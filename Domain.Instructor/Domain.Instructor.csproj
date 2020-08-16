@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>Domain.Instructors</AssemblyName>
+        <RootNamespace>Submarine.Domain.Instructors</RootNamespace>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain.Commands\Domain.Commands.csproj" />
+      <ProjectReference Include="..\Domain.Queries\Domain.Queries.csproj" />
+    </ItemGroup>
+
+</Project>
