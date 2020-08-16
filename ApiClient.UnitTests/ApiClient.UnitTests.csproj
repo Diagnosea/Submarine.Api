@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Submarine.ApiClient.UnitTests</RootNamespace>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ApiClient\ApiClient.csproj" />
+      <ProjectReference Include="..\TestingUtiltiies\TestingUtiltiies.csproj" />
+    </ItemGroup>
+
+</Project>
