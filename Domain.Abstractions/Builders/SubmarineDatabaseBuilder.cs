@@ -33,9 +33,9 @@ namespace Submarine.Domain.Abstractions.Builders
         internal IMongoDatabase Build()
         {
             var client = new MongoClient(_mongoClientSettings);
-            var name = Assembly.GetCallingAssembly().GetName();
+            var callingAssemblyName = Assembly.GetCallingAssembly().GetName();
             
-            ConventionRegistry.Register(name.FullName, _conventionPack, x => true);
+            ConventionRegistry.Register(callingAssemblyName.FullName, _conventionPack, x => true);
 
             if (_mongoUrl is null)
                 throw new ArgumentException("Cannot Build Database Without URL");
