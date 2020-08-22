@@ -2,13 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <AssemblyName>Domain.Instructors</AssemblyName>
-        <RootNamespace>Diagnosea.Submarine.Domain.Instructors</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Domain.User</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
+      <ProjectReference Include="..\Domain.Abstractions\Domain.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

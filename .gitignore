@@ -9,4 +9,5 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-*.user
+*.csproj.user
+.vs
