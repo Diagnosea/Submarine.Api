@@ -1,13 +1,14 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
-namespace Submarine.Data.Builders
+namespace Submarine.Domain.Abstractions.Builders
 {
     public class SubmarineDatabaseBuilder
     {
-        private MongoUrl _mongoUrl;
-        private MongoClientSettings _mongoClientSettings;
+        private MongoUrl? _mongoUrl;
+        private MongoClientSettings? _mongoClientSettings;
         private readonly ConventionPack _conventionPack;
 
         internal SubmarineDatabaseBuilder()
@@ -36,6 +37,9 @@ namespace Submarine.Data.Builders
             
             ConventionRegistry.Register(name.FullName, _conventionPack, x => true);
 
+            if (_mongoUrl is null)
+                throw new ArgumentException("Cannot Build Database Without URL");
+            
             return client.GetDatabase(_mongoUrl.DatabaseName);
         }
     }

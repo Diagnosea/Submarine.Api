@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Submarine.Data.Builders;
+using Submarine.Domain.Abstractions.Builders;
 
-namespace Submarine.Data.Extensions
+namespace Submarine.Domain.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddSubmarineData(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
+        public static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
         {
             var submarineDatabaseBuilder = new SubmarineDatabaseBuilder();
             builder(submarineDatabaseBuilder);
