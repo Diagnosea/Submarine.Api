@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Submarine.Api</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Api</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 

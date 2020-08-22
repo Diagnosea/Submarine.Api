@@ -3,13 +3,13 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <AssemblyName>Domain.Instructors</AssemblyName>
-        <RootNamespace>Submarine.Domain.Instructors</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Domain.Instructors</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain.Commands\Domain.Commands.csproj" />
       <ProjectReference Include="..\Domain.Queries\Domain.Queries.csproj" />
+      <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
     </ItemGroup>
 
 </Project>

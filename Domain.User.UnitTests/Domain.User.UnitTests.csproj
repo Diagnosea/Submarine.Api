@@ -2,10 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Submarine.Domain.User.UnitTests</RootNamespace>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Domain.User.UnitTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain.Queries\Domain.Queries.csproj" />
+      <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
       <ProjectReference Include="..\TestingUtiltiies\TestingUtiltiies.csproj" />
     </ItemGroup>
 

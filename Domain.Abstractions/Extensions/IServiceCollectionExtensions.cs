@@ -1,8 +1,8 @@
 ﻿using System;
+using Diagnosea.Submarine.Domain.Abstractions.Builders;
 using Microsoft.Extensions.DependencyInjection;
-using Submarine.Domain.Abstractions.Builders;
 
-namespace Submarine.Domain.Abstractions.Extensions
+namespace Diagnosea.Submarine.Domain.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
