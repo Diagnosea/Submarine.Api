@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Diagnosea.Submarine.Domain.Instructors.Builders;
-using Diagnosea.Submarine.Domain.User;
+using Diagnosea.Submarine.Domain.User.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +11,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Extensions
     {
         internal static void AddSubmarineMediator(this IServiceCollection serviceCollection)
         {
-            var user = Assembly.GetAssembly(typeof(ExampleUserCommand));
+            var user = Assembly.GetAssembly(typeof(UserEntity));
             serviceCollection.AddMediatR(user);
         }
         

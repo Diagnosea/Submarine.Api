@@ -10,7 +10,7 @@ namespace Diagnosea.Submarine.Domain.User.Entities
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
-        public string FriendlyName { get; set; }
+        public string? FriendlyName { get; set; }
         public IList<UserRole> Roles { get; set; } = new List<UserRole>();
     }
 }
