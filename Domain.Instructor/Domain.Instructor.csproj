@@ -7,9 +7,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Domain.Queries\Domain.Queries.csproj" />
-      <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
-    </ItemGroup>
-
 </Project>
