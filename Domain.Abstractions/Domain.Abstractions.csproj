@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Submarine.Domain.Abstractions</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Domain.Abstractions</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 

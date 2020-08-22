@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Submarine.Api.IntegrationTests</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Api.IntegrationTests</RootNamespace>
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
     </PropertyGroup>

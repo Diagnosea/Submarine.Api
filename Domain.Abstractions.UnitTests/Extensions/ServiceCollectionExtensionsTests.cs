@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Diagnosea.Submarine.Domain.Abstractions.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using NUnit.Framework;
-using Submarine.Domain.Abstractions.Extensions;
 
-namespace Submarine.Domain.Abstractions.UnitTests.Extensions
+namespace Diagnosea.Submarine.Domain.Abstractions.UnitTests.Extensions
 {
     [TestFixture]
     public class ServiceCollectionExtensionsTests
