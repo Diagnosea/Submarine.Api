@@ -3,7 +3,7 @@ using System.Reflection;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
-namespace Diagnosea.Submarine.Domain.Abstractions.Builders
+namespace Diagnosea.Submarine.Domain.Instructors.Builders
 {
     public class SubmarineDatabaseBuilder
     {

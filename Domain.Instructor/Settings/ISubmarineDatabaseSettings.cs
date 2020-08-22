@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Domain.Abstractions.Settings
+﻿namespace Diagnosea.Submarine.Domain.Instructors.Settings
 {
     public interface ISubmarineDatabaseSettings
     {

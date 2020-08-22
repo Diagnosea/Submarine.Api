@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Domain.Abstractions\Domain.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="8.1.0" />
+    </ItemGroup>
+
 </Project>
