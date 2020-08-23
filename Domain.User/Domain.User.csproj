@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>Diagnosea.Submarine.Domain.User</RootNamespace>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,6 +12,11 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="8.1.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands" />
     </ItemGroup>
 
 </Project>
