@@ -13,7 +13,7 @@ namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
         public Guid Id { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public IList<UserRole> Roles { get; set; } = new List<UserRole>();
     }
 }
