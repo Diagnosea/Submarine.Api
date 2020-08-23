@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Diagnosea.Submarine.Domain.Authentication.Queries;
 using Diagnosea.Submarine.Domain.Instructors.Builders;
 using Diagnosea.Submarine.Domain.User.Entities;
 using MediatR;
@@ -9,13 +10,14 @@ namespace Diagnosea.Submarine.Domain.Instructors.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        internal static void AddSubmarineMediator(this IServiceCollection serviceCollection)
+        public static void AddSubmarineMediator(this IServiceCollection serviceCollection)
         {
             var user = Assembly.GetAssembly(typeof(UserEntity));
-            serviceCollection.AddMediatR(user);
+            var auth = Assembly.GetAssembly(typeof(GenerateJwtQuery));
+            serviceCollection.AddMediatR(user, auth);
         }
         
-        internal static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
+        public static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
         {
             var submarineDatabaseBuilder = new SubmarineDatabaseBuilder();
             builder(submarineDatabaseBuilder);
