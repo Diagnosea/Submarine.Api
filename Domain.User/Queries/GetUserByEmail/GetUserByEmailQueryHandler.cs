@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
-using Diagnosea.Submarine.Domain.User.Builders;
 using Diagnosea.Submarine.Domain.User.Entities;
 using MediatR;
 using MongoDB.Driver;
@@ -19,9 +18,9 @@ namespace Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail
         
         public async Task<UserEntity> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
-            var projection = new UserProjectionDefinitionBuilder()
-                .WithEmailAddress()
-                .Build();
+            var projection = new ProjectionDefinitionBuilder<UserEntity>()
+                .Include(x => x.Id)
+                .Include(x => x.EmailAddress);
 
             return await _userCollection
                 .Find(x => x.EmailAddress == request.EmailAddress)
