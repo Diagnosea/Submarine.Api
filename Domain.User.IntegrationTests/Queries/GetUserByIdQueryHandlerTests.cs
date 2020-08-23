@@ -5,36 +5,36 @@ using System.Threading.Tasks;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Enums;
-using Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail;
+using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MongoDB.Driver;
 using NUnit.Framework;
 
 namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
 {
     [TestFixture]
-    public class GetUserByEmailQueryHandlerTests : UserIntegrationTests
+    public class GetUserByIdQueryHandlerTests : UserIntegrationTests
     {
         private IMongoCollection<UserEntity> _userCollection;
-        private GetUserByEmailQueryHandler _classUnderTests;
+        private GetUserByIdQueryHandler _classUnderTests;
 
         [SetUp]
         public void SetUp()
         {
             _userCollection = Database.GetEntityCollection<UserEntity>();
-            _classUnderTests = new GetUserByEmailQueryHandler(Database);
+            _classUnderTests = new GetUserByIdQueryHandler(Database);
         }
 
-        public class Handle : GetUserByEmailQueryHandlerTests
+        public class Handle : GetUserByIdQueryHandlerTests
         {
             [Test]
-            public async Task GivenGetUserByEmailQuery_ReturnsUserFromMongo()
+            public async Task GivenGetUserByIdQuery_WithInvalidId_ReturnsNull()
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
 
-                var getUserByEmailQuery = new GetUserByEmailQuery
+                var getUserByIdQuery = new GetUserByIdQuery
                 {
-                    EmailAddress = "john.smith@gmail.com"
+                    Id = Guid.NewGuid()
                 };
 
                 var user = new UserEntity
@@ -50,7 +50,37 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                 await _userCollection.InsertOneAsync(user, null, cancellationToken);
                 
                 // Act
-                var result = await _classUnderTests.Handle(getUserByEmailQuery, cancellationToken);
+                var result = await _classUnderTests.Handle(getUserByIdQuery, cancellationToken);
+                
+                // Assert
+                Assert.That(result, Is.Null);
+            }
+            
+            [Test]
+            public async Task GivenGetUserByIdQuery_WithValidId_ReturnsUserFromMongo()
+            {
+                // Arrange
+                var cancellationToken = new CancellationToken();
+
+                var getUserByIdQuery = new GetUserByIdQuery
+                {
+                    Id = Guid.NewGuid()
+                };
+
+                var user = new UserEntity
+                {
+                    Id = getUserByIdQuery.Id,
+                    EmailAddress = "john.smith@gmail.com",
+                    Password = "30=5902i0jfe-q0dj-0",
+                    UserName = "Johnoo2398",
+                    FriendlyName = "John Smith",
+                    Roles = new List<UserRole> {UserRole.StandardUser}
+                };
+
+                await _userCollection.InsertOneAsync(user, null, cancellationToken);
+                
+                // Act
+                var result = await _classUnderTests.Handle(getUserByIdQuery, cancellationToken);
                 
                 // Assert
                 Assert.Multiple(() =>
