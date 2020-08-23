@@ -1,5 +1,4 @@
-﻿using System;
-using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
+﻿using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
 
 namespace Diagnosea.Submarine.Domain.User.Mappers
@@ -13,7 +12,7 @@ namespace Diagnosea.Submarine.Domain.User.Mappers
                 Id = insertUserCommand.Id,
                 EmailAddress = insertUserCommand.EmailAddress,
                 Password = insertUserCommand.Password,
-                UserName = insertUserCommand.Username,
+                UserName = insertUserCommand.UserName,
                 Roles = insertUserCommand.Roles
             };
         }

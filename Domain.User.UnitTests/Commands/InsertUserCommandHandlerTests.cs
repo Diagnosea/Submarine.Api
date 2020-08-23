@@ -44,7 +44,7 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                     Id = Guid.NewGuid(),
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
-                    Username = "Johnoo2398",
+                    UserName = "Johnoo2398",
                     Roles = new List<UserRole> {UserRole.StandardUser}
                 };
 
@@ -61,10 +61,10 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
 
             private static bool VerifyUserEntity(UserEntity user, InsertUserCommand command)
             {
-                return user.Id != command.Id &&
+                return user.Id == command.Id &&
                        user.EmailAddress == command.EmailAddress &&
                        user.Password == command.Password &&
-                       user.UserName == command.Username &&
+                       user.UserName == command.UserName &&
                        user.Roles.Contains(UserRole.StandardUser);
             }
         }
