@@ -9,13 +9,13 @@ namespace Diagnosea.Submarine.Domain.Instructors.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        internal static void AddSubmarineMediator(this IServiceCollection serviceCollection)
+        public static void AddSubmarineMediator(this IServiceCollection serviceCollection)
         {
             var user = Assembly.GetAssembly(typeof(UserEntity));
             serviceCollection.AddMediatR(user);
         }
         
-        internal static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
+        public static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
         {
             var submarineDatabaseBuilder = new SubmarineDatabaseBuilder();
             builder(submarineDatabaseBuilder);
