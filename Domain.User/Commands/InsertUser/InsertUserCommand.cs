@@ -6,7 +6,7 @@ using MediatR;
 namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
 {
     /// <summary>
-    /// Insert a user with their basic information for authentication and permissions.
+    /// Insert a user with authentication and permissions details.
     /// </summary>
     public class InsertUserCommand : IRequest
     {
