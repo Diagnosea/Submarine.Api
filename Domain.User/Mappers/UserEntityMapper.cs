@@ -10,7 +10,7 @@ namespace Diagnosea.Submarine.Domain.User.Mappers
         {
             return new UserEntity
             {
-                Id = Guid.NewGuid(),
+                Id = insertUserCommand.Id,
                 EmailAddress = insertUserCommand.EmailAddress,
                 Password = insertUserCommand.Password,
                 UserName = insertUserCommand.Username,

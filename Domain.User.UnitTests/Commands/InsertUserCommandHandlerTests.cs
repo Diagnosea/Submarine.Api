@@ -41,6 +41,7 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 
                 var insertUserCommand = new InsertUserCommand
                 {
+                    Id = Guid.NewGuid(),
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
                     Username = "Johnoo2398",
@@ -60,7 +61,7 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
 
             private static bool VerifyUserEntity(UserEntity user, InsertUserCommand command)
             {
-                return user.Id != Guid.Empty &&
+                return user.Id != command.Id &&
                        user.EmailAddress == command.EmailAddress &&
                        user.Password == command.Password &&
                        user.UserName == command.Username &&
