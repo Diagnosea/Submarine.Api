@@ -1,4 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Domain.Authentication.Builders;
@@ -25,13 +27,22 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
             var securityTokenDescriptorBuilder = new SecurityTokenDescriptorBuilder()
                 .WithSymmetricSecurityKey(encodedSecret)
                 .WithExpiration(expiration)
-                .WithClaim(AuthenticationConstants.ClaimTypes.UserId, request.Id.ToString())
-                .WithClaim(AuthenticationConstants.ClaimTypes.UserName, request.Name)
+                .WithClaim(AuthenticationConstants.ClaimTypes.Subject, request.Id.ToString())
+                .WithClaim(AuthenticationConstants.ClaimTypes.Name, request.Name)
+                .WithClaim(AuthenticationConstants.ClaimTypes.Issuer, _submarineJwtSettings.Issuer)
+                .WithClaim(AuthenticationConstants.ClaimTypes.IssuedAt, DateTime.UtcNow.ToString())
                 .WithClaim(AuthenticationConstants.ClaimTypes.Expiration, expiration.ToString());
+
+            if (_submarineJwtSettings.Audiences.All(x => x != request.Audience))
+            {
+                throw new ArgumentException($"Invalid Audience: '{request.Audience}'");
+            }
+            
+            securityTokenDescriptorBuilder.WithClaim(AuthenticationConstants.ClaimTypes.Audience, request.Audience);
 
             foreach (var role in request.Roles)
             {
-                securityTokenDescriptorBuilder.WithClaim(AuthenticationConstants.ClaimTypes.Roles, role.ToString());
+                securityTokenDescriptorBuilder.WithClaim(AuthenticationConstants.ClaimTypes.Role, role.ToString());
             }
 
             var securityTokenDescriptor = securityTokenDescriptorBuilder.Build();

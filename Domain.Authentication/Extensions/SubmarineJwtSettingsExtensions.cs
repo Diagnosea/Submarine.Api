@@ -13,7 +13,7 @@ namespace Diagnosea.Submarine.Domain.Authentication.Extensions
         
         public static DateTime GetExpiration(this ISubmarineJwtSettings submarineJwtSettings)
         {
-            return DateTime.UtcNow.AddDays(-submarineJwtSettings.ExpirationInDays);
+            return DateTime.UtcNow.AddDays(submarineJwtSettings.ExpirationInDays);
         }
     }
 }
