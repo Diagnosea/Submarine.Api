@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
       <ProjectReference Include="..\Domain.Abstractions\Domain.Abstractions.csproj" />
       <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
     </ItemGroup>
@@ -14,6 +15,21 @@
       <PackageReference Include="MediatR" Version="8.1.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="AuthenticationExceptionMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AuthenticationExceptionMessages.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="AuthenticationExceptionMessages.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>AuthenticationExceptionMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

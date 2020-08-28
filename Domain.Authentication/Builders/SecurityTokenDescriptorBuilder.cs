@@ -8,8 +8,8 @@ namespace Diagnosea.Submarine.Domain.Authentication.Builders
     public class SecurityTokenDescriptorBuilder
     {
         private readonly IList<Claim> _claims = new List<Claim>();
-        private DateTime _expiration;
-        private SymmetricSecurityKey _symmetricSecurityKey;
+        private DateTime _expires;
+        private byte[] _key;
 
         public SecurityTokenDescriptorBuilder WithClaim(string type, string value)
         {
@@ -17,27 +17,28 @@ namespace Diagnosea.Submarine.Domain.Authentication.Builders
             return this;
         }
         
-        public SecurityTokenDescriptorBuilder WithExpiration(DateTime expiration)
+        public SecurityTokenDescriptorBuilder WithExpires(DateTime expiration)
         {
-            _expiration = expiration;
+            _expires = expiration;
             return this;
         }
-        
-        public SecurityTokenDescriptorBuilder WithSymmetricSecurityKey(byte[] encodedSecret)
+
+        public SecurityTokenDescriptorBuilder WithKey(byte[] key)
         {
-            _symmetricSecurityKey = new SymmetricSecurityKey(encodedSecret);
+            _key = key;
             return this;
         }
 
         public SecurityTokenDescriptor Build()
         {
             var claimsIdentity = new ClaimsIdentity(_claims);
-            var signingCredentials = new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
-
+            var symmetricSecurityKey = new SymmetricSecurityKey(_key);
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
+            
             return new SecurityTokenDescriptor
             {
                 Subject = claimsIdentity,
-                Expires = _expiration,
+                Expires = _expires,
                 SigningCredentials = signingCredentials
             };
         }

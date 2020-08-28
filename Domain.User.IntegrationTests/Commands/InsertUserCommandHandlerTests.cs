@@ -39,7 +39,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Commands
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
                     UserName = "Johnoo2398",
-                    Roles = new List<UserRole> {UserRole.StandardUser}
+                    Roles = new List<UserRole> {UserRole.Standard}
                 };
                 
                 // Act

@@ -44,7 +44,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                     Password = "30=5902i0jfe-q0dj-0",
                     UserName = "Johnoo2398",
                     FriendlyName = "John Smith",
-                    Roles = new List<UserRole> {UserRole.StandardUser}
+                    Roles = new List<UserRole> {UserRole.Standard}
                 };
 
                 await _userCollection.InsertOneAsync(user, null, cancellationToken);
@@ -74,7 +74,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                     Password = "30=5902i0jfe-q0dj-0",
                     UserName = "Johnoo2398",
                     FriendlyName = "John Smith",
-                    Roles = new List<UserRole> {UserRole.StandardUser}
+                    Roles = new List<UserRole> {UserRole.Standard}
                 };
 
                 await _userCollection.InsertOneAsync(user, null, cancellationToken);

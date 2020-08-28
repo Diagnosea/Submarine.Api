@@ -5,9 +5,9 @@ namespace Diagnosea.Submarine.Domain.Authentication.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddSubmarineJwt(this IServiceCollection serviceCollection, ISubmarineJwtSettings submarineJwtSettings)
+        public static void AddSubmarineAuthentication(this IServiceCollection serviceCollection, ISubmarineAuthenticationSettings submarineAuthenticationSettings)
         {
-            serviceCollection.AddSingleton(submarineJwtSettings);
+            serviceCollection.AddSingleton(submarineAuthenticationSettings);
         }
     }
 }

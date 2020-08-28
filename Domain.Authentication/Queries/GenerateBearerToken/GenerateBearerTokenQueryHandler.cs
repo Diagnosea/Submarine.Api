@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Authentication.Builders;
-using Diagnosea.Submarine.Domain.Authentication.Extensions;
 using Diagnosea.Submarine.Domain.Authentication.Settings;
 using MediatR;
 
@@ -12,37 +14,39 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
 {
     public class GenerateBearerTokenQueryHandler : IRequestHandler<GenerateBearerTokenQuery, string>
     {
-        private readonly ISubmarineJwtSettings _submarineJwtSettings;
+        private readonly ISubmarineAuthenticationSettings _submarineAuthenticationSettings;
 
-        public GenerateBearerTokenQueryHandler(ISubmarineJwtSettings submarineJwtSettings)
+        public GenerateBearerTokenQueryHandler(ISubmarineAuthenticationSettings submarineAuthenticationSettings)
         {
-            _submarineJwtSettings = submarineJwtSettings;
+            _submarineAuthenticationSettings = submarineAuthenticationSettings;
         }
         
         public Task<string> Handle(GenerateBearerTokenQuery request, CancellationToken cancellationToken)
         {
-            var encodedSecret = _submarineJwtSettings.GetEncodedSecret();
-            var expiration = _submarineJwtSettings.GetExpiration();
+            var key = Encoding.UTF8.GetBytes(_submarineAuthenticationSettings.Secret);
+            var expiration = DateTime.UtcNow.AddDays(_submarineAuthenticationSettings.ExpirationInDays);
 
             var securityTokenDescriptorBuilder = new SecurityTokenDescriptorBuilder()
-                .WithSymmetricSecurityKey(encodedSecret)
-                .WithExpiration(expiration)
-                .WithClaim(AuthenticationConstants.ClaimTypes.Subject, request.Id.ToString())
-                .WithClaim(AuthenticationConstants.ClaimTypes.Name, request.Name)
-                .WithClaim(AuthenticationConstants.ClaimTypes.Issuer, _submarineJwtSettings.Issuer)
-                .WithClaim(AuthenticationConstants.ClaimTypes.IssuedAt, DateTime.UtcNow.ToString())
-                .WithClaim(AuthenticationConstants.ClaimTypes.Expiration, expiration.ToString());
-
-            if (_submarineJwtSettings.Audiences.All(x => x != request.Audience))
+                .WithKey(key)
+                .WithExpires(expiration)
+                .WithClaim(JwtRegisteredClaimNames.Sub, request.Subject.ToString())
+                .WithClaim(SubmarineRegisteredClaimNames.Name, request.Name)
+                .WithClaim(JwtRegisteredClaimNames.Iss, _submarineAuthenticationSettings.Issuer)
+                .WithClaim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
+                .WithClaim(JwtRegisteredClaimNames.Iat, expiration.ToString(CultureInfo.InvariantCulture));
+            
+            if (_submarineAuthenticationSettings.ValidAudiences.All(x => x != request.Audience))
             {
-                throw new ArgumentException($"Invalid Audience: '{request.Audience}'");
+                throw new SubmarineArgumentException(
+                    $"Invalid Audience: '{request.Audience}'", 
+                    AuthenticationExceptionMessages.AuthenticationInvalidAudience);
             }
             
-            securityTokenDescriptorBuilder.WithClaim(AuthenticationConstants.ClaimTypes.Audience, request.Audience);
+            securityTokenDescriptorBuilder.WithClaim(JwtRegisteredClaimNames.Aud, request.Audience);
 
             foreach (var role in request.Roles)
             {
-                securityTokenDescriptorBuilder.WithClaim(AuthenticationConstants.ClaimTypes.Role, role.ToString());
+                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Role, role.ToString());
             }
 
             var securityTokenDescriptor = securityTokenDescriptorBuilder.Build();

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken;
 using Diagnosea.Submarine.Domain.User.Enums;
@@ -15,40 +17,38 @@ namespace Domain.Authentication.UnitTests.Queries
     [TestFixture]
     public class GenerateBearerTokenQueryHandlerTests
     {
-        private SubmarineTestJwtSettings _submarineTestJwtSettings;
+        private SubmarineTestAuthenticationSettings _submarineTestAuthenticationSettings;
         private GenerateBearerTokenQueryHandler _classUnderTest;
 
         [SetUp]
         public void SetUp()
         {
-            _submarineTestJwtSettings = new SubmarineTestJwtSettings();
-            _classUnderTest = new GenerateBearerTokenQueryHandler(_submarineTestJwtSettings);
+            _submarineTestAuthenticationSettings = new SubmarineTestAuthenticationSettings
+            {
+                Secret = "thisIsATestSecret",
+                ExpirationInDays = 1,
+                ValidAudiences = new List<string> {"test-audience"},
+                Issuer = "test-issuer"
+            };
+            
+            _classUnderTest = new GenerateBearerTokenQueryHandler(_submarineTestAuthenticationSettings);
         }
-        
+
         public class Handle : GenerateBearerTokenQueryHandlerTests
         {
+
             [Test]
-            public async Task GivenGenerateBearerTokenQueryWithInvalidAudience_ShouldThrowArgumentException()
+            public void GivenGenerateBearerTokenQueryWithInvalidAudience_ShouldThrowArgumentException()
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "invalid-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser,
-                        UserRole.AdministratingUser
-                    }
-                };
-
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
+                generateBearerTokenQuery.Audience = "invalid-audience";
+                
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<ArgumentException>(() => _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken));
+                    var exception = Assert.ThrowsAsync<SubmarineArgumentException>(() => _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken));
                     Assert.That(exception.Message, Is.Not.Null);
                 });
             }
@@ -58,17 +58,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -90,17 +80,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -115,10 +95,10 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var subjectClaim = token.Claims.FirstOrDefault(x => x.Type == AuthenticationConstants.ClaimTypes.Subject);
+                    var subjectClaim = token.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
 
                     Assert.That(subjectClaim, Is.Not.Null);
-                    Assert.That(subjectClaim.Value, Is.EqualTo(generateBearerTokenQuery.Id.ToString()));
+                    Assert.That(subjectClaim.Value, Is.EqualTo(generateBearerTokenQuery.Subject));
                 });
             }
             
@@ -127,17 +107,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -152,7 +122,7 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var subjectClaim = token.Claims.FirstOrDefault(x => x.Type == AuthenticationConstants.ClaimTypes.Name);
+                    var subjectClaim = token.Claims.FirstOrDefault(x => x.Type == SubmarineRegisteredClaimNames.Name);
 
                     Assert.That(subjectClaim, Is.Not.Null);
                     Assert.That(subjectClaim.Value, Is.EqualTo(generateBearerTokenQuery.Name));
@@ -164,17 +134,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -189,10 +149,10 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var issuerClaim = token.Claims.FirstOrDefault(x => x.Type == AuthenticationConstants.ClaimTypes.Issuer);
+                    var issuerClaim = token.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Iss);
 
                     Assert.That(issuerClaim, Is.Not.Null);
-                    Assert.That(issuerClaim.Value, Is.EqualTo(_submarineTestJwtSettings.Issuer));
+                    Assert.That(issuerClaim.Value, Is.EqualTo(_submarineTestAuthenticationSettings.Issuer));
                 });
             }
             
@@ -201,17 +161,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -226,10 +176,10 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var issuedAtClaim = token.Claims.FirstOrDefault(x => x.Type == AuthenticationConstants.ClaimTypes.IssuedAt);
+                    var issuedAtClaim = token.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Iat);
 
                     Assert.That(issuedAtClaim, Is.Not.Null);
-                    Assert.That(token.IssuedAt.ToString(), Is.EqualTo(DateTime.UtcNow.ToString()));
+                    Assert.That(token.IssuedAt.ToString(CultureInfo.InvariantCulture), Is.EqualTo(DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)));
                 });
             }
             
@@ -238,17 +188,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -263,11 +203,11 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var expirationClaim = token.Claims.FirstOrDefault(x => x.Type == AuthenticationConstants.ClaimTypes.Expiration);
-                    var expiration = DateTime.UtcNow.AddDays(_submarineTestJwtSettings.ExpirationInDays);
+                    var expirationClaim = token.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp);
+                    var expiration = DateTime.UtcNow.AddDays(_submarineTestAuthenticationSettings.ExpirationInDays);
 
                     Assert.That(expirationClaim, Is.Not.Null);
-                    Assert.That(token.ValidTo.ToString(), Is.EqualTo(expiration.ToString()));
+                    Assert.That(token.ValidTo.ToString(CultureInfo.InvariantCulture), Is.EqualTo(expiration.ToString(CultureInfo.InvariantCulture)));
                 });
             }
             
@@ -276,17 +216,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -301,10 +231,10 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var audienceClaim = token.Claims.FirstOrDefault(x => x.Type == AuthenticationConstants.ClaimTypes.Audience);
+                    var audienceClaim = token.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Aud);
 
                     Assert.That(audienceClaim, Is.Not.Null);
-                    Assert.That(audienceClaim.Value, Is.EqualTo(_submarineTestJwtSettings.Audiences[0]));
+                    Assert.That(audienceClaim.Value, Is.EqualTo(_submarineTestAuthenticationSettings.ValidAudiences[0]));
                 });
             }
             
@@ -313,18 +243,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser,
-                        UserRole.AdministratingUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -339,8 +258,8 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var roleClaims = token.Claims.Where(x => x.Type == AuthenticationConstants.ClaimTypes.Role);
-                    var standardUserRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.StandardUser.ToString());
+                    var roleClaims = token.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Role);
+                    var standardUserRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.Standard.ToString());
 
                     Assert.That(standardUserRoleClaim, Is.Not.Null);
                 });
@@ -351,18 +270,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 // Arrange
                 var cancellationToken = new CancellationToken();
-
-                var generateBearerTokenQuery = new GenerateBearerTokenQuery
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Johnno74",
-                    Audience = "test-audience",
-                    Roles = new List<UserRole>
-                    {
-                        UserRole.StandardUser,
-                        UserRole.AdministratingUser
-                    }
-                };
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
                 
                 // Act
                 var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
@@ -377,12 +285,27 @@ namespace Domain.Authentication.UnitTests.Queries
 
                     Assert.That(token, Is.Not.Null);
 
-                    var roleClaims = token.Claims.Where(x => x.Type == AuthenticationConstants.ClaimTypes.Role);
-                    var standardUserRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.AdministratingUser.ToString());
+                    var roleClaims = token.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Role);
+                    var administratorUserRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.Administrator.ToString());
 
-                    Assert.That(standardUserRoleClaim, Is.Not.Null);
+                    Assert.That(administratorUserRoleClaim, Is.Not.Null);
                 });
             }
+        }
+        
+        private GenerateBearerTokenQuery CreateGenerateBearerTokenQuery()
+        {
+            return new GenerateBearerTokenQuery
+            {
+                Subject = Guid.NewGuid().ToString(),
+                Name = "Johnno74",
+                Audience = "test-audience",
+                Roles = new List<string>
+                {
+                    UserRole.Standard.ToString(),
+                    UserRole.Administrator.ToString()
+                }
+            };
         }
     }
 }
