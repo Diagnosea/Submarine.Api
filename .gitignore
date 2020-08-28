@@ -11,3 +11,4 @@ bld/
 [Ll]og/
 *.csproj.user
 .vs
+*.Dotsettings.user
