@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
-    public static class ServiceExtensions
+    public static class ServiceCollectionExtensions
     {
         public static void AddSubmarineAuthentication(this IServiceCollection serviceCollection, ISubmarineAuthenticationSettings settings)
         {
