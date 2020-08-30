@@ -34,7 +34,7 @@ namespace Domain.Authentication.UnitTests.Queries
 
                 var query = new HashTextQuery
                 {
-                    PlainTextPassword = "This is a password"
+                    PlainText = "This is a password"
                 };
                 
                 // Act
@@ -45,7 +45,7 @@ namespace Domain.Authentication.UnitTests.Queries
                 {
                     Assert.That(result, Is.Not.Null);
 
-                    var isValidPassword = BCrypt.Net.BCrypt.Verify(query.PlainTextPassword, result);
+                    var isValidPassword = BCrypt.Net.BCrypt.Verify(query.PlainText, result);
                     Assert.That(isValidPassword);
                 });
             }
