@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
-    public static class AppExtensions
+    public static class ApplicationBuilderExtensions
     {
         public static void AddSwagger(this IApplicationBuilder app, string pathBase)
         {
