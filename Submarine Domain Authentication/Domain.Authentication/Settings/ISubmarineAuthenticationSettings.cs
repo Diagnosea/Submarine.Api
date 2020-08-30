@@ -8,5 +8,6 @@ namespace Diagnosea.Submarine.Domain.Authentication.Settings
         int ExpirationInDays { get; set; }
         IList<string> ValidAudiences { get; set; }
         string Issuer { get; set; }
+        int SaltingRounds { get; set; }
     }
 }

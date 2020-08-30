@@ -8,6 +8,7 @@ namespace Domain.Authentication.UnitTests.Settings
         public string Secret { get; set; }
         public int ExpirationInDays { get; set; }
         public IList<string> ValidAudiences { get; set; } = new List<string>();
-        public string Issuer { get; set; } 
+        public string Issuer { get; set; }
+        public int SaltingRounds { get; set; }
     }
 }
