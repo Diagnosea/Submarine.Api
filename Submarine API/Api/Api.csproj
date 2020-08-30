@@ -11,9 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain Instructors\Domain.Instructor\Domain.Instructor.csproj" />
       <ProjectReference Include="..\Api.Abstractions\Api.Abstractions.csproj" />
-      <ProjectReference Include="..\Domain.Instructor\Domain.Instructor.csproj" />
     </ItemGroup>
 
 </Project>

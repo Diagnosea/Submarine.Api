@@ -6,9 +6,5 @@
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\TestingUtiltiies\TestingUtiltiies.csproj" />
-    </ItemGroup>
     
 </Project>
