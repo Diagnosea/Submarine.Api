@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Domain.Instructors.Extensions;
+﻿using Diagnosea.Submarine.Domain.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using NUnit.Framework;

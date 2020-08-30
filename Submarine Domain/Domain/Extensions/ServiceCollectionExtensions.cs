@@ -5,7 +5,7 @@ using Diagnosea.Submarine.Domain.User.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Diagnosea.Submarine.Domain.Instructors.Extensions
+namespace Diagnosea.Submarine.Domain.Extensions
 {
     public static class ServiceCollectionExtensions
     {
