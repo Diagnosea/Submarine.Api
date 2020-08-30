@@ -8,14 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain.Authentication\Domain.Authentication.csproj" />
-      <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
         <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain User\Domain.User\Domain.User.csproj" />
     </ItemGroup>
 
 </Project>

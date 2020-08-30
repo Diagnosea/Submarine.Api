@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Submarine.TestingUtiltiies</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.ApiClient.UnitTests</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 

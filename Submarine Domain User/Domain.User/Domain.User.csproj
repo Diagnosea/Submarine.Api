@@ -5,11 +5,7 @@
         <RootNamespace>Diagnosea.Submarine.Domain.User</RootNamespace>
         <Nullable>disable</Nullable>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Domain.Abstractions\Domain.Abstractions.csproj" />
-    </ItemGroup>
-
+    
     <ItemGroup>
       <PackageReference Include="MediatR" Version="8.1.0" />
       <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
@@ -19,4 +15,7 @@
       <Folder Include="Commands" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Domain Abstractions\Domain.Abstractions\Domain.Abstractions.csproj" />
+    </ItemGroup>
 </Project>

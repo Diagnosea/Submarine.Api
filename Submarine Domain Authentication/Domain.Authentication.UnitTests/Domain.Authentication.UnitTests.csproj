@@ -5,13 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain.Authentication\Domain.Authentication.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
       <PackageReference Include="NUnit" Version="3.12.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Domain User\Domain.User\Domain.User.csproj" />
+      <ProjectReference Include="..\Domain.Authentication\Domain.Authentication.csproj" />
     </ItemGroup>
 
 </Project>
