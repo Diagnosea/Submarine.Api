@@ -1,6 +1,6 @@
 using Diagnosea.Submarine.Api.Abstractions.Extensions;
 using Diagnosea.Submarine.Api.Options;
-using Diagnosea.Submarine.Domain.Instructors.Extensions;
+using Diagnosea.Submarine.Domain.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
