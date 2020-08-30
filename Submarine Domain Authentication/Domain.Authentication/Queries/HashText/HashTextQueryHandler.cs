@@ -17,7 +17,7 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.HashText
         public Task<string> Handle(HashTextQuery request, CancellationToken cancellationToken)
         {
             var salt = BCrypt.Net.BCrypt.GenerateSalt(_submarineAuthenticationSettings.SaltingRounds);
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.PlainTextPassword, salt);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.PlainText, salt);
 
             return Task.FromResult(hashedPassword);
         }
