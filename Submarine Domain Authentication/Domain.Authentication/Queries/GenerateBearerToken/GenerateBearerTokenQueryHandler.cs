@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Authentication.Builders;
 using Diagnosea.Submarine.Domain.Authentication.Settings;
 using MediatR;
@@ -33,16 +31,8 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
                 .WithClaim(SubmarineRegisteredClaimNames.Name, request.Name)
                 .WithClaim(JwtRegisteredClaimNames.Iss, _submarineAuthenticationSettings.Issuer)
                 .WithClaim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
-                .WithClaim(JwtRegisteredClaimNames.Iat, expiration.ToString(CultureInfo.InvariantCulture));
-            
-            if (_submarineAuthenticationSettings.ValidAudiences.All(x => x != request.Audience))
-            {
-                throw new SubmarineArgumentException(
-                    $"Invalid Audience: '{request.Audience}'", 
-                    AuthenticationExceptionMessages.AuthenticationInvalidAudience);
-            }
-            
-            securityTokenDescriptorBuilder.WithClaim(JwtRegisteredClaimNames.Aud, request.Audience);
+                .WithClaim(JwtRegisteredClaimNames.Iat, expiration.ToString(CultureInfo.InvariantCulture))
+                .WithClaim(JwtRegisteredClaimNames.Aud, request.AudienceId);
 
             foreach (var role in request.Roles)
             {

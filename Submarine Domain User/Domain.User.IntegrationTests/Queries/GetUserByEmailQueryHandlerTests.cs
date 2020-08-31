@@ -24,6 +24,12 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
             _classUnderTests = new GetUserByEmailQueryHandler(Database);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _userCollection.DeleteMany(FilterDefinition<UserEntity>.Empty);
+        }
+
         public class Handle : GetUserByEmailQueryHandlerTests
         {
             [Test]
