@@ -4,6 +4,6 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.HashText
 {
     public class HashTextQuery : IRequest<string>
     {
-        public string PlainText { get; set; }
+        public string Text { get; set; }
     }
 }

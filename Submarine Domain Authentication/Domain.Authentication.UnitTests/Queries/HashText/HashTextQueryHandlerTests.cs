@@ -5,7 +5,7 @@ using Diagnosea.Submarine.Domain.Authentication.Settings;
 using Domain.Authentication.UnitTests.Settings;
 using NUnit.Framework;
 
-namespace Domain.Authentication.UnitTests.Queries
+namespace Domain.Authentication.UnitTests.Queries.HashText
 {
     [TestFixture]
     public class HashTextQueryHandlerTests
@@ -34,7 +34,7 @@ namespace Domain.Authentication.UnitTests.Queries
 
                 var query = new HashTextQuery
                 {
-                    PlainText = "This is a password"
+                    Text = "This is a password"
                 };
                 
                 // Act
@@ -45,7 +45,7 @@ namespace Domain.Authentication.UnitTests.Queries
                 {
                     Assert.That(result, Is.Not.Null);
 
-                    var isValidPassword = BCrypt.Net.BCrypt.Verify(query.PlainText, result);
+                    var isValidPassword = BCrypt.Net.BCrypt.Verify(query.Text, result);
                     Assert.That(isValidPassword);
                 });
             }

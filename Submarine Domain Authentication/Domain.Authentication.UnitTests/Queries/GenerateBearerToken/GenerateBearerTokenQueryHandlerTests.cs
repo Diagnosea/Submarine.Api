@@ -5,14 +5,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken;
 using Diagnosea.Submarine.Domain.User.Enums;
 using Domain.Authentication.UnitTests.Settings;
 using NUnit.Framework;
 
-namespace Domain.Authentication.UnitTests.Queries
+namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
 {
     [TestFixture]
     public class GenerateBearerTokenQueryHandlerTests
@@ -36,23 +35,6 @@ namespace Domain.Authentication.UnitTests.Queries
 
         public class Handle : GenerateBearerTokenQueryHandlerTests
         {
-
-            [Test]
-            public void GivenGenerateBearerTokenQueryWithInvalidAudience_ShouldThrowArgumentException()
-            {
-                // Arrange
-                var cancellationToken = new CancellationToken();
-                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
-                generateBearerTokenQuery.Audience = "invalid-audience";
-                
-                // Act & Assert
-                Assert.Multiple(() =>
-                {
-                    var exception = Assert.ThrowsAsync<SubmarineArgumentException>(() => _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken));
-                    Assert.That(exception.Message, Is.Not.Null);
-                });
-            }
-            
             [Test]
             public async Task GivenGenerateBearerTokenQuery_GeneratesBearerToken()
             {
@@ -299,7 +281,7 @@ namespace Domain.Authentication.UnitTests.Queries
             {
                 Subject = Guid.NewGuid().ToString(),
                 Name = "Johnno74",
-                Audience = "test-audience",
+                AudienceId = "test-audience",
                 Roles = new List<string>
                 {
                     UserRole.Standard.ToString(),
