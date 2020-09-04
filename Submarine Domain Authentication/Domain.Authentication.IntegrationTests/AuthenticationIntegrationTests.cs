@@ -12,25 +12,18 @@ namespace Diagnosea.Submarine.Domain.Authentication.IntegrationTests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            if (_mongoDbRunner == null)
-            {
-                _mongoDbRunner = MongoDbRunner.Start();
-            }
+            _mongoDbRunner ??= MongoDbRunner.Start();
 
-            if (Database == null)
-            {
-                var client = new MongoClient(_mongoDbRunner.ConnectionString);
-                Database = client.GetDatabase(nameof(AuthenticationIntegrationTests));
-            }
+            if (Database != null) return;
+            
+            var client = new MongoClient(_mongoDbRunner.ConnectionString);
+            Database = client.GetDatabase(nameof(AuthenticationIntegrationTests));
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            if (!_mongoDbRunner.Disposed)
-            {
-                _mongoDbRunner.Dispose();
-            };
+            _mongoDbRunner.Dispose();
         }
     }
 }

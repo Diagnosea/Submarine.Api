@@ -7,6 +7,7 @@ using MongoDB.Driver;
 
 namespace Diagnosea.Submarine.Domain.Authentication.Queries.ValidateAudience
 {
+    // Will in future be swapped out for licensing.
     public class ValidateAudienceQueryHandler : IRequestHandler<ValidateAudienceQuery, bool>
     {
         private readonly IMongoCollection<AudienceEntity> _audienceCollection;
@@ -18,8 +19,11 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.ValidateAudience
         
         public async Task<bool> Handle(ValidateAudienceQuery request, CancellationToken cancellationToken)
         {
+            var filterDefinitionBuilder = new FilterDefinitionBuilder<AudienceEntity>();
+            var filter = filterDefinitionBuilder.Eq(x => x.Id, request.AudienceId);
+            
             var audience = await _audienceCollection
-                .Find(x => x.Id == request.AudienceId)
+                .Find(filter)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return audience != null;

@@ -6,9 +6,7 @@ namespace Diagnosea.Submarine.Domain.User.Extensions
 {
     public static class UserRoleExtensions
     {
-        public static IList<string> ToPlainText(this IList<UserRole> roles)
-        {
-            return roles.Select(x => x.ToString()).ToList();
-        }
+        public static IEnumerable<string> AsStrings(this IEnumerable<UserRole> roles) 
+            => roles.Select(x => x.ToString()).ToList();
     }
 }

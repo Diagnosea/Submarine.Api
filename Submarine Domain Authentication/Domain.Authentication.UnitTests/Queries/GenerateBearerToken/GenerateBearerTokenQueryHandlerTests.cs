@@ -11,7 +11,7 @@ using Diagnosea.Submarine.Domain.User.Enums;
 using Domain.Authentication.UnitTests.Settings;
 using NUnit.Framework;
 
-namespace Domain.Authentication.UnitTests.Queries
+namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
 {
     [TestFixture]
     public class GenerateBearerTokenQueryHandlerTests

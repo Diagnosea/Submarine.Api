@@ -2,11 +2,11 @@
 {
     public class HashTextQueryBuilder
     {
-        private string _plainText;
+        private string _text;
 
-        public HashTextQueryBuilder WithPlainText(string plainText)
+        public HashTextQueryBuilder WithText(string text)
         {
-            _plainText = plainText;
+            _text = text;
             return this;
         }
 
@@ -14,7 +14,7 @@
         {
             return new HashTextQuery
             {
-                PlainText = _plainText
+                Text = _text
             };
         }
     }

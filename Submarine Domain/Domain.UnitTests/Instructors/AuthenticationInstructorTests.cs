@@ -69,7 +69,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
 
             private static bool VerifyHashTextQuery(HashTextQuery query, RegisterDto register)
             {
-                return query.PlainText == register.PlainTextPassword;
+                return query.Text == register.PlainTextPassword;
             }
 
             private static bool VerifyInsertUserCommand(InsertUserCommand command, RegisterDto register, string hashedPassword)
@@ -94,7 +94,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 {
                     AudienceId = "This is an audience ID",
                     EmailAddress = "This is an email address",
-                    Password = "This is a plain text password"
+                    PlainTextPassword = "This is a plain text password"
                 };
 
                 const bool isValueAudience = false;
@@ -128,7 +128,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 {
                     AudienceId = "This is an audience ID",
                     EmailAddress = "This is an email address",
-                    Password = "This is a plain text password"
+                    PlainTextPassword = "This is a plain text password"
                 };
 
                 const bool isValueAudience = true;
@@ -167,7 +167,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 {
                     AudienceId = "This is an audience ID",
                     EmailAddress = "This is an email address",
-                    Password = "This is a plain text password"
+                    PlainTextPassword = "This is a plain text password"
                 };
 
                 const bool isValueAudience = true;
@@ -216,7 +216,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 
                 _mediator.Verify(x => x.Send(
                     It.Is<CompareHashTextQuery>(chtq => 
-                        ValidateCompareHashTextQuery(chtq, authentication.Password, user.Password)), cancellationToken),
+                        ValidateCompareHashTextQuery(chtq, authentication.PlainTextPassword, user.Password)), cancellationToken),
                     Times.Once);
             }
             
@@ -230,7 +230,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 {
                     AudienceId = "This is an audience ID",
                     EmailAddress = "This is an email address",
-                    Password = "This is a plain text password"
+                    PlainTextPassword = "This is a plain text password"
                 };
 
                 const bool isValueAudience = true;
@@ -282,7 +282,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 
                 _mediator.Verify(x => x.Send(
                     It.Is<CompareHashTextQuery>(chtq => 
-                        ValidateCompareHashTextQuery(chtq, authentication.Password, user.Password)), cancellationToken),
+                        ValidateCompareHashTextQuery(chtq, authentication.PlainTextPassword, user.Password)), cancellationToken),
                     Times.Once);
                 
                 _mediator.Verify(x => x.Send(It.Is<GenerateBearerTokenQuery>(gbtq =>

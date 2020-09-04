@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;
 using NUnit.Framework;
 
-namespace Domain.Authentication.UnitTests.Queries
+namespace Domain.Authentication.UnitTests.Queries.CompareHashText
 {
     [TestFixture]
     public class CompareHashTextQueryHandlerTests
