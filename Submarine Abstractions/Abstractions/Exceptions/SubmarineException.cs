@@ -4,15 +4,21 @@ namespace Diagnosea.Submarine.Abstractions.Exceptions
 {
     public class SubmarineException : Exception
     {
-        public int ErrorCode { get; set; }
-        public string TechnicalMessage { get; set; }
-        public string UserMessage { get; set; }
+        public int ExceptionCode { get; }
+        public string TechnicalMessage { get; }
+        public string UserMessage { get; }
         
         public override string Message => !string.IsNullOrEmpty(UserMessage) ? UserMessage : TechnicalMessage;
-        
-        public SubmarineException(SubmarineExceptionCode code, string technicalMessage, string userMessage)
+
+        public SubmarineException(SubmarineExceptionCode exceptionCode, string technicalMessage)
         {
-            ErrorCode = (int) code;
+            ExceptionCode = (int)exceptionCode;
+            TechnicalMessage = technicalMessage;
+        }
+        
+        public SubmarineException(SubmarineExceptionCode exceptionCode, string technicalMessage, string userMessage)
+        {
+            ExceptionCode = (int) exceptionCode;
             TechnicalMessage = technicalMessage;
             UserMessage = userMessage;
         }

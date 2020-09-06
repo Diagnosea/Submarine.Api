@@ -2,8 +2,8 @@
 {
     public interface ISubmarineException
     {
-        int ErrorCode { get; set; }
-        string TechnicalMessage { get; set; }
-        string UserMessage { get; set; }
+        int ExceptionCode { get; }
+        string TechnicalMessage { get; }
+        string UserMessage { get; }
     }
 }

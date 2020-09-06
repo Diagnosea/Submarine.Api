@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Submarine Domain\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTests", "Submarine Domain\Domain.UnitTests\Domain.UnitTests.csproj", "{3A071F79-BB02-4880-959F-4DF6CC9CDF9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Abstractions.UnitTests", "Submarine API\Api.Abstractions.UnitTests\Api.Abstractions.UnitTests.csproj", "{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{3A071F79-BB02-4880-959F-4DF6CC9CDF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A071F79-BB02-4880-959F-4DF6CC9CDF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A071F79-BB02-4880-959F-4DF6CC9CDF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +152,7 @@ Global
 		{45A48D86-9E41-4AD4-9412-C6BD4A5D1537} = {7D6ED528-8EA5-40FD-B328-C55EA9A0CF28}
 		{8449C966-42F6-4D4A-ACAF-5B347E099CCB} = {B282476D-C5B7-49BF-B28D-014C00E6868F}
 		{3A071F79-BB02-4880-959F-4DF6CC9CDF9F} = {B282476D-C5B7-49BF-B28D-014C00E6868F}
+		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5} = {E1A3F410-63CD-41B3-BF78-8132CF5189F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC71E9EF-3B1F-4E70-9CE9-1BE964B459DB}
