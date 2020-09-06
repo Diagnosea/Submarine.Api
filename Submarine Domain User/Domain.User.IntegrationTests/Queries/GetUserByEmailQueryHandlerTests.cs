@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.Domain.User.Enums;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail;
 using MongoDB.Driver;
 using NUnit.Framework;

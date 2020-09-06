@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Abstractions\Abstractions\Abstractions.csproj" />
       <ProjectReference Include="..\Domain.User\Domain.User.csproj" />
     </ItemGroup>
 

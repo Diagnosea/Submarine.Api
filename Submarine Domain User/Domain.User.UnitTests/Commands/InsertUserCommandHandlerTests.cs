@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.Domain.User.Enums;
 using MongoDB.Driver;
 using Moq;
 using NUnit.Framework;

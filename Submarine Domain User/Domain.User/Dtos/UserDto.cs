@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Diagnosea.Submarine.Domain.User.Enums;
+using Diagnosea.Submarine.Abstractions.Enums;
 
 namespace Diagnosea.Submarine.Domain.User.Dtos
 {

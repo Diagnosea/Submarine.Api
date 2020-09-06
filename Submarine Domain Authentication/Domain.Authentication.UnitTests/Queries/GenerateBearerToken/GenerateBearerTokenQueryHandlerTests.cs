@@ -5,9 +5,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken;
-using Diagnosea.Submarine.Domain.User.Enums;
 using Domain.Authentication.UnitTests.Settings;
 using NUnit.Framework;
 
