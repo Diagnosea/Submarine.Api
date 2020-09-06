@@ -1,6 +1,6 @@
 ﻿using System;
+using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
-using Diagnosea.Submarine.Domain.User.Enums;
 using NUnit.Framework;
 
 namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands

@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Domain.User.Enums
+﻿namespace Diagnosea.Submarine.Abstractions.Enums
 {
     public enum UserRole
     {

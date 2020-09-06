@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.Domain.User.Enums;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MediatR;
 using Moq;

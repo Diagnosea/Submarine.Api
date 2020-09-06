@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Diagnosea.Submarine.Domain.User.Enums;
+using Diagnosea.Submarine.Abstractions.Enums;
 
 namespace Diagnosea.Submarine.Domain.User.Extensions
 {
