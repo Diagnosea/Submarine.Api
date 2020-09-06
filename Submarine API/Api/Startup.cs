@@ -1,5 +1,6 @@
 using Diagnosea.Submarine.Api.Abstractions.Extensions;
-using Diagnosea.Submarine.Api.Options;
+using Diagnosea.Submarine.Api.Settings;
+using Diagnosea.Submarine.Domain.Authentication.Extensions;
 using Diagnosea.Submarine.Domain.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,27 +12,28 @@ namespace Diagnosea.Submarine.Api
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ApplicationOptions>(Configuration);
-
+            var databaseSettings = _configuration.GetSettings<DatabaseSettings>();
+            var authenticationSettings = _configuration.GetSettings<AuthenticationSettings>();
+            
+            services.AddSubmarineAuthenticationSettings(authenticationSettings);
             services.AddSubmarineMediator();
 
             services.AddControllers();
 
             services.AddSubmarineSwagger<Startup>();
+            
+            services.AddSubmarineAuthentication(authenticationSettings);
 
-            var applicationOptions = Configuration.Get<ApplicationOptions>();
-            services.AddSubmarineAuthentication(applicationOptions);
-
-            services.AddSubmarineDatabase(builder => builder.WithConnectionString(applicationOptions.SubmarineConnectionString));
+            services.AddSubmarineDatabase(builder => builder.WithConnectionString(databaseSettings.ConnectionString));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,7 +47,7 @@ namespace Diagnosea.Submarine.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
-            var pathBase = Configuration.GetValue<string>("PathBase");
+            var pathBase = _configuration.GetValue<string>("PathBase");
             app.AddSwagger(pathBase);
             app.UsePathBase(pathBase);
 

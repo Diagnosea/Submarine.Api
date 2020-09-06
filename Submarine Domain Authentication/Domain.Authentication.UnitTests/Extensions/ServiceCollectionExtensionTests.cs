@@ -10,7 +10,7 @@ namespace Domain.Authentication.UnitTests.Extensions
     [TestFixture]
     public class ServiceCollectionExtensionTests
     {
-        public class AddSubmarineAuthentication : ServiceCollectionExtensionTests
+        public class AddSubmarineAuthenticationSettings : ServiceCollectionExtensionTests
         {
             [Test]
             public void GivenSettings_AddsSettingsToCollection()
@@ -27,7 +27,7 @@ namespace Domain.Authentication.UnitTests.Extensions
                 };
 
                 // Act
-                services.AddSubmarineAuthentication(settings);
+                services.AddSubmarineAuthenticationSettings(settings);
                 
                 // Assert
                 var provider = services.BuildServiceProvider();
