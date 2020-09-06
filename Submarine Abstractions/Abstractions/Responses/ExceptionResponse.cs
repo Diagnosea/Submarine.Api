@@ -30,7 +30,8 @@ namespace Diagnosea.Submarine.Abstractions.Responses
             UserMessage = userMessage;
         }
 
-        public ExceptionResponse(ISubmarineException exception) : this(exception.ExceptionCode, exception.TechnicalMessage, exception.UserMessage)
+        public ExceptionResponse(ISubmarineException exception) 
+            : this(exception.ExceptionCode, exception.TechnicalMessage, exception.UserMessage)
         {
         }
     }

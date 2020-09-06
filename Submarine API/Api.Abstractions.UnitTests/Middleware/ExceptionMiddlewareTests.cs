@@ -119,11 +119,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
         
         private class SubmarineTestException : SubmarineException, ISubmarineException
         {
-            public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage) : base(exceptionCode, technicalMessage)
+            public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage) 
+                : base(exceptionCode, technicalMessage)
             {
             }
 
-            public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage, string userMessage) : base(exceptionCode, technicalMessage, userMessage)
+            public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage, string userMessage) 
+                : base(exceptionCode, technicalMessage, userMessage)
             {
             }
         }

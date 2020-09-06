@@ -13,13 +13,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
 {
     public class ExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate _requestDelegate;
         private readonly IDictionary<Type, HttpStatusCode> _statusCodes;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public ExceptionMiddleware(RequestDelegate next, IDictionary<Type, HttpStatusCode> statusCodes)
+        public ExceptionMiddleware(RequestDelegate requestDelegate, IDictionary<Type, HttpStatusCode> statusCodes)
         {
-            _next = next;
+            _requestDelegate = requestDelegate;
             _statusCodes = statusCodes;
 
             _jsonSerializerOptions = new JsonSerializerOptions
@@ -32,14 +32,14 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
         {
             try
             {
-                await _next(context);
+                await _requestDelegate(context);
             }
             catch (Exception exception)
             {
                 await HandleExceptionAsync(context, exception);
                 
                 // Reset stream.
-                context.Response.Body.Seek(0, SeekOrigin.Begin);
+                context.Response.Body.Seek(default(int), SeekOrigin.Begin);
             }
         }
 
