@@ -28,7 +28,8 @@ namespace Diagnosea.Submarine.Api.Abstractions.DocumentFilters
         private static string GetControllerVersion(IEnumerable<ApiDescription> apiDescriptions)
         {
             // Get the version of the first controller action you can find.
-            var versionModel = apiDescriptions.FirstOrDefault()?.ActionDescriptor?.GetApiVersionModel();
+            var actionDescriptor = apiDescriptions.FirstOrDefault()?.ActionDescriptor;
+            var versionModel = actionDescriptor?.GetApiVersionModel();
             
             // If there are any versions specifically declared in an attribute against this action.
             if (versionModel != null && versionModel.DeclaredApiVersions.Any())
@@ -46,7 +47,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.DocumentFilters
                 return implementedVersion.ToString();
             }
 
-            throw new Exception("Dear god this controller has no version, how?");
+            throw new ArgumentException($"No Version Found for {actionDescriptor.DisplayName}");
         }
     }
 }
