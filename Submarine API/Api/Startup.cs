@@ -28,6 +28,7 @@ namespace Diagnosea.Submarine.Api
             services.AddSubmarineMediator();
 
             // TODO: Maybe consider making these one method.
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers();
             services.AddSubmarineApiVersioning();
 
