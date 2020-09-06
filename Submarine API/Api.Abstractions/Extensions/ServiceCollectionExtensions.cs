@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Diagnosea.Submarine.Api.Abstractions.DocumentFilters;
+using Diagnosea.Submarine.Api.Abstractions.OperationFilters;
 using Diagnosea.Submarine.Domain.Authentication.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,6 +71,8 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
                         new List<string>()
                     }
                 });
+                c.DocumentFilter<VersionDocumentFilter>();
+                c.OperationFilter<VersionOperationFilter>();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -78,6 +82,11 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
             });
 
             serviceCollection.AddSwaggerExamplesFromAssemblyOf<T>();
+        }
+
+        public static void AddSubmarineApiVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning();
         }
     }
 }

@@ -27,7 +27,9 @@ namespace Diagnosea.Submarine.Api
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
             services.AddSubmarineMediator();
 
+            // TODO: Maybe consider making these one method.
             services.AddControllers();
+            services.AddSubmarineApiVersioning();
 
             services.AddSubmarineSwagger<Startup>();
             
@@ -46,10 +48,7 @@ namespace Diagnosea.Submarine.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            var pathBase = _configuration.GetValue<string>("PathBase");
-            app.AddSwagger(pathBase);
-            app.UsePathBase(pathBase);
+            app.AddSubmarineSwagger();
 
             app.UseEndpoints(endpoints =>
             {
