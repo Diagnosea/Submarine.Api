@@ -18,7 +18,6 @@ namespace Diagnosea.Submarine.Api.Abstractions.DocumentFilters
             foreach (var documentedPath in swaggerDoc.Paths)
             {
                 var correctedPath = documentedPath.Key.Replace("{version}", routeVersion);
-
                 updatedApiPaths.Add(correctedPath, documentedPath.Value);
             }
 
@@ -29,21 +28,19 @@ namespace Diagnosea.Submarine.Api.Abstractions.DocumentFilters
         {
             // Get the version of the first controller action you can find.
             var actionDescriptor = apiDescriptions.FirstOrDefault()?.ActionDescriptor;
-            var versionModel = actionDescriptor?.GetApiVersionModel();
+            var apiVersionModel = actionDescriptor?.GetApiVersionModel();
             
             // If there are any versions specifically declared in an attribute against this action.
-            if (versionModel != null && versionModel.DeclaredApiVersions.Any())
+            if (apiVersionModel != null && apiVersionModel.DeclaredApiVersions.Any())
             {
-                var declaredVersion = versionModel.DeclaredApiVersions.FirstOrDefault();
-
-                return declaredVersion.ToString();
+                var declaredApiVersion = apiVersionModel.DeclaredApiVersions.First();
+                return declaredApiVersion.ToString();
             }
 
             // If there are any versions implemented by this action.
-            if (versionModel != null && versionModel.ImplementedApiVersions.Any())
+            if (apiVersionModel != null && apiVersionModel.ImplementedApiVersions.Any())
             {
-                var implementedVersion = versionModel.ImplementedApiVersions.OrderByDescending(v => v).FirstOrDefault();
-
+                var implementedVersion = apiVersionModel.ImplementedApiVersions.First();
                 return implementedVersion.ToString();
             }
 
