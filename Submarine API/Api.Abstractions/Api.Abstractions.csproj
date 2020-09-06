@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Submarine Abstractions\Abstractions\Abstractions.csproj" />
+    <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
   </ItemGroup>
 
 </Project>

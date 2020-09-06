@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Diagnosea.Submarine.Api.Abstractions.Settings;
+using Diagnosea.Submarine.Domain.Authentication.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -28,13 +28,12 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(settings.PrivateSigningKey)),
-                        ValidIssuers = settings.Issuers,
-                        ValidAudiences = settings.Audiences
+                        ValidateAudience = false,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(settings.Secret)),
+                        ValidIssuers = new []{settings.Issuer}
                     };
                 });
         }
-
 
         public static void AddSubmarineSwagger<T>(this IServiceCollection serviceCollection) where T : class
         {

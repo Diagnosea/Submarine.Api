@@ -5,7 +5,7 @@ namespace Diagnosea.Submarine.Domain.Authentication.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddSubmarineAuthentication(this IServiceCollection serviceCollection, ISubmarineAuthenticationSettings submarineAuthenticationSettings)
+        public static void AddSubmarineAuthenticationSettings(this IServiceCollection serviceCollection, ISubmarineAuthenticationSettings submarineAuthenticationSettings)
         {
             serviceCollection.AddSingleton(submarineAuthenticationSettings);
         }
