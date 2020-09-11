@@ -38,9 +38,5 @@ namespace Diagnosea.Submarine.Api.Controllers
         {
             return Ok();
         }
-
-        [HttpGet("test")]
-        [AllowAnonymous]
-        public IActionResult GetTest() => Ok();
     }
 }

@@ -26,16 +26,9 @@ namespace Diagnosea.Submarine.Api
             
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
             services.AddSubmarineMediator();
-
-            // TODO: Maybe consider making these one method.
-            services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllers();
-            services.AddSubmarineApiVersioning();
-
+            services.AddSubmarineControllers();
             services.AddSubmarineSwagger<Startup>();
-            
             services.AddSubmarineAuthentication(authenticationSettings);
-
             services.AddSubmarineDatabase(builder => builder.WithConnectionString(databaseSettings.ConnectionString));
         }
 

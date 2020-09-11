@@ -16,6 +16,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static void AddSubmarineControllers(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddRouting(options => options.LowercaseUrls = true);
+            serviceCollection.AddControllers();
+            serviceCollection.AddApiVersioning();
+        }
+        
         public static void AddSubmarineAuthentication(this IServiceCollection serviceCollection, ISubmarineAuthenticationSettings settings)
         {
             serviceCollection.AddAuthentication(x =>
@@ -82,11 +89,6 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
             });
 
             serviceCollection.AddSwaggerExamplesFromAssemblyOf<T>();
-        }
-
-        public static void AddSubmarineApiVersioning(this IServiceCollection services)
-        {
-            services.AddApiVersioning();
         }
     }
 }
