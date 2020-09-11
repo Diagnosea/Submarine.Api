@@ -6,7 +6,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void AddSwagger(this IApplicationBuilder app, string pathBase)
+        public static void AddSubmarineSwagger(this IApplicationBuilder app)
         {
             app.UseSwagger(c =>
             {
@@ -16,14 +16,21 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
                     {
                         new OpenApiServer
                         {
-                            Url = $"https://{httpReq.Host.Value}{pathBase}"
+                            Url = $"https://{httpReq.Host.Value}"
                         }
                     };
                 });
             });
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint($"{pathBase}/swagger/v1/swagger.json", "Submarine.API"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = string.Empty;
+                c.DocumentTitle = "Diagnosea Submarine API";
+                
+                // // TODO: Store in settings as List<string>.
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Submarine API V1");
+            });
         }
     }
 }

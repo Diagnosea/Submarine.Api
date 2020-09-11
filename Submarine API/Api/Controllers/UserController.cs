@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Diagnosea.Submarine.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {

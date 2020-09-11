@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Diagnosea.Submarine.Api.Abstractions.DocumentFilters;
+using Diagnosea.Submarine.Api.Abstractions.OperationFilters;
 using Diagnosea.Submarine.Domain.Authentication.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static void AddSubmarineControllers(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddRouting(options => options.LowercaseUrls = true);
+            serviceCollection.AddControllers();
+            serviceCollection.AddApiVersioning();
+        }
+        
         public static void AddSubmarineAuthentication(this IServiceCollection serviceCollection, ISubmarineAuthenticationSettings settings)
         {
             serviceCollection.AddAuthentication(x =>
@@ -69,6 +78,8 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
                         new List<string>()
                     }
                 });
+                c.DocumentFilter<VersionDocumentFilter>();
+                c.OperationFilter<VersionOperationFilter>();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

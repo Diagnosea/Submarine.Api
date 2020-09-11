@@ -26,13 +26,9 @@ namespace Diagnosea.Submarine.Api
             
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
             services.AddSubmarineMediator();
-
-            services.AddControllers();
-
+            services.AddSubmarineControllers();
             services.AddSubmarineSwagger<Startup>();
-            
             services.AddSubmarineAuthentication(authenticationSettings);
-
             services.AddSubmarineDatabase(builder => builder.WithConnectionString(databaseSettings.ConnectionString));
         }
 
@@ -46,10 +42,7 @@ namespace Diagnosea.Submarine.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            var pathBase = _configuration.GetValue<string>("PathBase");
-            app.AddSwagger(pathBase);
-            app.UsePathBase(pathBase);
+            app.AddSubmarineSwagger();
 
             app.UseEndpoints(endpoints =>
             {
