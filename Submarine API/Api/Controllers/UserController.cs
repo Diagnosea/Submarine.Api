@@ -1,42 +1,33 @@
-﻿using System.Threading.Tasks;
-using Diagnosea.Submarine.Api.Models.Request;
-using Diagnosea.Submarine.Domain.Authentication.Queries;
-using MediatR;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Diagnosea.Submarine.Api.Abstractions.Extensions;
+using Diagnosea.Submarine.Domain.Instructors.User;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diagnosea.Submarine.Api.Controllers
 {
-    [Route("v{version:apiVersion}/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("v{version:apiVersion}/" + RouteConstants.User.Base)]
     public class UserController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IUserInstructor _userInstructor;
 
-        public UserController(IMediator mediator)
+        public UserController(IUserInstructor userInstructor)
         {
-            _mediator = mediator;
+            _userInstructor = userInstructor;
         }
-
-        [HttpPost("authenticate")]
-        [AllowAnonymous]
-        public async Task<ActionResult<string>> Authenticate(AuthenticationRequestModel authenticationRequestModel)
+        
+        [Authorize(Roles = "Administrator")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserAsync([FromRoute] Guid userId, CancellationToken token)
         {
-            var jwt = await _mediator.Send(new GenerateJwtQuery
-            {
-                PrivateSigningKey = authenticationRequestModel.PrivateSigningKey,
-                Audience = authenticationRequestModel.Audience,
-                Issuer = authenticationRequestModel.Issuer
-            }, HttpContext.RequestAborted);
-
-            return Ok(jwt);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult Get()
-        {
-            return Ok();
+            var user = await _userInstructor.GetAsync(userId, token);
+            return Ok(user.ToResponse());
         }
     }
 }

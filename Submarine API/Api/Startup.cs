@@ -1,4 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Api.Abstractions.Extensions;
+using Diagnosea.Submarine.Api.Abstractions.Middleware;
 using Diagnosea.Submarine.Api.Settings;
 using Diagnosea.Submarine.Domain.Authentication.Extensions;
 using Diagnosea.Submarine.Domain.Extensions;
@@ -13,6 +18,11 @@ namespace Diagnosea.Submarine.Api
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        
+        private static IDictionary<Type, HttpStatusCode> _exceptionMapping = new Dictionary<Type, HttpStatusCode>
+        {
+            { typeof(SubmarineEntityNotFoundException), HttpStatusCode.NotFound }
+        };
 
         public Startup(IConfiguration configuration)
         {
@@ -26,6 +36,7 @@ namespace Diagnosea.Submarine.Api
             
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
             services.AddSubmarineMediator();
+            services.AddSubmarineInstructors();
             services.AddSubmarineControllers();
             services.AddSubmarineSwagger<Startup>();
             services.AddSubmarineAuthentication(authenticationSettings);
@@ -42,6 +53,7 @@ namespace Diagnosea.Submarine.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<ExceptionMiddleware>(_exceptionMapping);
             app.AddSubmarineSwagger();
 
             app.UseEndpoints(endpoints =>
