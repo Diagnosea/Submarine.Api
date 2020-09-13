@@ -1,6 +1,4 @@
-﻿using Diagnosea.Submarine.Abstractions.Exceptions;
-
-namespace Diagnosea.Submarine.Abstractions.Responses
+﻿namespace Diagnosea.Submarine.Abstractions.Responses
 {
     public class ExceptionResponse
     {
@@ -18,21 +16,5 @@ namespace Diagnosea.Submarine.Abstractions.Responses
         /// Localised message to help understand issue.
         /// </summary>
         public string UserMessage { get; set;  }
-
-        public ExceptionResponse()
-        {
-        }
-        
-        public ExceptionResponse(int exceptionCode, string technicalMessage, string userMessage)
-        {
-            ExceptionCode = exceptionCode;
-            TechnicalMessage = technicalMessage;
-            UserMessage = userMessage;
-        }
-
-        public ExceptionResponse(ISubmarineException exception) 
-            : this(exception.ExceptionCode, exception.TechnicalMessage, exception.UserMessage)
-        {
-        }
     }
 }

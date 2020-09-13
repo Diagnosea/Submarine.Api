@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Api.Abstractions.Authentication\Api.Abstractions.Authentication.csproj" />
       <ProjectReference Include="..\Api.Abstractions\Api.Abstractions.csproj" />
     </ItemGroup>
 

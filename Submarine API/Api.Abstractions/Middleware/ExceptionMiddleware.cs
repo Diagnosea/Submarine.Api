@@ -49,7 +49,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
 
             if (exception is ISubmarineException submarineException)
             {
-                var response = new ExceptionResponse(submarineException);
+                var response = new ExceptionResponse
+                {
+                    ExceptionCode = submarineException.ExceptionCode,
+                    TechnicalMessage = submarineException.TechnicalMessage,
+                    UserMessage = submarineException.UserMessage
+                };
+                
                 var serialization = JsonSerializer.Serialize(response, _jsonSerializerOptions);
                 return context.Response.WriteAsync(serialization);
             }
