@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstractions.Enums;
+using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Instructors.User;
+using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MediatR;
@@ -28,7 +30,25 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
         public class GetAsync : UserInstructorTests
         {
             [Test]
-            public async Task GivenId_ReturnsUser()
+            public void GivenInvalidId_ThrowsSubmarineEntityNotFoundException()
+            {
+                // Assert
+                var cancellationToken = new CancellationToken();
+                var userId = Guid.NewGuid();
+
+                // Act & Assert
+                Assert.Multiple(() =>
+                {
+                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(() => _classUnderTest.GetAsync(userId, cancellationToken));
+
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.TechnicalMessage, Is.Not.Null);
+                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                });
+            }
+            
+            [Test]
+            public async Task GivenValidId_ReturnsUser()
             {
                 // Assert
                 var cancellationToken = new CancellationToken();

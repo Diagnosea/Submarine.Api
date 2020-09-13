@@ -8,8 +8,8 @@ using Diagnosea.Submarine.Abstractions.Responses;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.Utilities;
-using Diagnosea.Submarine.Utilities.Extensions;
+using Diagnosea.Submarine.TestingUtilities;
+using Diagnosea.Submarine.TestingUtilities.Extensions;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -94,7 +94,6 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                    
                     Assert.That(responseData.ExceptionCode, Is.EqualTo((int)SubmarineExceptionCode.EntityNotFound));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
                     Assert.That(responseData.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
@@ -130,6 +129,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 
                 Assert.Multiple(() =>
                 {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
                     Assert.That(responseData.Id, Is.EqualTo(user.Id));
                 });
             }

@@ -1,14 +1,17 @@
-﻿using Diagnosea.Submarine.Domain.User.Dtos;
+﻿using Diagnosea.Submarine.Abstractions.Responses;
+using Diagnosea.Submarine.Domain.User.Dtos;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
     public static class UserDtoExtensions
     {
-        public static UserDto ToResponse(this UserDto user)
+        public static UserResponse ToResponse(this UserDto user)
         {
-            return new UserDto
+            return new UserResponse
             {
-                Id = user.Id
+                Id = user.Id,
+                UserName = user.UserName,
+                FriendlyName = user.FriendlyName
             };
         }
     }

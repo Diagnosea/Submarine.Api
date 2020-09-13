@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
+using Diagnosea.Submarine.TestingUtilities.Factories;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Mongo2Go;
 using MongoDB.Driver;
 using NUnit.Framework;
-using Utilities;
 
 namespace Diagnosea.Submarine.Api.IntegrationTests
 {

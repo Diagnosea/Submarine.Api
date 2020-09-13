@@ -4,15 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
 
-namespace Utilities
+namespace Diagnosea.Submarine.TestingUtilities.Factories
 {
-    public class SubmarineWebApplicationFactoryOptions
-    {
-        public IMongoDatabase Database { get; set; }
-    }
-    
     public class SubmarineWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
         private readonly SubmarineWebApplicationFactoryOptions _webApplicationFactoryOptions;

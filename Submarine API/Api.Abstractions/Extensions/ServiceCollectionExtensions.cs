@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using Diagnosea.Submarine.Api.Abstractions.DocumentFilters;
 using Diagnosea.Submarine.Api.Abstractions.OperationFilters;
+using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,7 +56,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
                     Description = "The Submarine API"
                 });
                 c.AddSecurityDefinition(
-                    "Bearer",
+                    SubmarineSecurityDefinitionNames.Bearer,
                     new OpenApiSecurityScheme
                     {
                         In = ParameterLocation.Header,
@@ -71,7 +72,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
                         {
                             Reference = new OpenApiReference
                             {
-                                Id = "Bearer",
+                                Id = SubmarineSecurityDefinitionNames.Bearer,
                                 Type = ReferenceType.SecurityScheme
                             }
                         },
