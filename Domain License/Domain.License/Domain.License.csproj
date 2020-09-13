@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Submarine.Domain.License</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="8.1.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Domain Abstractions\Domain.Abstractions\Domain.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

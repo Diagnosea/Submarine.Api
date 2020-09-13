@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Submarine.Domain.License.IntegrationTests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\TestingUtilities\TestingUtilities.csproj" />
+      <ProjectReference Include="..\Domain.License\Domain.License.csproj" />
+    </ItemGroup>
+
+</Project>
