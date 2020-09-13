@@ -3,7 +3,7 @@ using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Extensions;
 using NUnit.Framework;
 
-namespace Diagnosea.Submarine.Domain.User.UnitTests.Extensions
+namespace Diagnosea.Submarine.Abstractions.UnitTests.Extensions
 {
     [TestFixture]
     public class UserRoleExtensionsTests
