@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Diagnosea.Submarine.Api.Abstractions.OperationFilters
+namespace Diagnosea.Submarine.Api.Abstractions.Swagger.OperationFilters
 {
     public class VersionOperationFilter : IOperationFilter
     {

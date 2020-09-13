@@ -2,7 +2,7 @@
 using System.Linq;
 using Diagnosea.Submarine.Abstractions.Enums;
 
-namespace Diagnosea.Submarine.Domain.User.Extensions
+namespace Diagnosea.Submarine.Abstractions.Extensions
 {
     public static class UserRoleExtensions
     {

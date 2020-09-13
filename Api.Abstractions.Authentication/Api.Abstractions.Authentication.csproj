@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Submarine.Api.Abstractions.Authentication</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.7.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.1.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Submarine Abstractions\Abstractions\Abstractions.csproj" />
+      <ProjectReference Include="..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\Submarine Domain User\Domain.User\Domain.User.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Domain.User.Extensions;
+using Diagnosea.Submarine.Abstractions.Extensions;
 using NUnit.Framework;
 
 namespace Diagnosea.Submarine.Domain.User.UnitTests.Extensions
