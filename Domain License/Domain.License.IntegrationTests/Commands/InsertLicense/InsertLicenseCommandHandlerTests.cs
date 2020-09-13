@@ -59,7 +59,9 @@ namespace Submarine.Domain.License.IntegrationTests.Commands.InsertLicense
                 var result = await _classUnderTest.Handle(command, cancellationToken);
                 
                 // Assert
-                var entity = await _licenseCollection.Find(x => x.Id == command.Id).FirstOrDefaultAsync(cancellationToken);
+                var entity = await _licenseCollection
+                    .Find(x => x.Id == command.Id)
+                    .FirstOrDefaultAsync(cancellationToken);
                 
                 Assert.Multiple(() =>
                 {

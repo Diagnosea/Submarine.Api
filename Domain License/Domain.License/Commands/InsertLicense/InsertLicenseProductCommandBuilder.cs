@@ -20,7 +20,6 @@ namespace Diagnosea.Submarine.Domain.License.Commands.InsertLicense
             return this;
         }
 
-
         public InsertLicenseProductCommandBuilder WithExpiration(DateTime expiration)
         {
             _expiration = expiration;

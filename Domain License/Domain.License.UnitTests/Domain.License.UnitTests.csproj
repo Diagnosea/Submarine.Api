@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\TestingUtilities\TestingUtilities.csproj" />
       <ProjectReference Include="..\Domain.License\Domain.License.csproj" />
     </ItemGroup>
 
