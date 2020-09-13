@@ -42,13 +42,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
                 var exception = new KeyNotFoundException("Not a Submarine Exception");
                 Task CurrentRequest(HttpContext c) => throw exception;
                 var classUnderTest = new ExceptionMiddleware(CurrentRequest, _exceptionMapping);
-                var context = GetHttpContext();
+                var context = GetDefaultHttpContext();
                 
                 // Act
                 await classUnderTest.InvokeAsync(context);
                 
                 // Assert
-                var message = await JsonSerializer.DeserializeAsync<ExceptionResponse>(context.Response.Body, _jsonSerializerOptions);
+                var message = await GetExceptionResponse(context);
 
                 Assert.Multiple(() =>
                 {
@@ -64,13 +64,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
                 var exception = new SubmarineTestException(SubmarineExceptionCode.EntityNotFound, "TM", "UM");
                 Task CurrentRequest(HttpContext c) => throw exception;
                 var classUnderTest = new ExceptionMiddleware(CurrentRequest, _exceptionMapping);
-                var context = GetHttpContext();
+                var context = GetDefaultHttpContext();
                 
                 // Act
                 await classUnderTest.InvokeAsync(context);
                 
                 // Assert
-                var message = await JsonSerializer.DeserializeAsync<ExceptionResponse>(context.Response.Body, _jsonSerializerOptions);
+                var message = await GetExceptionResponse(context);
 
                 Assert.Multiple(() =>
                 {
@@ -90,13 +90,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
                 var exception = new SubmarineTestException(SubmarineExceptionCode.EntityNotFound, "TM");
                 Task CurrentRequest(HttpContext c) => throw exception;
                 var classUnderTest = new ExceptionMiddleware(CurrentRequest, _exceptionMapping);
-                var context = GetHttpContext();
+                var context = GetDefaultHttpContext();
                 
                 // Act
                 await classUnderTest.InvokeAsync(context);
                 
                 // Assert
-                var message = await JsonSerializer.DeserializeAsync<ExceptionResponse>(context.Response.Body, _jsonSerializerOptions);
+                var message = await GetExceptionResponse(context);
                 
                 Assert.Multiple(() =>
                 {
@@ -108,15 +108,21 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
                     Assert.That(message.UserMessage, Is.Null);
                 });
             }
+            
+            private async Task<ExceptionResponse> GetExceptionResponse(DefaultHttpContext context)
+            {
+                context.Response.Body.Seek(default(int), SeekOrigin.Begin);
+                return await JsonSerializer.DeserializeAsync<ExceptionResponse>(context.Response.Body, _jsonSerializerOptions);
+            }
         }
 
-        private static DefaultHttpContext GetHttpContext()
+        private static DefaultHttpContext GetDefaultHttpContext()
         {
             var context = new DefaultHttpContext();
             context.Response.Body = new MemoryStream();
             return context;
         }
-        
+
         private class SubmarineTestException : SubmarineException, ISubmarineException
         {
             public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage) 

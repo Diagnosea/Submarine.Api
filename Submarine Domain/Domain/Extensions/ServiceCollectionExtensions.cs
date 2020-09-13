@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Diagnosea.Submarine.Domain.Authentication.Entities;
 using Diagnosea.Submarine.Domain.Builders;
 using Diagnosea.Submarine.Domain.Instructors.Authentication;
 using Diagnosea.Submarine.Domain.Instructors.User;
@@ -20,8 +21,8 @@ namespace Diagnosea.Submarine.Domain.Extensions
         public static void AddSubmarineMediator(this IServiceCollection serviceCollection)
         {
             var user = Assembly.GetAssembly(typeof(UserEntity));
-            var auth = Assembly.GetAssembly(typeof(Authentication.Extensions.ServiceCollectionExtensions));
-            serviceCollection.AddMediatR(auth);
+            var auth = Assembly.GetAssembly(typeof(AudienceEntity));
+            serviceCollection.AddMediatR(user, auth);
         }
         
         public static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 

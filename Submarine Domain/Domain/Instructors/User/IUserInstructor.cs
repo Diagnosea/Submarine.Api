@@ -10,6 +10,6 @@ namespace Diagnosea.Submarine.Domain.Instructors.User
     /// </summary>
     public interface IUserInstructor
     {
-        Task<UserDto> GetAsync(Guid id, CancellationToken token);
+        Task<UserDto> GetAsync(Guid userId, CancellationToken token);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
@@ -37,9 +36,6 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
             catch (Exception exception)
             {
                 await HandleExceptionAsync(context, exception);
-                
-                // Reset stream.
-                context.Response.Body.Seek(default(int), SeekOrigin.Begin);
             }
         }
 

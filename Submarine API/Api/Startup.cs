@@ -26,6 +26,7 @@ namespace Diagnosea.Submarine.Api
             
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
             services.AddSubmarineMediator();
+            services.AddSubmarineInstructors();
             services.AddSubmarineControllers();
             services.AddSubmarineSwagger<Startup>();
             services.AddSubmarineAuthentication(authenticationSettings);
@@ -42,6 +43,7 @@ namespace Diagnosea.Submarine.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.AddSubmarineExceptionMiddleware();
             app.AddSubmarineSwagger();
 
             app.UseEndpoints(endpoints =>

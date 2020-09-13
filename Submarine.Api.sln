@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTests", "Submari
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Abstractions.UnitTests", "Submarine API\Api.Abstractions.UnitTests\Api.Abstractions.UnitTests.csproj", "{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingUtilities", "TestingUtilities\TestingUtilities.csproj", "{87EBEA7A-E4F8-43D9-A4F8-900338E6A46F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A9B3F51-421C-4FF2-9EE6-74E31C4BE2C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87EBEA7A-E4F8-43D9-A4F8-900338E6A46F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87EBEA7A-E4F8-43D9-A4F8-900338E6A46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87EBEA7A-E4F8-43D9-A4F8-900338E6A46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87EBEA7A-E4F8-43D9-A4F8-900338E6A46F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
