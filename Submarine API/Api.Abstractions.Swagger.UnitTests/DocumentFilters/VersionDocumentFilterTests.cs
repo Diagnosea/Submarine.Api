@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Diagnosea.Submarine.Api.Abstractions.DocumentFilters;
+using Diagnosea.Submarine.Api.Abstractions.Swagger.DocumentFilters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using NUnit.Framework;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.DocumentFilters
+namespace Diagnosea.Submarine.Api.Abstractions.Swagger.UnitTests.DocumentFilters
 {
     [TestFixture]
     public class VersionDocumentFilterTests

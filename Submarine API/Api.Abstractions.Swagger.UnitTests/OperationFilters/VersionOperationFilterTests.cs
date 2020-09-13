@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Diagnosea.Submarine.Api.Abstractions.OperationFilters;
+using Diagnosea.Submarine.Api.Abstractions.Swagger.OperationFilters;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Moq;
 using NUnit.Framework;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.OperationFilters
+namespace Diagnosea.Submarine.Api.Abstractions.Swagger.UnitTests.OperationFilters
 {
     [TestFixture]
     public class VersionOperationFilterTests

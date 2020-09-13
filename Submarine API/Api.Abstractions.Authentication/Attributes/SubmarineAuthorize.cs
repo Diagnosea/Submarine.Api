@@ -1,8 +1,8 @@
 ﻿using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Domain.User.Extensions;
+using Diagnosea.Submarine.Abstractions.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Diagnosea.Submarine.Api.Abstractions.Attributes
+namespace Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes
 {
     public class SubmarineAuthorize : AuthorizeAttribute
     {

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Diagnosea.Submarine.Api.Abstractions.UnitTests</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Api.Abstractions.Swagger.UnitTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,8 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Api.Abstractions.Authentication\Api.Abstractions.Authentication.csproj" />
-      <ProjectReference Include="..\Api.Abstractions\Api.Abstractions.csproj" />
+      <ProjectReference Include="..\Api.Abstractions.Swagger\Api.Abstractions.Swagger.csproj" />
     </ItemGroup>
 
 </Project>

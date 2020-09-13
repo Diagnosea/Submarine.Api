@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Diagnosea.Submarine.Api.Abstractions.DocumentFilters
+namespace Diagnosea.Submarine.Api.Abstractions.Swagger.DocumentFilters
 {
     public class VersionDocumentFilter : IDocumentFilter
     {

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Exceptions;
+using Diagnosea.Submarine.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;
@@ -12,7 +13,6 @@ using Diagnosea.Submarine.Domain.Authentication.Queries.ValidateAudience;
 using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.Domain.User.Extensions;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail;
 using MediatR;
 

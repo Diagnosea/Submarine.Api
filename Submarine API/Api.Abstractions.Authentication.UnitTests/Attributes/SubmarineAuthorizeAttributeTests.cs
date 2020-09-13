@@ -1,5 +1,5 @@
 ﻿using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Api.Abstractions.Attributes;
+using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
 using NUnit.Framework;
 
 namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Attributes
