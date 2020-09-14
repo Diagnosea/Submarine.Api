@@ -273,6 +273,33 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
                     Assert.That(administratorUserRoleClaim, Is.Not.Null);
                 });
             }
+
+            [Test]
+            public async Task GivenGenerateBearerTokenQuery_GeneratesBearerTokenWithProductClaim()
+            {
+                // Arrange
+                var cancellationToken = new CancellationToken();
+                var generateBearerTokenQuery = CreateGenerateBearerTokenQuery();
+                
+                // Act
+                var result = await _classUnderTest.Handle(generateBearerTokenQuery, cancellationToken);
+                
+                // Assert
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result, Is.Not.Null);
+                    
+                    var handler = new JwtSecurityTokenHandler();
+                    var token = handler.ReadToken(result) as JwtSecurityToken;
+
+                    Assert.That(token, Is.Not.Null);
+
+                    var productClaim = token.Claims.FirstOrDefault(x => x.Type == SubmarineRegisteredClaimNames.Product);
+
+                    Assert.That(productClaim, Is.Not.Null);
+                    Assert.That(productClaim.Value, Is.EqualTo("Test Product"));
+                });
+            }
         }
         
         private GenerateBearerTokenQuery CreateGenerateBearerTokenQuery()
@@ -286,6 +313,10 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
                 {
                     UserRole.Standard.ToString(),
                     UserRole.Administrator.ToString()
+                },
+                Products = new List<string>
+                {
+                    "Test Product"
                 }
             };
         }
