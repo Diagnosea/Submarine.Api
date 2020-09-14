@@ -12,6 +12,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication.TestPack\Domain.Authentication.TestPack.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain License\Domain.License.TestPack\Domain.License.TestPack.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain User\Domain.User.TestPack\Domain.User.TestPack.csproj" />
+      <ProjectReference Include="..\..\Test Packs\UnitTestPack\UnitTestPack.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 

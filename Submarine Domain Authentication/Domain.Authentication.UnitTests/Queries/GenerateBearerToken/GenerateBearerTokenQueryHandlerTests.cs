@@ -281,7 +281,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
             {
                 Subject = Guid.NewGuid().ToString(),
                 Name = "Johnno74",
-                AudienceId = "test-audience",
+                Audience = "test-audience",
                 Roles = new List<string>
                 {
                     UserRole.Standard.ToString(),

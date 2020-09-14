@@ -7,15 +7,12 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="8.1.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
       <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Submarine Domain Abstractions\Domain.Abstractions\Domain.Abstractions.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Queries" />
     </ItemGroup>
 
 </Project>

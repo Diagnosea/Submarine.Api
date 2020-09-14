@@ -8,6 +8,7 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
         private string _name;
         private string _audienceId;
         private IEnumerable<string> _roles = new List<string>();
+        private IEnumerable<string> _products = new List<string>();
 
         public GenerateBearerTokenQueryBuilder WithSubject(string subject)
         {
@@ -32,6 +33,12 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
             _roles = roles;
             return this;
         }
+
+        public GenerateBearerTokenQueryBuilder WithProducts(IEnumerable<string> products)
+        {
+            _products = products;
+            return this;
+        }
         
         public GenerateBearerTokenQuery Build()
         {
@@ -39,8 +46,9 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
             {
                 Subject = _subject,
                 Name = _name,
-                AudienceId = _audienceId,
-                Roles = _roles
+                Audience = _audienceId,
+                Roles = _roles,
+                Products = _products
             };
         }
     }
