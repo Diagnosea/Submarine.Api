@@ -67,7 +67,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
                 Assert.Multiple(() =>
                 {
                     Assert.That(resultingReturn, Is.EqualTo(builder));
-                    Assert.That(resultingBuild.AudienceId, Is.EqualTo(audienceId));
+                    Assert.That(resultingBuild.Audience, Is.EqualTo(audienceId));
                 });
             }
         }

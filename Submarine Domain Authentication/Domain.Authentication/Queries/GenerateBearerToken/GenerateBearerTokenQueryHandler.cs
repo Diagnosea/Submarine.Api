@@ -27,16 +27,21 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
             var securityTokenDescriptorBuilder = new SecurityTokenDescriptorBuilder()
                 .WithKey(key)
                 .WithExpires(expiration)
-                .WithClaim(JwtRegisteredClaimNames.Sub, request.Subject.ToString())
+                .WithClaim(JwtRegisteredClaimNames.Sub, request.Subject)
                 .WithClaim(SubmarineRegisteredClaimNames.Name, request.Name)
                 .WithClaim(JwtRegisteredClaimNames.Iss, _submarineAuthenticationSettings.Issuer)
                 .WithClaim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
                 .WithClaim(JwtRegisteredClaimNames.Iat, expiration.ToString(CultureInfo.InvariantCulture))
-                .WithClaim(JwtRegisteredClaimNames.Aud, request.AudienceId);
+                .WithClaim(JwtRegisteredClaimNames.Aud, request.Audience);
 
             foreach (var role in request.Roles)
             {
-                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Role, role.ToString());
+                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Role, role);
+            }
+
+            foreach (var product in request.Products)
+            {
+                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Product, product);
             }
 
             var securityTokenDescriptor = securityTokenDescriptorBuilder.Build();
