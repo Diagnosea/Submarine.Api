@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Submarine.Abstractions.Interchange.TestPack</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Abstractions.Interchange\Abstractions.Interchange.csproj" />
+    </ItemGroup>
+
+</Project>

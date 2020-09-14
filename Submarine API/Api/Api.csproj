@@ -11,6 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Abstractions\Abstraction.Routes\Abstraction.Routes.csproj" />
+      <ProjectReference Include="..\..\Submarine Abstractions\Abstractions.Interchange\Abstractions.Interchange.csproj" />
       <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
       <ProjectReference Include="..\..\Submarine Domain\Domain\Domain.csproj" />
       <ProjectReference Include="..\Api.Abstractions.Authentication\Api.Abstractions.Authentication.csproj" />

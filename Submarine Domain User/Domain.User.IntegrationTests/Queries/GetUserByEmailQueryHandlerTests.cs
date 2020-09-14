@@ -63,10 +63,10 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                 {
                     Assert.That(result.Id, Is.EqualTo(user.Id));
                     Assert.That(result.EmailAddress, Is.EqualTo(user.EmailAddress));
-                    Assert.That(result.Password, Is.Null);
-                    Assert.That(result.UserName, Is.Null);
+                    Assert.That(result.Password, Is.EqualTo(user.Password));
+                    Assert.That(result.UserName, Is.EqualTo(user.UserName));
                     Assert.That(result.FriendlyName, Is.Null);
-                    Assert.That(result.Roles, Is.Empty);
+                    CollectionAssert.Contains(result.Roles, UserRole.Standard);
                 });
             }
         }

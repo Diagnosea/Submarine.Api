@@ -2,34 +2,36 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Diagnosea.IntegrationTestPack;
+using Diagnosea.IntegrationTestPack.Builders;
+using Diagnosea.IntegrationTestPack.Extensions;
+using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Responses;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.TestingUtilities;
-using Diagnosea.Submarine.TestingUtilities.Extensions;
 using MongoDB.Driver;
 using NUnit.Framework;
 
 namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
 {
     [TestFixture]
-    public class UserControllerTests : ApiIntegrationTests
+    public class UserControllerTests : WebApiIntegrationTests<Startup>
     {
         private IMongoCollection<UserEntity> _userCollection;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            _userCollection = Database.GetEntityCollection<UserEntity>();
+            _userCollection = MongoDatabase.GetEntityCollection<UserEntity>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Client.ClearBearerToken();
+            HttpClient.ClearBearerToken();
             
             _userCollection.DeleteMany(FilterDefinition<UserEntity>.Empty);
         }
@@ -48,7 +50,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetUrl(userId);
                 
                 // Act
-                var response = await Client.GetAsync(url);
+                var response = await HttpClient.GetAsync(url);
                 
                 // Assert
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
@@ -63,10 +65,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var bearerToken = new TestBearerTokenBuilder()
                     .Build();
                 
-                Client.SetBearerToken(bearerToken);
+                HttpClient.SetBearerToken(bearerToken);
                 
                 // Act 
-                var response = await Client.GetAsync(url);
+                var response = await HttpClient.GetAsync(url);
                 
                 // Assert
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
@@ -83,10 +85,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     .Build();
 
                 // Arrange - Client
-                Client.SetBearerToken(bearerToken);
+                HttpClient.SetBearerToken(bearerToken);
 
                 // Act
-                var response = await Client.GetAsync(url);
+                var response = await HttpClient.GetAsync(url);
                 
                 // Assert
                 var responseData =  await response.Content.ReadFromJsonAsync<ExceptionResponse>();
@@ -111,7 +113,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     .Build();
 
                 // Arrange - Client
-                Client.SetBearerToken(bearerToken);
+                HttpClient.SetBearerToken(bearerToken);
                 
                 // Arrange - Entity
                 var user = new UserEntity
@@ -122,7 +124,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 await _userCollection.InsertOneAsync(user);
                 
                 // Act
-                var response = await Client.GetAsync(url);
+                var response = await HttpClient.GetAsync(url);
                 
                 // Assert
                 var responseData = await response.Content.ReadFromJsonAsync<UserResponse>();

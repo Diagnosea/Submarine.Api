@@ -19,6 +19,27 @@ namespace Domain.Authentication.UnitTests.Queries.CompareHashText
         public class Handle : CompareHashTextQueryHandlerTests
         {
             [Test]
+            public async Task GivenHashIsInvalid_ReturnsFalse()
+            {
+                // Act
+                var cancellationToken = new CancellationToken();
+                
+                const string password = "This is a password";
+
+                var query = new CompareHashTextQuery
+                {
+                    Hash = password,
+                    Text = password
+                };
+                
+                // Act
+                var result = await _classUnderTest.Handle(query, cancellationToken);
+                
+                // Assert
+                Assert.That(result, Is.False);
+            }
+            
+            [Test]
             public async Task GivenTextAndHash_ReturnsTrueIfTextIsValid()
             {
                 // Act

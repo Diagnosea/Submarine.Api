@@ -31,7 +31,7 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
                 .WithClaim(SubmarineRegisteredClaimNames.Name, request.Name)
                 .WithClaim(JwtRegisteredClaimNames.Iss, _submarineAuthenticationSettings.Issuer)
                 .WithClaim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture))
-                .WithClaim(JwtRegisteredClaimNames.Iat, expiration.ToString(CultureInfo.InvariantCulture))
+                .WithClaim(JwtRegisteredClaimNames.Exp, expiration.ToString(CultureInfo.InvariantCulture))
                 .WithClaim(JwtRegisteredClaimNames.Aud, request.Audience);
 
             foreach (var role in request.Roles)

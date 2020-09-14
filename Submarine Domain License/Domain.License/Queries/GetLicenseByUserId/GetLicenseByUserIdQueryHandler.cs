@@ -23,7 +23,9 @@ namespace Diagnosea.Submarine.Domain.License.Queries.GetLicenseByUserId
 
             var projection = new ProjectionDefinitionBuilder<LicenseEntity>()
                 .Include(x => x.Id)
-                .Include(x => x.UserId);
+                .Include(x => x.UserId)
+                .Include(x => x.Key)
+                .Include(x => x.Products);
 
             return await _licenseCollection
                 .Find(filter)

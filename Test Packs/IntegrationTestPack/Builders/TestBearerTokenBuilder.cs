@@ -5,7 +5,7 @@ using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Diagnosea.Submarine.TestingUtilities
+namespace Diagnosea.IntegrationTestPack.Builders
 {
     public class TestBearerTokenBuilder
     {

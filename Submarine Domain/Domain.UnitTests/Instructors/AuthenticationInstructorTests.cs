@@ -218,7 +218,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 var result = await _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None);
                 
                 // Assert
-                Assert.That(result, Is.EqualTo(bearerToken));
+                Assert.That(result.BearerToken, Is.EqualTo(bearerToken));
                 
                 _mediator.VerifyHandler<GetUserByEmailQuery, UserEntity>(query => query.EmailAddress == emailAddress, Times.Once());
                 _mediator.VerifyHandler<CompareHashTextQuery, bool>(query => query.Hash == user.Password && query.Text == plainTextPassword, Times.Once());
