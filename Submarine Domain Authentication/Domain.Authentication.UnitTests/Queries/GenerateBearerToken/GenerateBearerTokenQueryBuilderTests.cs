@@ -60,7 +60,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
                 const string audienceId = "This is the audience";
                 
                 // Act
-                var resultingReturn = builder.WithAudienceId(audienceId);
+                var resultingReturn = builder.WithAudience(audienceId);
                 var resultingBuild = builder.Build();
                 
                 // Assert

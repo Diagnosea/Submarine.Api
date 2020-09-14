@@ -21,7 +21,7 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
             return this;
         }
 
-        public GenerateBearerTokenQueryBuilder WithAudienceId(string audienceId)
+        public GenerateBearerTokenQueryBuilder WithAudience(string audienceId)
         {
             _audienceId = audienceId;
             return this;

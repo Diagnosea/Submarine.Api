@@ -4,6 +4,6 @@
     {
         public string EmailAddress { get; set; }
         public string PlainTextPassword { get; set; }
-        public string AudienceId { get; set; }
+        public string ProductKey { get; set; }
     }
 }
