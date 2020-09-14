@@ -14,4 +14,8 @@
       <ProjectReference Include="..\..\Submarine Domain Abstractions\Domain.Abstractions\Domain.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Queries" />
+    </ItemGroup>
+
 </Project>
