@@ -6,7 +6,7 @@ namespace Diagnosea.Submarine.Domain.Authentication
     {
         private const string Prefix = "Authentication";
 
-        public static readonly string InvalidAudience = $"{Prefix}{ExceptionMessages.Separator}InvalidAudience";
+        public static readonly string InvalidProductKey = $"{Prefix}{ExceptionMessages.Separator}InvalidProductKey";
         public static readonly string InvalidPassword = $"{Prefix}{ExceptionMessages.Separator}InvalidPassword";
     }
 }

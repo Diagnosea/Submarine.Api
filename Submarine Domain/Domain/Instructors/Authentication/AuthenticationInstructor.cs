@@ -9,7 +9,7 @@ using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;
 using Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken;
 using Diagnosea.Submarine.Domain.Authentication.Queries.HashText;
-using Diagnosea.Submarine.Domain.Authentication.Queries.ValidateAudience;
+using Diagnosea.Submarine.Domain.License.Queries.GetLicenseByProductKey;
 using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
@@ -48,42 +48,42 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             await _mediator.Send(insertUserCommand, cancellationToken);
         }
 
-        public async Task<string> AuthenticateAsync(AuthenticationDto authentication, CancellationToken cancellationToken)
+        public async Task<string> AuthenticateAsync(AuthenticationDto authentication, CancellationToken token)
         {
-            await ValidateAudienceAsync(authentication, cancellationToken);
+            await ValidateLicenseAsync(authentication, token);
 
-            var user = await GetUserAsync(authentication, cancellationToken);
+            var user = await GetUserAsync(authentication, token);
 
-            await ValidatePasswordAsync(authentication, user, cancellationToken);
+            await ValidatePasswordAsync(authentication, user, token);
 
             var generateBearerTokenQuery = new GenerateBearerTokenQueryBuilder()
                 .WithSubject(user.Id.ToString())
                 .WithName(user.UserName)
                 .WithRoles(user.Roles.AsStrings())
-                .WithAudienceId(authentication.AudienceId)
+                .WithAudience(authentication.ProductKey)
                 .Build();
             
-            var bearerToken = await _mediator.Send(generateBearerTokenQuery, cancellationToken);
+            var bearerToken = await _mediator.Send(generateBearerTokenQuery, token);
 
             return bearerToken; 
         }
         
-        private async Task ValidateAudienceAsync(AuthenticationDto authentication, CancellationToken token)
+        private async Task ValidateLicenseAsync(AuthenticationDto authentication, CancellationToken token)
         {
-            var validateAudienceQuery = new ValidateAudienceQueryBuilder()
-                .WithAudienceId(authentication.AudienceId)
+            var getLicenseByProductKeyQuery = new GetLicenseByProductKeyQueryBuilder()
+                .WithProductKey(authentication.ProductKey)
                 .Build();
-            
-            var isValidAudience = await _mediator.Send(validateAudienceQuery, token);
-            if (!isValidAudience)
+
+            var license = await _mediator.Send(getLicenseByProductKeyQuery, token);
+            if (license == null)
             {
                 throw new SubmarineArgumentException(
-                    $"No Audience With ID '{authentication.AudienceId}'", 
-                    AuthenticationExceptionMessages.InvalidAudience);
+                    "Invalid Product Key Provided",
+                    AuthenticationExceptionMessages.InvalidProductKey);
             }
         }
 
-        private async ValueTask ValidatePasswordAsync(AuthenticationDto authetnicate, UserEntity user, CancellationToken token)
+        private async Task ValidatePasswordAsync(AuthenticationDto authetnicate, UserEntity user, CancellationToken token)
         {
             var compareHashTextQuery = new CompareHashTextQueryBuilder()
                 .WithHash(user.Password)
