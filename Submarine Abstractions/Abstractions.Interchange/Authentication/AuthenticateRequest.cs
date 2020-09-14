@@ -1,4 +1,4 @@
-﻿namespace Abstractions.Traffic.Authentication
+﻿namespace Diagnosea.Submarine.Abstractions.Interchange.Authentication
 {
     public class AuthenticateRequest
     {

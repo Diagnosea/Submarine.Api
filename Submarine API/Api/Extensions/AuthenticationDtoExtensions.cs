@@ -1,4 +1,4 @@
-﻿using Abstractions.Traffic.Authentication;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 
 namespace Diagnosea.Submarine.Api.Extensions

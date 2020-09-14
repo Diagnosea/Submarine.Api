@@ -47,7 +47,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             await _mediator.Send(insertUserCommand, cancellationToken);
         }
         
-        public async Task<string> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token)
+        public async Task<AuthenticatedDto> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token)
         {
             var user = await GetUserByEmailAsync(authenticate.EmailAddress, token);
 
@@ -66,8 +66,11 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
                 .Build();
             
             var bearerToken = await _mediator.Send(generateBearerTokenQuery, token);
-            
-            return bearerToken; 
+
+            return new AuthenticatedDto
+            {
+                BearerToken = bearerToken
+            };
         }
         
         private async Task<UserEntity> GetUserByEmailAsync(string emailAddress, CancellationToken token)

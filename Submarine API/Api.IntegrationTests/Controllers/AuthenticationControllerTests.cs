@@ -4,12 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Abstractions.Traffic.TestPack.Builders;
 using Diagnosea.IntegrationTestPack;
 using Diagnosea.IntegrationTestPack.Extensions;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Exceptions;
+using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
+using Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders;
 using Diagnosea.Submarine.Abstractions.Responses;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication;
@@ -197,9 +198,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
-                var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
+                var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = jwtSecurityTokenHandler.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -253,9 +254,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -311,9 +312,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -367,9 +368,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -423,9 +424,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -479,9 +480,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -536,9 +537,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {
@@ -597,9 +598,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadFromJsonAsync<AuthenticatedResponse>();
                 var jwtSecurityTokenHander = new JwtSecurityTokenHandler();
-                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData);
+                var securityToken = jwtSecurityTokenHander.ReadJwtToken(responseData.BearerToken);
                 
                 Assert.Multiple(() =>
                 {

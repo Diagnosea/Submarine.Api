@@ -2,10 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Submarine.Abstractions.Interchange</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Abstractions.Traffic\Abstractions.Traffic.csproj" />
-    </ItemGroup>
 
 </Project>

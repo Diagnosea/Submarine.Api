@@ -66,7 +66,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                     Assert.That(result.Password, Is.EqualTo(user.Password));
                     Assert.That(result.UserName, Is.EqualTo(user.UserName));
                     Assert.That(result.FriendlyName, Is.Null);
-                    Assert.That(result.Roles, Is.Empty);
+                    CollectionAssert.Contains(result.Roles, UserRole.Standard);
                 });
             }
         }

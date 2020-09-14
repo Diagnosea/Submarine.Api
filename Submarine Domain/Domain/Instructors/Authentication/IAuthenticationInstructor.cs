@@ -10,6 +10,6 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
     public interface IAuthenticationInstructor
     {
         Task RegisterAsync(RegisterDto register, CancellationToken cancellationToken);
-        Task<string> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token);
+        Task<AuthenticatedDto> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token);
     }
 }

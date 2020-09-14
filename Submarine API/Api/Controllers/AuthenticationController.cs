@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Abstractions.Traffic.Authentication;
 using Diagnosea.Submarine.Abstraction.Routes;
+using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
 using Diagnosea.Submarine.Api.Extensions;
 using Diagnosea.Submarine.Domain.Instructors.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -24,8 +24,8 @@ namespace Diagnosea.Submarine.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticateRequest request, CancellationToken cancellationToken)
         {
-            var token = await _authenticationInstructor.AuthenticateAsync(request.ToDto(), cancellationToken);
-            return Ok(token);
+            var authenticated = await _authenticationInstructor.AuthenticateAsync(request.ToDto(), cancellationToken);
+            return Ok(authenticated.ToResponse());
         } 
     }
 }

@@ -1,6 +1,6 @@
-﻿using Abstractions.Traffic.Authentication;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
 
-namespace Abstractions.Traffic.TestPack.Builders
+namespace Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders
 {
     public class TestAuthenticateRequestBuilder
     {
