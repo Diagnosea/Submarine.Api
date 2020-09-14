@@ -1,9 +1,9 @@
 ﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 
-namespace Diagnosea.Submarine.Api.Extensions
+namespace Diagnosea.Submarine.Api.Abstractions.Extensions.Authentication
 {
-    public static class AuthenticationDtoExtensions
+    public static class AuthenticateRequestExtensions
     {
         public static AuthenticateDto ToDto(this AuthenticateRequest request)
         {

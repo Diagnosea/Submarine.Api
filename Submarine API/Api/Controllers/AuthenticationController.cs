@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
-using Diagnosea.Submarine.Api.Extensions;
+using Diagnosea.Submarine.Api.Abstractions.Extensions.Authentication;
 using Diagnosea.Submarine.Domain.Instructors.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
