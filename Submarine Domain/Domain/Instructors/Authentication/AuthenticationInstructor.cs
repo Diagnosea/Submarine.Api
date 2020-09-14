@@ -47,11 +47,11 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             await _mediator.Send(insertUserCommand, cancellationToken);
         }
         
-        public async Task<string> AuthenticateAsync(AuthenticationDto authentication, CancellationToken token)
+        public async Task<string> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token)
         {
-            var user = await GetUserByEmailAsync(authentication.EmailAddress, token);
+            var user = await GetUserByEmailAsync(authenticate.EmailAddress, token);
 
-            await ValidatePasswordAsync(authentication.PlainTextPassword, user.Password, token);
+            await ValidatePasswordAsync(authenticate.PlainTextPassword, user.Password, token);
             
             var license = await GetLicenseByUserIdAsync(user.Id, token);
 

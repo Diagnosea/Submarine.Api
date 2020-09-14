@@ -8,6 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Abstractions.Traffic.TestPack\Abstractions.Traffic.TestPack.csproj" />
+      <ProjectReference Include="..\..\Submarine Abstractions\Abstraction.Routes\Abstraction.Routes.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain License\Domain.License.TestPack\Domain.License.TestPack.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain User\Domain.User.TestPack\Domain.User.TestPack.csproj" />
+      <ProjectReference Include="..\..\Test Packs\IntegrationTestPack\IntegrationTestPack.csproj" />
+      <ProjectReference Include="..\..\Test Packs\TestPack\TestPack.csproj" />
       <ProjectReference Include="..\..\TestingUtilities\TestingUtilities.csproj" />
       <ProjectReference Include="..\Api\Api.csproj" />
     </ItemGroup>

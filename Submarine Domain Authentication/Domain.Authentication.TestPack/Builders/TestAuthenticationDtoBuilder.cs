@@ -19,9 +19,9 @@ namespace Domain.Authentication.TestPack.Builders
             return this;
         }
         
-        public AuthenticationDto Build()
+        public AuthenticateDto Build()
         {
-            return new AuthenticationDto
+            return new AuthenticateDto
             {
                 EmailAddress = _emailAddress ?? "This is an email address",
                 PlainTextPassword = _plainTextPassword ?? "This is a password"

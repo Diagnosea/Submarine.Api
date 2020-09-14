@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Extensions;

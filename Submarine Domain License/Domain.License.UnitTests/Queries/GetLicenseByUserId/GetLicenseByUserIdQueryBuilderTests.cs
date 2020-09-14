@@ -24,7 +24,7 @@ namespace Submarine.Domain.License.UnitTests.Queries.GetLicenseByUserId
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(result, Is.EqualTo(userId));
+                    Assert.That(result, Is.EqualTo(builder));
                     Assert.That(build.UserId, Is.EqualTo(build.UserId));
                 });
             }

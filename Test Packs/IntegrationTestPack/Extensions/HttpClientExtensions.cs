@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using Diagnosea.Submarine.Domain.Authentication;
 
-namespace Diagnosea.Submarine.TestingUtilities.Extensions
+namespace Diagnosea.IntegrationTestPack.Extensions
 {
     public static class HttpClientExtensions
     {
