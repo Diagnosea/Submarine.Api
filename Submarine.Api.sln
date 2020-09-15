@@ -101,6 +101,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions.Interchange", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions.Interchange.TestPack", "Submarine Abstractions\Abstractions.Interchange.TestPack\Abstractions.Interchange.TestPack.csproj", "{B0671F1C-446B-42C2-9E88-5B49F78909EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrator", "Migrator\Migrator.csproj", "{4BE6C077-367D-4CA0-B494-C1B9A69C0F3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +257,10 @@ Global
 		{B0671F1C-446B-42C2-9E88-5B49F78909EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0671F1C-446B-42C2-9E88-5B49F78909EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0671F1C-446B-42C2-9E88-5B49F78909EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE6C077-367D-4CA0-B494-C1B9A69C0F3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE6C077-367D-4CA0-B494-C1B9A69C0F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE6C077-367D-4CA0-B494-C1B9A69C0F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE6C077-367D-4CA0-B494-C1B9A69C0F3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

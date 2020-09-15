@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Migrator</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.8" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.8" />
+      <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Submarine Domain Abstractions\Domain.Abstractions\Domain.Abstractions.csproj" />
+      <ProjectReference Include="..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\Submarine Domain License\Domain.License\Domain.License.csproj" />
+      <ProjectReference Include="..\Submarine Domain User\Domain.User\Domain.User.csproj" />
+    </ItemGroup>
+
+</Project>

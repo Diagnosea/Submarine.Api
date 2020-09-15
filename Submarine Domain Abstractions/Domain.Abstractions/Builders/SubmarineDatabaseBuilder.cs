@@ -3,7 +3,7 @@ using System.Reflection;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
-namespace Diagnosea.Submarine.Domain.Builders
+namespace Diagnosea.Submarine.Domain.Abstractions.Builders
 {
     public class SubmarineDatabaseBuilder
     {
@@ -11,7 +11,7 @@ namespace Diagnosea.Submarine.Domain.Builders
         private MongoClientSettings? _mongoClientSettings;
         private readonly ConventionPack _conventionPack;
 
-        internal SubmarineDatabaseBuilder()
+        public SubmarineDatabaseBuilder()
         {
             _conventionPack = new ConventionPack();
         }
@@ -30,12 +30,12 @@ namespace Diagnosea.Submarine.Domain.Builders
             return this;
         }
 
-        internal IMongoDatabase Build()
+        public IMongoDatabase Build()
         {
             var client = new MongoClient(_mongoClientSettings);
             var callingAssemblyName = Assembly.GetCallingAssembly().GetName();
             
-            ConventionRegistry.Register(callingAssemblyName.FullName, _conventionPack, x => true);
+            ConventionRegistry.Register(callingAssemblyName.Name, _conventionPack, x => true);
 
             if (_mongoUrl is null)
                 throw new ArgumentException("Cannot Build Database Without URL");

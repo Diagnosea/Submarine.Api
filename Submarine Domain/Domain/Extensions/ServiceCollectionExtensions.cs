@@ -1,7 +1,5 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Diagnosea.Submarine.Domain.Authentication;
-using Diagnosea.Submarine.Domain.Builders;
 using Diagnosea.Submarine.Domain.Instructors.Authentication;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Diagnosea.Submarine.Domain.License;
@@ -26,15 +24,6 @@ namespace Diagnosea.Submarine.Domain.Extensions
             var licensing = Assembly.GetAssembly(typeof(LicenseExceptionMessages));
             
             serviceCollection.AddMediatR(user, authentication, licensing);
-        }
-        
-        public static void AddSubmarineDatabase(this IServiceCollection serviceCollection, Action<SubmarineDatabaseBuilder> builder) 
-        {
-            var submarineDatabaseBuilder = new SubmarineDatabaseBuilder();
-            builder(submarineDatabaseBuilder);
-
-            var database = submarineDatabaseBuilder.Build();
-            serviceCollection.AddSingleton(database);
         }
     }
 }

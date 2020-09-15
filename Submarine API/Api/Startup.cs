@@ -2,6 +2,7 @@ using Diagnosea.Submarine.Api.Abstractions.Authentication.Extensions;
 using Diagnosea.Submarine.Api.Abstractions.Extensions;
 using Diagnosea.Submarine.Api.Abstractions.Swagger.Extensions;
 using Diagnosea.Submarine.Api.Settings;
+using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication.Extensions;
 using Diagnosea.Submarine.Domain.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -44,7 +45,7 @@ namespace Diagnosea.Submarine.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -1,6 +1,6 @@
 ﻿using Diagnosea.Submarine.Domain.Abstractions.Settings;
 
-namespace Diagnosea.Submarine.Api.Settings
+namespace Diagnosea.Migrator.Settings
 {
     public class DatabaseSettings : ISubmarineDatabaseSettings
     {
