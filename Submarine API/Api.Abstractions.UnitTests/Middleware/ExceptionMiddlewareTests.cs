@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Abstractions.Exceptions;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Responses;
 using Diagnosea.Submarine.Api.Abstractions.Middleware;
 using Microsoft.AspNetCore.Http;

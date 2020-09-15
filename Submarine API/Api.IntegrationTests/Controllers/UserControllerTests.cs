@@ -2,12 +2,12 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
 using Diagnosea.IntegrationTestPack;
 using Diagnosea.IntegrationTestPack.Builders;
 using Diagnosea.IntegrationTestPack.Extensions;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Responses;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User;

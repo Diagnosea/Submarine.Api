@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Diagnosea.Submarine.Abstractions.Exceptions
+namespace Abstractions.Exceptions
 {
     public class SubmarineException : Exception
     {

@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders
 {

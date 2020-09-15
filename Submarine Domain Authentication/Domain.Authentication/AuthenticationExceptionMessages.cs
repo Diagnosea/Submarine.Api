@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Domain.Abstractions;
+﻿using Diagnosea.Submarine.Abstractions;
 
 namespace Diagnosea.Submarine.Domain.Authentication
 {
@@ -7,8 +7,6 @@ namespace Diagnosea.Submarine.Domain.Authentication
         private const string Prefix = "Authentication";
 
         public static readonly string NoLicensesUnderUserWithId = $"{Prefix}{ExceptionMessages.Separator}InvalidProductKey";
-        public static readonly string NoProductWithNameRequested = $"{Prefix}{ExceptionMessages.Separator}NoProductWithNameRequested";
-        public static readonly string InvalidProductKeyForProduct = $"{Prefix}{ExceptionMessages.Separator}InvalidProductKeyForProduct";
         public static readonly string PasswordIsIncorrect = $"{Prefix}{ExceptionMessages.Separator}InvalidPassword";
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Domain.Abstractions
+﻿namespace Diagnosea.Submarine.Abstractions
 {
     public static class ExceptionMessages
     {

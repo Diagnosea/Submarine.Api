@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Abstractions.Exceptions
+﻿namespace Abstractions.Exceptions
 {
     public class SubmarineArgumentException : SubmarineException, ISubmarineException
     {

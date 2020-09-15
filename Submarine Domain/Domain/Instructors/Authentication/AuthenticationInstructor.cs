@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
@@ -26,7 +26,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
 
         public AuthenticationInstructor(IMediator mediator) => _mediator = mediator;
 
-        public async Task RegisterAsync(RegisterDto register, CancellationToken cancellationToken)
+        public async Task<RegisteredDto> RegisterAsync(RegisterDto register, CancellationToken cancellationToken)
         {
             var insertUserCommandBuilder = new InsertUserCommandBuilder()
                 .WithId(Guid.NewGuid())
@@ -45,6 +45,11 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
                 .Build();
             
             await _mediator.Send(insertUserCommand, cancellationToken);
+
+            return new RegisteredDto
+            {
+                UserId = insertUserCommand.Id
+            };
         }
         
         public async Task<AuthenticatedDto> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token)

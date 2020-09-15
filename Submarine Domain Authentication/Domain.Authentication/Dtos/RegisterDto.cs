@@ -5,5 +5,6 @@
         public string EmailAddress { get; set; }
         public string PlainTextPassword { get; set; }
         public string UserName { get; set; }
+        public string FriendlyName { get; set; }
     }
 }

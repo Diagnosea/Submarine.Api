@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Abstractions.Interchange.Authentication
+﻿namespace Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate
 {
     public class AuthenticatedResponse
     {

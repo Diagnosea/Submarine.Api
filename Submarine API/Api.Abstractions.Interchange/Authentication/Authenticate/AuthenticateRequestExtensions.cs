@@ -1,7 +1,7 @@
-﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 
-namespace Diagnosea.Submarine.Api.Abstractions.Extensions.Authentication
+namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authenticate
 {
     public static class AuthenticateRequestExtensions
     {

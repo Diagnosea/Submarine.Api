@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Domain.Abstractions;
+﻿using Diagnosea.Submarine.Abstractions;
 
 namespace Diagnosea.Submarine.Domain.User
 {

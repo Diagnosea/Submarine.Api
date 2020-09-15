@@ -1,8 +1,8 @@
-﻿using Diagnosea.Submarine.Api.Abstractions.Extensions.Authentication;
+﻿using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authenticate;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using NUnit.Framework;
 
-namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Extensions
+namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Extensions
 {
     [TestFixture]
     public class AuthenticatedDtoExtensionTests

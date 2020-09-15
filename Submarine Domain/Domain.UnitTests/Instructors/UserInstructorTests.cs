@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Entities;
