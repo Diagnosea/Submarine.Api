@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Extensions;
-using Diagnosea.Submarine.TestingUtilities;
+using Diagnosea.TestPack;
 using NUnit.Framework;
 
 namespace Submarine.Domain.License.UnitTests.Extensions
@@ -69,7 +69,7 @@ namespace Submarine.Domain.License.UnitTests.Extensions
 
                     Assert.That(stub.Name, Is.EqualTo(product.Name));
                     Assert.That(stub.Key, Is.EqualTo(product.Key));
-                    SubmarineAssert.That(stub.Expiration, Is.EqualTo(product.Expiration));
+                    DiagnoseaAssert.That(stub.Expiration, Is.EqualTo(product.Expiration));
                 });
             }
         }
