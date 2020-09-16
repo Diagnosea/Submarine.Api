@@ -13,15 +13,15 @@ namespace Diagnosea.TestPack
         /// <summary>
         /// Test an error exists under a field within model state.
         /// </summary>
-        public static void ForNestedValue(IDictionary<string, string[]> modelStateErrors, string modelFieldName, string errorMessage)
+        public static void Contains(IDictionary<string, string[]> dictionary, string key, string value)
         {
-            Assert.That(modelStateErrors.ContainsKey(modelFieldName));
+            Assert.That(dictionary.ContainsKey(key));
 
-            var modelStateFieldErrors = modelStateErrors[modelFieldName];
-            CollectionAssert.IsNotEmpty(modelStateFieldErrors);
+            var nestedValues = dictionary[key];
+            CollectionAssert.IsNotEmpty(nestedValues);
 
-            var modelStateFieldError = modelStateFieldErrors.FirstOrDefault(error => error == errorMessage);
-            Assert.NotNull(modelStateFieldError);
+            var nestedValue = nestedValues.FirstOrDefault(nv => nv == value);
+            Assert.That(nestedValue, Is.Not.Null);
         }
     }
 }

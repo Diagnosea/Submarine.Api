@@ -23,6 +23,7 @@ namespace Diagnosea.Submarine.Api.Controllers
             _userInstructor = userInstructor;
         }
         
+        [ActionName(nameof(GetUserAsync))]
         [HttpGet("{userId}")]
         [SubmarineAuthorize(UserRole.Administrator)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

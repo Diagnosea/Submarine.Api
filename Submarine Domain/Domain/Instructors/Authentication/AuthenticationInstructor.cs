@@ -31,6 +31,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
                 .WithId(Guid.NewGuid())
                 .WithEmailAddress(register.EmailAddress)
                 .WithUserName(register.UserName)
+                .WithFriendlyName(register.FriendlyName)
                 .WithRole(UserRole.Standard);
 
             var hashTextQuery = new HashTextQueryBuilder()

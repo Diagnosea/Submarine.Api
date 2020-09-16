@@ -25,10 +25,10 @@ namespace Diagnosea.Submarine.Api.Controllers
         [HttpPost(RouteConstants.Authentication.Register)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken token)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, ApiVersion version, CancellationToken token)
         {
             var registered = await _authenticationInstructor.RegisterAsync(request.ToDto(), token);
-            return CreatedUser(RouteConstants.Version1, registered.UserId, registered);
+            return CreatedUser(version, registered.UserId, registered);
         }
         
 
@@ -40,8 +40,16 @@ namespace Diagnosea.Submarine.Api.Controllers
             var authenticated = await _authenticationInstructor.AuthenticateAsync(request.ToDto(), cancellationToken);
             return Ok(authenticated.ToResponse());
         }
-        
-        public CreatedAtActionResult CreatedUser(string version, Guid userId, object value)
-            => CreatedAtAction("GetUserAsync", "User", new {version, userId}, value);
+
+        public CreatedAtActionResult CreatedUser(ApiVersion version, Guid userId, object value)
+        {
+            var routeValues = new
+            {
+                version = version.ToString(),
+                userId = userId.ToString()
+            };
+            
+            return CreatedAtAction("GetUserAsync", "User", routeValues, value);
+        }
     }
 }

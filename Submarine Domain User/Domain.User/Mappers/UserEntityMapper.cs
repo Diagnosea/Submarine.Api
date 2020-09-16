@@ -13,6 +13,8 @@ namespace Diagnosea.Submarine.Domain.User.Mappers
                 EmailAddress = insertUserCommand.EmailAddress,
                 Password = insertUserCommand.Password,
                 UserName = insertUserCommand.UserName,
+                // TODO: Test coverage.
+                FriendlyName = insertUserCommand.FriendlyName,
                 Roles = insertUserCommand.Roles
             };
         }
