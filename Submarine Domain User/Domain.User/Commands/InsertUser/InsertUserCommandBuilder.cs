@@ -36,8 +36,7 @@ namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
             _userName = userName;
             return this;
         }
-
-        // TODO: Test coverage.
+        
         public InsertUserCommandBuilder WithFriendlyName(string friendlyName)
         {
             _friendlyName = friendlyName;

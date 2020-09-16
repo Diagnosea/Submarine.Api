@@ -18,14 +18,14 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 var id = Guid.NewGuid();
                 
                 // Act
-                var resultingReturn = builder.WithId(id);
-                var resultingBuild = builder.Build();
+                var result = builder.WithId(id);
+                var build = builder.Build();
                 
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(resultingReturn, Is.EqualTo(builder));
-                    Assert.That(resultingBuild.Id, Is.EqualTo(id));
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.Id, Is.EqualTo(id));
                 });
             }
         }
@@ -40,14 +40,14 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 const string emailAddress = "john.smith@gmail.com";
 
                 // Act
-                var resultingReturn = builder.WithEmailAddress(emailAddress);
-                var resultingBuild = builder.Build();
+                var result = builder.WithEmailAddress(emailAddress);
+                var build = builder.Build();
                 
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(resultingReturn, Is.EqualTo(builder));
-                    Assert.That(resultingBuild.EmailAddress, Is.EqualTo(emailAddress));
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.EmailAddress, Is.EqualTo(emailAddress));
                 });
             }
         }
@@ -62,14 +62,14 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 const string password = "This is a password";
                 
                 // Act
-                var resultingReturn = builder.WithPassword(password);
-                var resultingBuild = builder.Build();
+                var result = builder.WithPassword(password);
+                var build = builder.Build();
                 
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(resultingReturn, Is.EqualTo(builder));
-                    Assert.That(resultingBuild.Password, Is.EqualTo(password));
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.Password, Is.EqualTo(password));
                 });
             }
         }
@@ -84,14 +84,36 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 const string userName = "This is a user name";
                 
                 // Act
-                var resultingReturn = builder.WithUserName(userName);
-                var resultingBuild = builder.Build();
+                var result = builder.WithUserName(userName);
+                var build = builder.Build();
                 
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(resultingReturn, Is.EqualTo(builder));
-                    Assert.That(resultingBuild.UserName, Is.EqualTo(userName));
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.UserName, Is.EqualTo(userName));
+                });
+            }
+        }
+
+        public class WithFriendlyName : InsertUserCommandBuilderTests
+        {
+            [Test]
+            public void GivenFriendlyName_BuildsWithFriendlyName()
+            {
+                // Arrange
+                var builder = new InsertUserCommandBuilder();
+                const string friendlyName = "This is a friendly name";
+                
+                // Act
+                var result = builder.WithFriendlyName(friendlyName);
+                var build = builder.Build();
+                
+                // Assert
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.FriendlyName, Is.EqualTo(friendlyName));
                 });
             }
         }
@@ -105,14 +127,14 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 var builder =new InsertUserCommandBuilder();
                 
                 // Act
-                var resultingReturn = builder.WithRole(UserRole.Standard);
-                var resultingBuild = builder.Build();
+                var result = builder.WithRole(UserRole.Standard);
+                var build = builder.Build();
                 
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(resultingReturn, Is.EqualTo(builder));
-                    CollectionAssert.Contains(resultingBuild.Roles, UserRole.Standard);
+                    Assert.That(result, Is.EqualTo(builder));
+                    CollectionAssert.Contains(build.Roles, UserRole.Standard);
                 });
             }
         }

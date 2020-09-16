@@ -20,7 +20,8 @@ namespace Diagnosea.Submarine.Domain.User.Queries.GetUserById
         {
             var projection = new ProjectionDefinitionBuilder<UserEntity>()
                 .Include(x => x.Id)
-                .Include(x => x.EmailAddress);
+                .Include(x => x.UserName)
+                .Include(x => x.FriendlyName);
 
             return await _userCollection
                 .Find(x => x.Id == request.Id)

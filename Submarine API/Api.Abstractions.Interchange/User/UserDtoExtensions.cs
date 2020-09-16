@@ -5,7 +5,6 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.User
 {
     public static class UserDtoExtensions
     {
-        // TODO: Unit tests.
         public static UserResponse ToResponse(this UserDto user)
         {
             return new UserResponse
