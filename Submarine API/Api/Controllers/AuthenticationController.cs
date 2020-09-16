@@ -2,8 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstraction.Routes;
-using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate;
-using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Register;
+using Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authenticate;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Register;
 using Diagnosea.Submarine.Domain.Instructors.Authentication;

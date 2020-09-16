@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Domain.License
+﻿namespace Diagnosea.Submarine.Domain.License.Queries
 {
     public static class LicenseExceptionMessages
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Diagnosea.Submarine.Abstractions.Responses
+namespace Diagnosea.Submarine.Abstractions.Interchange.Responses.User
 {
     public class UserResponse
     {

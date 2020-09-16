@@ -8,6 +8,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Submarine Abstractions\Abstractions.Interchange\Abstractions.Interchange.csproj" />
       <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain User\Domain.User\Domain.User.csproj" />
     </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
-using Diagnosea.Submarine.Abstractions.Responses;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Diagnosea.Submarine.Api.Abstractions.Middleware;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;

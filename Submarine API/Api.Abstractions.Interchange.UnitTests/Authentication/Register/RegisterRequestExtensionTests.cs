@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Register;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Register;
 using NUnit.Framework;
 

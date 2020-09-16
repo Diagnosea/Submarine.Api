@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Diagnosea.Submarine.Abstractions.Interchange.Authentication.Register
+namespace Diagnosea.Submarine.Abstractions.Interchange.Responses.Authentication
 {
     public class RegisteredResponse
     {

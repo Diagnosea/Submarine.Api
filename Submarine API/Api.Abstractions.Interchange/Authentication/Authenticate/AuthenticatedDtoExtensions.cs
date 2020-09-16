@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Responses.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authenticate

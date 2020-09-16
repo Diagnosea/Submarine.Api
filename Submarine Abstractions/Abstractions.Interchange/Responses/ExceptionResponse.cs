@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Abstractions.Responses
+﻿namespace Diagnosea.Submarine.Abstractions.Interchange.Responses
 {
     public class ExceptionResponse
     {

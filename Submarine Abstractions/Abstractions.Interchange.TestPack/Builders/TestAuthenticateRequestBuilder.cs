@@ -1,4 +1,4 @@
-﻿using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders
 {
@@ -23,8 +23,8 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders
         {
             return new AuthenticateRequest
             {
-                EmailAddress = _emailAddress ?? "This is an email address",
-                Password = _password ?? "This is a password"
+                EmailAddress = _emailAddress,
+                Password = _password
             };
         }
     }
