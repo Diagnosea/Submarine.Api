@@ -2,7 +2,7 @@
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authenticate;
 using NUnit.Framework;
 
-namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Extensions
+namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Authentication.Authenticate
 {
     [TestFixture]
     public class AuthenticateRequestExtensionTests

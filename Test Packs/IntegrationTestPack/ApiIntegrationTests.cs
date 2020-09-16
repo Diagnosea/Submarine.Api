@@ -38,7 +38,5 @@ namespace Diagnosea.IntegrationTestPack
             _mongoDbRunner.Dispose();
             _webApplicationFactory.Dispose();
         }
-
-        protected virtual string GetUrl(params string[] parts) => string.Join("/", parts);
     }
 }

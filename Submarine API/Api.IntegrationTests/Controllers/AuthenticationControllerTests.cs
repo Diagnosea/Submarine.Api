@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
@@ -12,7 +13,6 @@ using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Interchange.Authentication.Authenticate;
 using Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders;
 using Diagnosea.Submarine.Abstractions.Responses;
-using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.License.Entities;
 using Diagnosea.Submarine.Domain.License.TestPack.Builders;
@@ -33,8 +33,8 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
         [OneTimeSetUp]
         public new void OneTimeSetUp()
         {
-            _userCollection = MongoDatabase.GetEntityCollection<UserEntity>();
-            _licenseCollection = MongoDatabase.GetEntityCollection<LicenseEntity>();
+            _userCollection = MongoDatabase.GetCollection<UserEntity>("User");
+            _licenseCollection = MongoDatabase.GetCollection<LicenseEntity>("License");
         }
 
         [TearDown]
@@ -57,7 +57,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     RouteConstants.Authentication.Authenticate
                 };
                 
-                return GetUrl(parts);
+                return Path.Combine(parts);
             }
             
             [Test]
