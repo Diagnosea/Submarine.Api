@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mime;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Middleware
 {
@@ -14,16 +15,16 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
     {
         private readonly RequestDelegate _requestDelegate;
         private readonly IDictionary<Type, HttpStatusCode> _statusCodes;
-        private readonly JsonSerializerOptions _jsonSerializerOptions;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         public ExceptionMiddleware(RequestDelegate requestDelegate, IDictionary<Type, HttpStatusCode> statusCodes)
         {
             _requestDelegate = requestDelegate;
             _statusCodes = statusCodes;
 
-            _jsonSerializerOptions = new JsonSerializerOptions
+            _jsonSerializerSettings = new JsonSerializerSettings
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
             };
         }
 
@@ -56,7 +57,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
                     UserMessage = submarineException.UserMessage
                 };
                 
-                var serialization = JsonSerializer.Serialize(response, _jsonSerializerOptions);
+                var serialization = JsonConvert.SerializeObject(response, _jsonSerializerSettings);
                 return context.Response.WriteAsync(serialization);
             }
             
@@ -66,7 +67,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
                 TechnicalMessage = exception.Message
             };
 
-            var fallbackSerialization = JsonSerializer.Serialize(fallbackResponse, _jsonSerializerOptions);
+            var fallbackSerialization = JsonConvert.SerializeObject(fallbackResponse, _jsonSerializerSettings);
             return context.Response.WriteAsync(fallbackSerialization);
         }
     }

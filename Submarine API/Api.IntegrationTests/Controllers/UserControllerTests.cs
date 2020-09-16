@@ -118,7 +118,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 // Arrange - Entity
                 var user = new UserEntity
                 {
-                    Id = userId
+                    Id = userId,
+                    UserName = "This is a user name",
+                    FriendlyName = "This is a friendly name"
                 };
 
                 await _userCollection.InsertOneAsync(user);
@@ -133,6 +135,8 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
                     Assert.That(responseData.Id, Is.EqualTo(user.Id));
+                    Assert.That(responseData.UserName, Is.EqualTo(user.UserName));
+                    Assert.That(responseData.FriendlyName, Is.EqualTo(user.FriendlyName));
                 });
             }
         }
