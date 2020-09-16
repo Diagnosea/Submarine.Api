@@ -46,7 +46,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Arrange
                 var cancellationToken = new CancellationToken();
                 
-                var registerUser = new RegisterDto
+                var register = new RegisterDto
                 {
                     EmailAddress = "This is an email",
                     PlainTextPassword = "This is a password",
@@ -54,32 +54,22 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 };
 
                 const string hashedPassword = "This is a hashed password";
-
-                _mediator
-                    .Setup(x => x.Send(It.IsAny<HashTextQuery>(), cancellationToken))
-                    .ReturnsAsync(hashedPassword);
+                
+                _mediator.SetupHandler<HashTextQuery, string>().ReturnsAsync(hashedPassword);
 
                 // Act
-                await _classUnderTest.RegisterAsync(registerUser, cancellationToken);
+                var result = await _classUnderTest.RegisterAsync(register, cancellationToken);
                 
                 // Assert
-                _mediator.Verify(x => x.Send(It.Is<HashTextQuery>(
-                    htq => VerifyHashTextQuery(htq, registerUser)), cancellationToken), Times.Once);
-                
-                _mediator.Verify(x => x.Send(It.Is<InsertUserCommand>(
-                    iuc => VerifyInsertUserCommand(iuc, registerUser, hashedPassword)), cancellationToken), Times.Once);
+                _mediator.VerifyHandler<HashTextQuery, string>(query => query.Text == register.PlainTextPassword, Times.Once());
+                _mediator.VerifyHandler<InsertUserCommand>(command => VerifyInsertUserCommand(command, register, result), Times.Once());
             }
 
-            private static bool VerifyHashTextQuery(HashTextQuery query, RegisterDto register)
+            private static bool VerifyInsertUserCommand(InsertUserCommand command, RegisterDto register, RegisteredDto registered)
             {
-                return query.Text == register.PlainTextPassword;
-            }
-
-            private static bool VerifyInsertUserCommand(InsertUserCommand command, RegisterDto register, string hashedPassword)
-            {
-                return command.Id != Guid.Empty &&
+                return command.Id == registered.UserId &&
                        command.EmailAddress == register.EmailAddress &&
-                       command.Password == hashedPassword &&
+                       command.Password != null && // Handled by BCrypt in the integration test.
                        command.UserName == register.UserName &&
                        command.Roles.Contains(UserRole.Standard);
             }

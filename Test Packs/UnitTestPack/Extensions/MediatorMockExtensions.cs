@@ -10,16 +10,19 @@ namespace Diagnosea.Submarine.UnitTestPack.Extensions
 {
     public static class MediatorMockExtensions
     {
-        public static ISetup<IMediator, Task<TResult>> SetupHandler<TRequest, TResult>(this Mock<IMediator> mock)
-            where TRequest : IRequest<TResult>
+        public static ISetup<IMediator, Task<TResult>> SetupHandler<TRequest, TResult>(this Mock<IMediator> mock) where TRequest : IRequest<TResult>
         {
-            return mock.Setup(m => m.Send(It.IsAny<TRequest>(), CancellationToken.None));
+            return mock.Setup(m => m.Send(It.IsAny<TRequest>(), It.IsNotNull<CancellationToken>()));
         }
 
-        public static void VerifyHandler<TRequest, TResult>(this Mock<IMediator> mock, Expression<Func<TRequest, bool>> verify, Times times)
-            where TRequest : IRequest<TResult>
+        public static void VerifyHandler<TRequest, TResult>(this Mock<IMediator> mock, Expression<Func<TRequest, bool>> verify, Times times) where TRequest : IRequest<TResult>
         {
-            mock.Verify(m => m.Send(It.Is(verify), CancellationToken.None), times);
+            mock.Verify(m => m.Send(It.Is(verify), It.IsNotNull<CancellationToken>()), times);
+        }
+
+        public static void VerifyHandler<TRequest>(this Mock<IMediator> mock, Expression<Func<TRequest, bool>> verifyCommand, Times times) where TRequest : IRequest<Unit>
+        {
+            mock.Verify(m => m.Send(It.Is(verifyCommand), It.IsNotNull<CancellationToken>()), times);
         }
     }
 }
