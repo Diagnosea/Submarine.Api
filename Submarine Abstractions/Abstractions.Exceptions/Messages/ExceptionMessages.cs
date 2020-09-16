@@ -1,4 +1,4 @@
-﻿namespace Abstractions.Exceptions
+﻿namespace Abstractions.Exceptions.Messages
 {
     public static class ExceptionMessages
     {

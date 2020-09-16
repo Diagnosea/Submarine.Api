@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Abstractions.Exceptions;
+using Abstractions.Exceptions.Messages;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.Attributes
 {

@@ -105,6 +105,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Abstractions.Interchang
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Abstractions.Interchange.UnitTests", "Submarine API\Api.Abstractions.Interchange.UnitTests\Api.Abstractions.Interchange.UnitTests.csproj", "{3B96FF65-ED25-4342-AC18-BA24F3EF2C21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions.Interchange.UnitTests", "Submarine Abstractions\Abstractions.Interchange.UnitTests\Abstractions.Interchange.UnitTests.csproj", "{A7CF4A7F-E186-4FA4-9E98-C2A042C6B283}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +269,10 @@ Global
 		{3B96FF65-ED25-4342-AC18-BA24F3EF2C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B96FF65-ED25-4342-AC18-BA24F3EF2C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B96FF65-ED25-4342-AC18-BA24F3EF2C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CF4A7F-E186-4FA4-9E98-C2A042C6B283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CF4A7F-E186-4FA4-9E98-C2A042C6B283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CF4A7F-E186-4FA4-9E98-C2A042C6B283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CF4A7F-E186-4FA4-9E98-C2A042C6B283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -310,6 +316,7 @@ Global
 		{B0671F1C-446B-42C2-9E88-5B49F78909EB} = {5F7A7BC8-D91E-49C2-996C-B8890CAD1D6C}
 		{27241791-0C6B-4D1C-B64C-1CCBD72EB38A} = {E1A3F410-63CD-41B3-BF78-8132CF5189F9}
 		{3B96FF65-ED25-4342-AC18-BA24F3EF2C21} = {E1A3F410-63CD-41B3-BF78-8132CF5189F9}
+		{A7CF4A7F-E186-4FA4-9E98-C2A042C6B283} = {5F7A7BC8-D91E-49C2-996C-B8890CAD1D6C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC71E9EF-3B1F-4E70-9CE9-1BE964B459DB}

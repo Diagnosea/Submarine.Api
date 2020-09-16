@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
+using Abstractions.Exceptions.Messages;
 using Diagnosea.IntegrationTestPack;
 using Diagnosea.IntegrationTestPack.Extensions;
 using Diagnosea.Submarine.Abstraction.Routes;
