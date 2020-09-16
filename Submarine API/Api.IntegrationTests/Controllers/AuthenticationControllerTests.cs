@@ -357,7 +357,15 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, authenticate);
                 
                 // Assert
-                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+                var responseData = await response.Content.ReadFromJsonAsync<ExceptionResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(responseData.TechnicalMessage, Is.Not.Null);
+                    Assert.That(responseData.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                });
             }
 
             [Test]

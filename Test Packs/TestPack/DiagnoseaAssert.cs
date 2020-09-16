@@ -15,9 +15,10 @@ namespace Diagnosea.TestPack
         /// </summary>
         public static void Contains(IDictionary<string, string[]> dictionary, string key, string value)
         {
-            Assert.That(dictionary.ContainsKey(key));
+            var correctedKey = char.ToLowerInvariant(key[0]) + key.Substring(1);
+            Assert.That(dictionary.ContainsKey(correctedKey));
 
-            var nestedValues = dictionary[key];
+            var nestedValues = dictionary[correctedKey];
             CollectionAssert.IsNotEmpty(nestedValues);
 
             var nestedValue = nestedValues.FirstOrDefault(nv => nv == value);
