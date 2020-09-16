@@ -4,8 +4,8 @@ using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Abstractions.Exceptions;
-using Diagnosea.Submarine.Abstractions.Responses;
+using Abstractions.Exceptions;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Microsoft.AspNetCore.Http;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Middleware

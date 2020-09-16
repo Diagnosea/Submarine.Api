@@ -10,6 +10,7 @@ namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
         private string _emailAddress;
         private string _password;
         private string _userName;
+        private string _friendlyName;
         private IList<UserRole> _roles = new List<UserRole>();
 
         public InsertUserCommandBuilder WithId(Guid id)
@@ -35,6 +36,12 @@ namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
             _userName = userName;
             return this;
         }
+        
+        public InsertUserCommandBuilder WithFriendlyName(string friendlyName)
+        {
+            _friendlyName = friendlyName;
+            return this;
+        }
 
         public InsertUserCommandBuilder WithRole(UserRole role)
         {
@@ -50,6 +57,7 @@ namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
                 EmailAddress = _emailAddress,
                 Password = _password,
                 UserName = _userName,
+                FriendlyName = _friendlyName,
                 Roles = _roles
             };
         }

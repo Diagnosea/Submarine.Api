@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Diagnosea.Submarine.Abstractions.Exceptions;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Api.Abstractions.Middleware;
 using Microsoft.AspNetCore.Builder;
 

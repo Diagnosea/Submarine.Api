@@ -7,6 +7,7 @@
         public static class Authentication
         {
             public const string Base = "authentication";
+            public const string Register = "register";
             public const string Authenticate = "authenticate";
         }
         

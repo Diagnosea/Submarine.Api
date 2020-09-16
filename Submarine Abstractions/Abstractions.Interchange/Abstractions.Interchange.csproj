@@ -5,4 +5,13 @@
         <RootNamespace>Diagnosea.Submarine.Abstractions.Interchange</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Abstractions.Exceptions\Abstractions.Exceptions.csproj" />
+      <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Diagnosea.Submarine.Domain.License.Entities;
 
-namespace Domain.License.TestPack.Builders
+namespace Diagnosea.Submarine.Domain.License.TestPack.Builders
 {
     public class TestLicenseProductEntityBuilder
     {

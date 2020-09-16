@@ -16,6 +16,7 @@
       <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
       <ProjectReference Include="..\..\Submarine Domain\Domain\Domain.csproj" />
       <ProjectReference Include="..\Api.Abstractions.Authentication\Api.Abstractions.Authentication.csproj" />
+      <ProjectReference Include="..\Api.Abstractions.Interchange\Api.Abstractions.Interchange.csproj" />
       <ProjectReference Include="..\Api.Abstractions.Swagger\Api.Abstractions.Swagger.csproj" />
       <ProjectReference Include="..\Api.Abstractions\Api.Abstractions.csproj" />
     </ItemGroup>

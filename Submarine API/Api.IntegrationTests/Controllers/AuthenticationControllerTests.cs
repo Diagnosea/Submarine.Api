@@ -1,24 +1,26 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
+using Abstractions.Exceptions.Messages;
 using Diagnosea.IntegrationTestPack;
 using Diagnosea.IntegrationTestPack.Extensions;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Abstractions.Exceptions;
-using Diagnosea.Submarine.Abstractions.Interchange.Authentication;
+using Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses.Authentication;
 using Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders;
-using Diagnosea.Submarine.Abstractions.Responses;
-using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.License.Entities;
+using Diagnosea.Submarine.Domain.License.TestPack.Builders;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.TestPack.Builders;
 using Diagnosea.TestPack;
-using Domain.License.TestPack.Builders;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -33,8 +35,8 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
         [OneTimeSetUp]
         public new void OneTimeSetUp()
         {
-            _userCollection = MongoDatabase.GetEntityCollection<UserEntity>();
-            _licenseCollection = MongoDatabase.GetEntityCollection<LicenseEntity>();
+            _userCollection = MongoDatabase.GetCollection<UserEntity>("User");
+            _licenseCollection = MongoDatabase.GetCollection<LicenseEntity>("License");
         }
 
         [TearDown]
@@ -46,9 +48,212 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             HttpClient.ClearBearerToken();
         }
 
+        public class RegisterAsync : AuthenticationControllerTests
+        {
+            private static string GetRegisterUrl()
+            {
+                var parts = new[]
+                {
+                    RouteConstants.Version1,
+                    RouteConstants.Authentication.Base,
+                    RouteConstants.Authentication.Register
+                };
+                
+                return string.Join("/", parts);
+            }
+
+            private static string GetUserUrl(Guid userId)
+            {
+                var parts = new[]
+                {
+                    RouteConstants.Version1,
+                    RouteConstants.User.Base,
+                    userId.ToString()
+                };
+
+                return string.Join("/", parts);
+            }
+
+            [Test]
+            public async Task GivenNoEmailAddress_RespondsWithModelState()
+            {
+                var url = GetRegisterUrl();
+
+                const string emailAddress = null;
+                const string password = "This is a password";
+                const string userName = "This is a user name";
+                const string friendlyName = "This is a friendly name";
+
+                var register = new TestRegisterRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .WithUserName(userName)
+                    .WithFriendlyName(friendlyName)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, register);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.EmailAddress), InterchangeExceptionMessages.Required);
+                });
+            }
+
+            [Test]
+            public async Task GivenInvalidEmailAddress_RespondsWithModelState()
+            {
+                var url = GetRegisterUrl();
+
+                const string emailAddress = "This is an email address";
+                const string password = "This is a password";
+                const string userName = "This is a user name";
+                const string friendlyName = "This is a friendly name";
+
+                var register = new TestRegisterRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .WithUserName(userName)
+                    .WithFriendlyName(friendlyName)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, register);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.EmailAddress), InterchangeExceptionMessages.InvalidEmailAddress);
+                });
+            }
+
+            [Test]
+            public async Task GivenNoPassword_RespondsWithModelState()
+            {
+                var url = GetRegisterUrl();
+
+                const string emailAddress = "john.smith@example.com";
+                const string password = null;
+                const string userName = "This is a user name";
+                const string friendlyName = "This is a friendly name";
+
+                var register = new TestRegisterRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .WithUserName(userName)
+                    .WithFriendlyName(friendlyName)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, register);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.Password), InterchangeExceptionMessages.Required);
+                });
+            }
+
+            [Test]
+            public async Task GivenValidCredentialsWithoutOptionals_RespondsWithCreatedUserId()
+            {
+                var url = GetRegisterUrl();
+
+                const string emailAddress = "john.smith@example.com";
+                const string password = "This is a password";
+
+                var register = new TestRegisterRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, register);
+                
+                // Assert
+                var responseLocationHeaderValue = response.Headers.Location.ToString();
+                
+                var responseData = await response.Content.ReadFromJsonAsync<RegisteredResponse>();
+
+                var user = await _userCollection
+                    .Find(x => x.Id == responseData.UserId)
+                    .FirstOrDefaultAsync();
+
+                var userUrl = GetUserUrl(user.Id);
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+                    Assert.That(responseLocationHeaderValue.Contains(userUrl));
+                    
+                    Assert.That(user.EmailAddress, Is.EqualTo(emailAddress));
+                    Assert.That(user.UserName, Is.Null);
+                    Assert.That(user.FriendlyName, Is.Null);
+
+                    var isPasswordValue = BCrypt.Net.BCrypt.Verify(password, user.Password);
+                    Assert.That(isPasswordValue);
+                });
+            }
+
+            [Test]
+            public async Task GivenValidCredentials_RespondsWithCreatedUserId()
+            {
+                var url = GetRegisterUrl();
+
+                const string emailAddress = "john.smith@example.com";
+                const string password = "This is a password";
+                const string userName = "This is a user name";
+                const string friendlyName = "This is a friendly name";
+
+                var register = new TestRegisterRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .WithUserName(userName)
+                    .WithFriendlyName(friendlyName)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, register);
+                
+                // Assert
+                var responseLocationHeaderValue = response.Headers.Location.ToString();
+                
+                var responseData = await response.Content.ReadFromJsonAsync<RegisteredResponse>();
+
+                var user = await _userCollection
+                    .Find(x => x.Id == responseData.UserId)
+                    .FirstOrDefaultAsync();
+
+                var userUrl = GetUserUrl(user.Id);
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+                    Assert.That(responseLocationHeaderValue.Contains(userUrl));
+                    
+                    Assert.That(user.EmailAddress, Is.EqualTo(emailAddress));
+                    Assert.That(user.UserName, Is.EqualTo(userName));
+                    Assert.That(user.FriendlyName, Is.EqualTo(friendlyName));
+
+                    var isPasswordValue = BCrypt.Net.BCrypt.Verify(password, user.Password);
+                    Assert.That(isPasswordValue);
+                });
+            }
+        }
+
         public class AuthenticateAsync : AuthenticationControllerTests
         {
-            private string GetAuthenticateUrl()
+            private static string GetAuthenticateUrl()
             {
                 var parts = new[]
                 {
@@ -57,7 +262,81 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     RouteConstants.Authentication.Authenticate
                 };
                 
-                return GetUrl(parts);
+                return Path.Combine(parts);
+            }
+
+            [Test]
+            public async Task GivenNoEmailAddress_RespondsWithModelState()
+            {
+                var url = GetAuthenticateUrl();
+
+                const string password = "This is a password";
+
+                var authenticate = new TestAuthenticateRequestBuilder()
+                    .WithPassword(password)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, authenticate);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.EmailAddress), InterchangeExceptionMessages.Required);
+                });
+            }
+
+            [Test]
+            public async Task GivenInvalidEmailAddress_RespondsWithModelState()
+            {
+                var url = GetAuthenticateUrl();
+
+                const string emailAddress = "This is an email address";
+                const string password = "This is a password";
+
+                var authenticate = new TestAuthenticateRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, authenticate);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.EmailAddress), InterchangeExceptionMessages.InvalidEmailAddress);
+                });
+            }
+
+            [Test]
+            public async Task GivenNoPassword_RespondsWithModelState()
+            {
+                var url = GetAuthenticateUrl();
+
+                const string emailAddress = "john.smith@example.com";
+
+                var authenticate = new TestAuthenticateRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .Build();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, authenticate);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.Password), InterchangeExceptionMessages.Required);
+                });
             }
             
             [Test]
@@ -66,7 +345,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 // Arrange
                 var url = GetAuthenticateUrl();
 
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
 
                 var authenticate = new TestAuthenticateRequestBuilder()
@@ -86,7 +365,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             {
                 var url = GetAuthenticateUrl();
 
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
 
                 var authenticate = new TestAuthenticateRequestBuilder()
@@ -121,7 +400,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 // Arrange
                 var url = GetAuthenticateUrl();
 
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
@@ -160,7 +439,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -216,7 +495,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -274,7 +553,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -330,7 +609,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -386,7 +665,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -442,7 +721,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -498,7 +777,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";
@@ -559,7 +838,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var url = GetAuthenticateUrl();
 
                 var userId = Guid.NewGuid();
-                const string emailAddress = "This is an email address";
+                const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
                 const string productKey = "This is a product key";
                 const string testProductOneName = "Test Product One Name";

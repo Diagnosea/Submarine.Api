@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Diagnosea.Submarine.Domain.License.Entities;
 
-namespace Domain.License.TestPack.Builders
+namespace Diagnosea.Submarine.Domain.License.TestPack.Builders
 {
     public class TestLicenseEntityBuilder
     {

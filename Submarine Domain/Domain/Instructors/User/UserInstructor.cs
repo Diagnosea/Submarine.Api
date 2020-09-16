@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Abstractions.Exceptions;
-using Diagnosea.Submarine.Domain.User;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.User.Dtos;
-using Diagnosea.Submarine.Domain.User.Mappers;
+using Diagnosea.Submarine.Domain.User.Extensions;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MediatR;
 

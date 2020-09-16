@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace Diagnosea.Submarine.TestingUtilities.Factories
+namespace Diagnosea.IntegrationTestPack.Factories
 {
     public class SubmarineWebApplicationFactoryOptions
     {

@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
-using Diagnosea.Submarine.TestingUtilities.Factories;
-using IntegrationTestPack.Factories;
+using Diagnosea.IntegrationTestPack.Factories;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Mongo2Go;
 using MongoDB.Driver;
@@ -39,7 +38,5 @@ namespace Diagnosea.IntegrationTestPack
             _mongoDbRunner.Dispose();
             _webApplicationFactory.Dispose();
         }
-
-        protected virtual string GetUrl(params string[] parts) => string.Join("/", parts);
     }
 }

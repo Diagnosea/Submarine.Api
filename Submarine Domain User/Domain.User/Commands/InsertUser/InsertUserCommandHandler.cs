@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User.Entities;
-using Diagnosea.Submarine.Domain.User.Mappers;
+using Diagnosea.Submarine.Domain.User.Extensions;
 using MediatR;
 using MongoDB.Driver;
 

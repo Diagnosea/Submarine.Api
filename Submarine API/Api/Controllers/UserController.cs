@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
-using Diagnosea.Submarine.Api.Abstractions.Extensions;
+using Diagnosea.Submarine.Api.Abstractions.Interchange.User;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +23,7 @@ namespace Diagnosea.Submarine.Api.Controllers
             _userInstructor = userInstructor;
         }
         
+        [ActionName(nameof(GetUserAsync))]
         [HttpGet("{userId}")]
         [SubmarineAuthorize(UserRole.Administrator)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

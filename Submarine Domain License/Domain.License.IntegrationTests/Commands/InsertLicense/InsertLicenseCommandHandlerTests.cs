@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Domain.Abstractions.Extensions;
+using Diagnosea.IntegrationTestPack;
 using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Entities;
-using Diagnosea.Submarine.TestingUtilities;
+using Diagnosea.TestPack;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -22,7 +22,7 @@ namespace Submarine.Domain.License.IntegrationTests.Commands.InsertLicense
         [OneTimeSetUp]
         public new void OneTimeSetUp()
         {
-            _licenseCollection = MongoDatabase.GetEntityCollection<LicenseEntity>();
+            _licenseCollection = MongoDatabase.GetCollection<LicenseEntity>("License");
             _classUnderTest = new InsertLicenseCommandHandler(MongoDatabase);
         }
 
@@ -75,7 +75,7 @@ namespace Submarine.Domain.License.IntegrationTests.Commands.InsertLicense
                     Assert.That(stub, Is.Not.Null);
                     Assert.That(stub.Name, Is.EqualTo(product.Name));
                     Assert.That(stub.Key, Is.EqualTo(product.Key));
-                    SubmarineAssert.That(stub.Expiration, Is.EqualTo(product.Expiration));
+                    DiagnoseaAssert.That(stub.Expiration, Is.EqualTo(product.Expiration));
                 });
             }
         }

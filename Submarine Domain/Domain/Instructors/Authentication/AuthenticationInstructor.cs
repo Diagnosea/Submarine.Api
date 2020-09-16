@@ -2,17 +2,16 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
+using Abstractions.Exceptions.Messages;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Extensions;
-using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;
 using Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken;
 using Diagnosea.Submarine.Domain.Authentication.Queries.HashText;
 using Diagnosea.Submarine.Domain.License.Entities;
 using Diagnosea.Submarine.Domain.License.Queries.GetLicenseByUserId;
-using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail;
@@ -26,12 +25,13 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
 
         public AuthenticationInstructor(IMediator mediator) => _mediator = mediator;
 
-        public async Task RegisterAsync(RegisterDto register, CancellationToken cancellationToken)
+        public async Task<RegisteredDto> RegisterAsync(RegisterDto register, CancellationToken cancellationToken)
         {
             var insertUserCommandBuilder = new InsertUserCommandBuilder()
                 .WithId(Guid.NewGuid())
                 .WithEmailAddress(register.EmailAddress)
                 .WithUserName(register.UserName)
+                .WithFriendlyName(register.FriendlyName)
                 .WithRole(UserRole.Standard);
 
             var hashTextQuery = new HashTextQueryBuilder()
@@ -45,6 +45,11 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
                 .Build();
             
             await _mediator.Send(insertUserCommand, cancellationToken);
+
+            return new RegisteredDto
+            {
+                UserId = insertUserCommand.Id
+            };
         }
         
         public async Task<AuthenticatedDto> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token)
@@ -102,7 +107,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             if (!isValidPassword)
             {
                 throw new SubmarineArgumentException(
-                    $"Invalid Password Provided",
+                    "Invalid Password Provided",
                     AuthenticationExceptionMessages.PasswordIsIncorrect);
             }
         }

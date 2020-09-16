@@ -1,12 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using Diagnosea.Submarine.TestingUtilities.Factories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IntegrationTestPack.Factories
+namespace Diagnosea.IntegrationTestPack.Factories
 {
     public class SubmarineWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {

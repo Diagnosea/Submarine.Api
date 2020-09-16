@@ -10,6 +10,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Test Packs\IntegrationTestPack\IntegrationTestPack.csproj" />
+      <ProjectReference Include="..\..\Test Packs\TestPack\TestPack.csproj" />
       <ProjectReference Include="..\..\TestingUtilities\TestingUtilities.csproj" />
       <ProjectReference Include="..\Domain.License\Domain.License.csproj" />
     </ItemGroup>

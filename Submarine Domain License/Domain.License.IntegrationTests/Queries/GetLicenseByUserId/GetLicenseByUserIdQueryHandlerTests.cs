@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Domain.Abstractions.Extensions;
+using Diagnosea.IntegrationTestPack;
 using Diagnosea.Submarine.Domain.License.Entities;
 using Diagnosea.Submarine.Domain.License.Queries.GetLicenseByUserId;
-using Diagnosea.Submarine.TestingUtilities;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -19,7 +18,7 @@ namespace Submarine.Domain.License.IntegrationTests.Queries.GetLicenseByUserId
         [OneTimeSetUp]
         public new void OneTimeSetUp()
         {
-            _licenseCollection = MongoDatabase.GetEntityCollection<LicenseEntity>();
+            _licenseCollection = MongoDatabase.GetCollection<LicenseEntity>("License");
             _classUnderTest = new GetLicenseByUserIdQueryHandler(MongoDatabase);
         }
 

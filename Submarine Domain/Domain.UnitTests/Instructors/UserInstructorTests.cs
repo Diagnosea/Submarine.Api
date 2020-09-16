@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Abstractions.Exceptions;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Instructors.User;
-using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MediatR;
@@ -57,11 +54,8 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 var user = new UserEntity
                 {
                     Id = Guid.NewGuid(),
-                    EmailAddress = "This is an email address",
-                    Password = "This is a password",
                     UserName = "This is a user name",
                     FriendlyName = "This is a friendly name",
-                    Roles = new List<UserRole> {UserRole.Standard}
                 };
 
                 _mediator
@@ -77,7 +71,6 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                     Assert.That(result.Id, Is.EqualTo(user.Id));
                     Assert.That(result.UserName, Is.EqualTo(user.UserName));
                     Assert.That(result.FriendlyName, Is.EqualTo(user.FriendlyName));
-                    CollectionAssert.Contains(result.Roles, UserRole.Standard);
                 });
             }
         }

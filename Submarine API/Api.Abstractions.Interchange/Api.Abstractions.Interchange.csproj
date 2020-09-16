@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Diagnosea.Submarine.Api.Abstractions.Interchange</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submarine Abstractions\Abstractions.Interchange\Abstractions.Interchange.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain User\Domain.User\Domain.User.csproj" />
+    </ItemGroup>
+
+</Project>

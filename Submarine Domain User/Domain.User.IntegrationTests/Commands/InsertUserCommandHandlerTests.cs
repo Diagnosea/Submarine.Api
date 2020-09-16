@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstractions.Enums;
-using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
 using MongoDB.Driver;
@@ -20,7 +19,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Commands
         [SetUp]
         public void SetUp()
         {
-            _userCollection = Database.GetEntityCollection<UserEntity>();
+            _userCollection = Database.GetCollection<UserEntity>("User");
             _classUnderTest = new InsertUserCommandHandler(Database);
         }
 
