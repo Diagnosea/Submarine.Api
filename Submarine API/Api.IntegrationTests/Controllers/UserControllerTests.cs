@@ -10,7 +10,6 @@ using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Responses;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
-using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Entities;
 using MongoDB.Driver;
 using NUnit.Framework;

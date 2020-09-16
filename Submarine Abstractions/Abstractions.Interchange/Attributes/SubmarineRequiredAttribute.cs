@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Abstractions.Exceptions;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.Attributes
 {

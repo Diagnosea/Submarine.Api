@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
-using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Dtos;
 using Diagnosea.Submarine.Domain.User.Mappers;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;

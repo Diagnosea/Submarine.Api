@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Extensions;
-using Diagnosea.Submarine.Domain.Authentication;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;
 using Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken;
 using Diagnosea.Submarine.Domain.Authentication.Queries.HashText;
 using Diagnosea.Submarine.Domain.License.Entities;
 using Diagnosea.Submarine.Domain.License.Queries.GetLicenseByUserId;
-using Diagnosea.Submarine.Domain.User;
 using Diagnosea.Submarine.Domain.User.Commands.InsertUser;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail;
@@ -107,7 +105,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             if (!isValidPassword)
             {
                 throw new SubmarineArgumentException(
-                    $"Invalid Password Provided",
+                    "Invalid Password Provided",
                     AuthenticationExceptionMessages.PasswordIsIncorrect);
             }
         }

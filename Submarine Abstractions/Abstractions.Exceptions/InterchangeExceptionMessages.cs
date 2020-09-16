@@ -1,4 +1,4 @@
-﻿namespace Diagnosea.Submarine.Abstractions.Interchange
+﻿namespace Abstractions.Exceptions
 {
     public static class InterchangeExceptionMessages
     {

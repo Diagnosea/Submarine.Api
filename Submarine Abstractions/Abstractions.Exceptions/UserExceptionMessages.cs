@@ -1,6 +1,4 @@
-﻿using Diagnosea.Submarine.Abstractions;
-
-namespace Diagnosea.Submarine.Domain.User
+﻿namespace Abstractions.Exceptions
 {
     public static class UserExceptionMessages
     {
