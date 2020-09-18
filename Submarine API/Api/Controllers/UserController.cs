@@ -1,13 +1,16 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
+using Diagnosea.Submarine.Abstractions.Interchange.Requests.User;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses.User;
 using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.User;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Diagnosea.Submarine.Api.Controllers
 {
@@ -23,13 +26,21 @@ namespace Diagnosea.Submarine.Api.Controllers
             _userInstructor = userInstructor;
         }
         
+        /// <summary>
+        /// Get a user by their ID.
+        /// </summary>
         [ActionName(nameof(GetUserAsync))]
         [HttpGet("{userId}")]
         [SubmarineAuthorize(UserRole.Administrator)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetUserAsync([FromRoute] Guid userId, CancellationToken token)
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(UserResponse))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
+        public async Task<IActionResult> GetUserAsync([FromRoute] GetUserRequest request, CancellationToken token)
         {
-            var user = await _userInstructor.GetAsync(userId, token);
+            var user = await _userInstructor.GetAsync(request.UserId, token);
             return Ok(user.ToResponse());
         }
     }
