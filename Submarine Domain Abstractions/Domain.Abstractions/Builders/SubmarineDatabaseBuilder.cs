@@ -7,8 +7,8 @@ namespace Diagnosea.Submarine.Domain.Abstractions.Builders
 {
     public class SubmarineDatabaseBuilder
     {
-        private MongoUrl? _mongoUrl;
-        private MongoClientSettings? _mongoClientSettings;
+        private MongoUrl _mongoUrl;
+        private MongoClientSettings _mongoClientSettings;
         private readonly ConventionPack _conventionPack;
 
         public SubmarineDatabaseBuilder()

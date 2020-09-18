@@ -34,7 +34,7 @@ namespace Diagnosea.Submarine.Api
             services.AddSubmarineMediator();
             services.AddSubmarineInstructors();
             services.AddSubmarineControllers();
-            services.AddSubmarineSwagger<Startup>();
+            services.AddSubmarineSwagger("Api.Abstractions.xml");
             services.AddSubmarineAuthentication(authenticationSettings);
             services.AddSubmarineDatabase(builder => builder.WithConnectionString(databaseSettings.ConnectionString));
         }
