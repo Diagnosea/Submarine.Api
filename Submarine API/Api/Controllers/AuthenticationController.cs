@@ -31,10 +31,9 @@ namespace Diagnosea.Submarine.Api.Controllers
         /// </summary>
         [ActionName(nameof(RegisterAsync))]
         [HttpPost(RouteConstants.Authentication.Register)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerResponse(StatusCodes.Status201Created, Type = typeof(RegisteredResponse))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+        [SwaggerResponse(StatusCodes.Status409Conflict, Type = typeof(ExceptionResponse))]
         [SwaggerRequestExample(typeof(RegisterRequest), typeof(RegisterRequestExamplesProvider))]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, ApiVersion version, CancellationToken token)
         {
@@ -55,8 +54,6 @@ namespace Diagnosea.Submarine.Api.Controllers
         /// </summary>
         [ActionName(nameof(AuthenticateAsync))]
         [HttpPost(RouteConstants.Authentication.Authenticate)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AuthenticatedResponse))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
