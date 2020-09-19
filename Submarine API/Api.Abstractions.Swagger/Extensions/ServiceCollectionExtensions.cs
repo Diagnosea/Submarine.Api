@@ -45,6 +45,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.Extensions
                     }
                 });
                 c.DocumentFilter<VersionDocumentFilter>();
+                c.DocumentFilter<RemoveSchemasDocumentFilter>();
                 c.OperationFilter<VersionOperationFilter>();
                 c.ExampleFilters();
                 c.CustomSchemaIds(x => x.FullName?.ToString());

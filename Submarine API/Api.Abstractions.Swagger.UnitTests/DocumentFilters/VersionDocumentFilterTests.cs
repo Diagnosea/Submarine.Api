@@ -18,8 +18,8 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.UnitTests.DocumentFilters
     {
         private VersionDocumentFilter _classUnderTest;
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             _classUnderTest = new VersionDocumentFilter();
         }
