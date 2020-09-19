@@ -12,6 +12,11 @@
         /// <summary>
         /// Unable to resolve an entity from the database.
         /// </summary>
-        EntityNotFound
+        EntityNotFound,
+        
+        /// <summary>
+        /// Resolved existing data, so there's likely a conflict.
+        /// </summary>
+        DataAlreadyExists
     }
 }

@@ -25,8 +25,10 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
 
         public AuthenticationInstructor(IMediator mediator) => _mediator = mediator;
 
-        public async Task<RegisteredDto> RegisterAsync(RegisterDto register, CancellationToken cancellationToken)
+        public async Task<RegisteredDto> RegisterAsync(RegisterDto register, CancellationToken token)
         {
+            await ValidateUserDoesNotExist(register.EmailAddress, token);
+            
             var insertUserCommandBuilder = new InsertUserCommandBuilder()
                 .WithId(Guid.NewGuid())
                 .WithEmailAddress(register.EmailAddress)
@@ -38,13 +40,13 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
                 .WithText(register.PlainTextPassword)
                 .Build();
 
-            var hashedPassword = await _mediator.Send(hashTextQuery, cancellationToken);
+            var hashedPassword = await _mediator.Send(hashTextQuery, token);
             
             var insertUserCommand = insertUserCommandBuilder
                 .WithPassword(hashedPassword)
                 .Build();
             
-            await _mediator.Send(insertUserCommand, cancellationToken);
+            await _mediator.Send(insertUserCommand, token);
 
             return new RegisteredDto
             {
@@ -76,6 +78,22 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             {
                 BearerToken = bearerToken
             };
+        }
+
+        private async Task ValidateUserDoesNotExist(string emailAddress, CancellationToken token)
+        {
+            var getUserByEmailQuery = new GetUserByEmailQueryBuilder()
+                .WithEmailAddress(emailAddress)
+                .Build();
+
+            var user = await _mediator.Send(getUserByEmailQuery, token);
+
+            if (user != null)
+            {
+                throw new SubmarineDataAlreadyExistsException(
+                    $"User Already Exists For Email: '{user.EmailAddress}'",
+                    UserExceptionMessages.UserExistsWithEmail);
+            }
         }
         
         private async Task<UserEntity> GetUserByEmailAsync(string emailAddress, CancellationToken token)
