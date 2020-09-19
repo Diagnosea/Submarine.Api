@@ -41,6 +41,38 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
         public class RegisterAsync : AuthenticationInstructorTests
         {
             [Test]
+            public void GivenEmailAlreadyExists_ThrowsSubmarineEntityFoundException()
+            {
+                // Arrange
+                var register = new RegisterDto
+                {
+                    EmailAddress = "This is an email",
+                    PlainTextPassword = "This is a password",
+                    UserName = "This is a username"
+                };
+
+                var user = new UserEntity
+                {
+                    EmailAddress = "This is an email"
+                };
+
+                _mediator.SetupHandler<GetUserByEmailQuery, UserEntity>().ReturnsAsync(user);
+
+                // Act & Assert
+                Assert.Multiple(() =>
+                {
+                    var exception = Assert.ThrowsAsync<SubmarineDataAlreadyExistsException>(() => _classUnderTest.RegisterAsync(register, CancellationToken.None));
+
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataAlreadyExists));
+                    Assert.That(exception.TechnicalMessage, Is.Not.Null);
+                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserExistsWithEmail));
+                });
+                
+                
+                _mediator.VerifyHandler<GetUserByEmailQuery, UserEntity>(query => query.EmailAddress == register.EmailAddress, Times.Once());
+            }
+            
+            [Test]
             public async Task GivenRegisterUserDto_InsertsUserIntoDatabase()
             {
                 // Arrange

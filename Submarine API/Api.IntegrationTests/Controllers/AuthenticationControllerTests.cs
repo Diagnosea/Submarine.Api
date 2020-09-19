@@ -165,6 +165,41 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             }
 
             [Test]
+            public async Task GivenEmailAlreadyUsed_RespondsWithConflict()
+            {
+                var url = GetRegisterUrl();
+
+                const string emailAddress = "john.smith@example.com";
+                const string password = "This is a password";
+
+                var register = new TestRegisterRequestBuilder()
+                    .WithEmailAddress(emailAddress)
+                    .WithPassword(password)
+                    .Build();
+
+                var user = new TestUserEntityBuilder()
+                    .WithId(Guid.NewGuid())
+                    .WithEmailAddress(emailAddress)
+                    .Build();
+
+                await _userCollection.InsertOneAsync(user);
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(url, register);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ExceptionResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int)SubmarineExceptionCode.DataAlreadyExists));
+                    Assert.That(responseData.TechnicalMessage, Is.Not.Null);
+                    Assert.That(responseData.UserMessage, Is.EqualTo(UserExceptionMessages.UserExistsWithEmail));
+                });
+            }
+            
+            [Test]
             public async Task GivenValidCredentialsWithoutOptionals_RespondsWithCreatedUserId()
             {
                 var url = GetRegisterUrl();
