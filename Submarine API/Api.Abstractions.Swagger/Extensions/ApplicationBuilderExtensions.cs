@@ -26,6 +26,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.Extensions
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = string.Empty;
+                c.DefaultModelsExpandDepth(-1);
                 c.DocumentTitle = "Diagnosea Submarine API";
                 
                 // // TODO: Store in settings as List<string>.

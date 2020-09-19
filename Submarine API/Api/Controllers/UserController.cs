@@ -32,11 +32,10 @@ namespace Diagnosea.Submarine.Api.Controllers
         [ActionName(nameof(GetUserAsync))]
         [HttpGet("{userId}")]
         [SubmarineAuthorize(UserRole.Administrator)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(UserResponse))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized)]
+        [SwaggerResponse(StatusCodes.Status403Forbidden)]
         [SwaggerResponse(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
         public async Task<IActionResult> GetUserAsync([FromRoute] GetUserRequest request, CancellationToken token)
         {
