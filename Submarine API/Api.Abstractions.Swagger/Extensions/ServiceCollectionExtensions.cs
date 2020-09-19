@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Diagnosea.Submarine.Api.Abstractions.Swagger.DocumentFilters;
 using Diagnosea.Submarine.Api.Abstractions.Swagger.OperationFilters;
 using Diagnosea.Submarine.Domain.Authentication;
@@ -10,7 +12,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddSubmarineSwagger<TStartup>(this IServiceCollection serviceCollection) where TStartup : class
+        public static void AddSubmarineSwagger(this IServiceCollection serviceCollection, string xmlCommentsFileName)
         {
             serviceCollection.AddSwaggerGen(c =>
             {
@@ -49,9 +51,12 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.Extensions
                 c.OperationFilter<VersionOperationFilter>();
                 c.ExampleFilters();
                 c.CustomSchemaIds(x => x.FullName?.ToString());
+                
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFileName);
+                c.IncludeXmlComments(xmlPath, true);
             });
 
-            serviceCollection.AddSwaggerExamplesFromAssemblyOf<TStartup>();
+            serviceCollection.AddSwaggerExamplesFromAssemblyOf<VersionDocumentFilter>();
         }
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
@@ -10,7 +12,22 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
         public static void AddSubmarineControllers(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddRouting(SetRoutingOptions);
-            serviceCollection.AddControllers().AddJsonOptions(SetJsonOptions);
+            
+            serviceCollection
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy
+                        {
+                            ProcessDictionaryKeys = true
+                        }
+                    };
+            
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+            
             serviceCollection.AddApiVersioning();
         }
 
