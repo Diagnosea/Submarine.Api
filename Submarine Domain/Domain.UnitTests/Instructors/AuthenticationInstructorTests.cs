@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
-using Abstractions.Exceptions.Messages;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;
@@ -153,10 +152,10 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineArgumentException>(() => 
+                    var exception = Assert.ThrowsAsync<SubmarineDataMismatchException>(() => 
                         _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.ArgumentException));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataMismatchException));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
                     Assert.That(exception.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.PasswordIsIncorrect));
                 });

@@ -7,8 +7,6 @@
         /// </summary>
         Unknown,
         
-        ArgumentException,
-
         /// <summary>
         /// Unable to resolve an entity from the database.
         /// </summary>
@@ -17,6 +15,11 @@
         /// <summary>
         /// Resolved existing data, so there's likely a conflict.
         /// </summary>
-        DataAlreadyExists
+        DataAlreadyExists,
+        
+        /// <summary>
+        /// Typically used when comparing hashes.
+        /// </summary>
+        DataMismatchException
     }
 }

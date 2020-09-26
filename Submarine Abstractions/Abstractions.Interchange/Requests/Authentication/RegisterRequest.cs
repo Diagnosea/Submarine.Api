@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Abstractions.Exceptions.Messages;
+using Abstractions.Exceptions;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication
 {

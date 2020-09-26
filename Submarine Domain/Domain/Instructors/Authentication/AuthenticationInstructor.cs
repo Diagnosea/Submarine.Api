@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
-using Abstractions.Exceptions.Messages;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
@@ -124,7 +123,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             var isValidPassword = await _mediator.Send(compareHashTextQuery, token);
             if (!isValidPassword)
             {
-                throw new SubmarineArgumentException(
+                throw new SubmarineDataMismatchException(
                     "Invalid Password Provided",
                     AuthenticationExceptionMessages.PasswordIsIncorrect);
             }
