@@ -153,7 +153,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineArgumentException>(() => 
+                    var exception = Assert.ThrowsAsync<SubmarineDataMismatchException>(() => 
                         _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
 
                     Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.ArgumentException));

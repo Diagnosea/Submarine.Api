@@ -17,6 +17,11 @@
         /// <summary>
         /// Resolved existing data, so there's likely a conflict.
         /// </summary>
-        DataAlreadyExists
+        DataAlreadyExists,
+        
+        /// <summary>
+        /// Typically used when comparing hashes.
+        /// </summary>
+        DataMismatchException
     }
 }

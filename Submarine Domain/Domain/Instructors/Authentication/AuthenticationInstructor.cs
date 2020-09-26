@@ -124,7 +124,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             var isValidPassword = await _mediator.Send(compareHashTextQuery, token);
             if (!isValidPassword)
             {
-                throw new SubmarineArgumentException(
+                throw new SubmarineDataMismatchException(
                     "Invalid Password Provided",
                     AuthenticationExceptionMessages.PasswordIsIncorrect);
             }
