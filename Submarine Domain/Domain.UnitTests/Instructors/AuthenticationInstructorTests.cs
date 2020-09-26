@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
-using Abstractions.Exceptions.Messages;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Domain.Authentication.Dtos;
 using Diagnosea.Submarine.Domain.Authentication.Queries.CompareHashText;

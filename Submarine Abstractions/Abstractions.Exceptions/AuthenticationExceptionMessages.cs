@@ -1,4 +1,4 @@
-﻿namespace Abstractions.Exceptions.Messages
+﻿namespace Abstractions.Exceptions
 {
     public static class AuthenticationExceptionMessages
     {

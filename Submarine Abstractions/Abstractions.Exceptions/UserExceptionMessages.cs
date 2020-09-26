@@ -1,6 +1,4 @@
-﻿using Abstractions.Exceptions.Messages;
-
-namespace Abstractions.Exceptions
+﻿namespace Abstractions.Exceptions
 {
     public static class UserExceptionMessages
     {
