@@ -155,7 +155,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                     var exception = Assert.ThrowsAsync<SubmarineDataMismatchException>(() => 
                         _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.ArgumentException));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataMismatchException));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
                     Assert.That(exception.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.PasswordIsIncorrect));
                 });

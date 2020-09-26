@@ -7,8 +7,6 @@
         /// </summary>
         Unknown,
         
-        ArgumentException,
-
         /// <summary>
         /// Unable to resolve an entity from the database.
         /// </summary>

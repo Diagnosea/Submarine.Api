@@ -429,8 +429,8 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.ArgumentException));
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataMismatchException));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
                     Assert.That(responseData.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.PasswordIsIncorrect));
                 });
