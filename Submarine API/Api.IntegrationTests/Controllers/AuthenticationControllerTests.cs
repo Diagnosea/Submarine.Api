@@ -80,14 +80,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
 
                 const string emailAddress = null;
                 const string password = "This is a password";
-                const string userName = "This is a user name";
-                const string friendlyName = "This is a friendly name";
 
                 var register = new TestRegisterRequestBuilder()
                     .WithEmailAddress(emailAddress)
                     .WithPassword(password)
-                    .WithUserName(userName)
-                    .WithFriendlyName(friendlyName)
                     .Build();
                 
                 // Act
@@ -110,14 +106,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
 
                 const string emailAddress = "This is an email address";
                 const string password = "This is a password";
-                const string userName = "This is a user name";
-                const string friendlyName = "This is a friendly name";
 
                 var register = new TestRegisterRequestBuilder()
                     .WithEmailAddress(emailAddress)
                     .WithPassword(password)
-                    .WithUserName(userName)
-                    .WithFriendlyName(friendlyName)
                     .Build();
                 
                 // Act
@@ -140,14 +132,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
 
                 const string emailAddress = "john.smith@example.com";
                 const string password = null;
-                const string userName = "This is a user name";
-                const string friendlyName = "This is a friendly name";
 
                 var register = new TestRegisterRequestBuilder()
                     .WithEmailAddress(emailAddress)
                     .WithPassword(password)
-                    .WithUserName(userName)
-                    .WithFriendlyName(friendlyName)
                     .Build();
                 
                 // Act
@@ -246,14 +234,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
 
                 const string emailAddress = "john.smith@example.com";
                 const string password = "This is a password";
-                const string userName = "This is a user name";
-                const string friendlyName = "This is a friendly name";
 
                 var register = new TestRegisterRequestBuilder()
                     .WithEmailAddress(emailAddress)
                     .WithPassword(password)
-                    .WithUserName(userName)
-                    .WithFriendlyName(friendlyName)
                     .Build();
                 
                 // Act
@@ -276,8 +260,6 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     Assert.That(responseLocationHeaderValue.Contains(userUrl));
                     
                     Assert.That(user.EmailAddress, Is.EqualTo(emailAddress));
-                    Assert.That(user.UserName, Is.EqualTo(userName));
-                    Assert.That(user.FriendlyName, Is.EqualTo(friendlyName));
 
                     var isPasswordValue = BCrypt.Net.BCrypt.Verify(password, user.Password);
                     Assert.That(isPasswordValue);
@@ -584,7 +566,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
                     var nameClaim = securityToken.Claims.FirstOrDefault(c => c.Type == SubmarineRegisteredClaimNames.Name);
-                    Assert.That(nameClaim.Value, Is.EqualTo(user.UserName));
+                    Assert.That(nameClaim.Value, Is.EqualTo(user.EmailAddress));
                 });
             }
             
@@ -866,7 +848,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-                    var roleClaims = securityToken.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Role);
+                    var roleClaims = securityToken.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Roles);
                     var administratorRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.Administrator.ToString());
                     
                     Assert.That(administratorRoleClaim, Is.Not.Null);
@@ -927,7 +909,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-                    var productClaims = securityToken.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Product);
+                    var productClaims = securityToken.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Products);
                     var testProductOneClaim = productClaims.FirstOrDefault(x => x.Value == testProductOneName);
                     var testProductTwoClaim = productClaims.FirstOrDefault(x => x.Value == testProductTwoName);
                     

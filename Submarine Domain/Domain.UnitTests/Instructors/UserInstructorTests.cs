@@ -5,6 +5,7 @@ using Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
+using Diagnosea.Submarine.UnitTestPack.Extensions;
 using MediatR;
 using Moq;
 using NUnit.Framework;
@@ -55,11 +56,11 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 {
                     Id = Guid.NewGuid(),
                     UserName = "This is a user name",
-                    FriendlyName = "This is a friendly name",
+                    FriendlyName = "This is a friendly name"
                 };
 
                 _mediator
-                    .Setup(x => x.Send(It.IsAny<GetUserByIdQuery>(), cancellationToken))
+                    .SetupHandler<GetUserByIdQuery, UserEntity>()
                     .ReturnsAsync(user);
                 
                 // Act

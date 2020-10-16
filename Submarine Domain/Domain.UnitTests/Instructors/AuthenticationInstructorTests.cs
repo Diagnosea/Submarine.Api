@@ -248,7 +248,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
             private static bool ValidateGenerateBearerTokenQuery(GenerateBearerTokenQuery query, UserEntity user, string audience)
             {
                 return query.Subject == user.Id.ToString() &&
-                       query.Name == user.UserName &&
+                       query.Name == user.EmailAddress &&
                        query.Audience == audience &&
                        query.Roles.Contains(UserRole.Standard.ToString());
             }

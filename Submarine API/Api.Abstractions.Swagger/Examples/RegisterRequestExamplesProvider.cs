@@ -10,9 +10,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.Examples
             return new RegisterRequest
             {
                 EmailAddress = "example.user@example.com",
-                Password = "A strong password",
-                UserName = "cooldude123",
-                FriendlyName = "Example User"
+                Password = "A strong password"
             };
         }
     }

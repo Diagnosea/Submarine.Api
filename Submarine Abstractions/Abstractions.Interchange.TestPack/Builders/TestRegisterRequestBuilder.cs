@@ -6,8 +6,6 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders
     {
         private string _emailAddress;
         private string _password;
-        private string _userName;
-        private string _friendlyName;
 
         public TestRegisterRequestBuilder WithEmailAddress(string emailAddress)
         {
@@ -21,26 +19,12 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.TestPack.Builders
             return this;
         }
 
-        public TestRegisterRequestBuilder WithUserName(string userName)
-        {
-            _userName = userName;
-            return this;
-        }
-
-        public TestRegisterRequestBuilder WithFriendlyName(string friendlyName)
-        {
-            _friendlyName = friendlyName;
-            return this;
-        }
-        
         public RegisterRequest Build()
         {
             return new RegisterRequest
             {
                 EmailAddress = _emailAddress,
-                Password = _password,
-                UserName = _userName,
-                FriendlyName = _friendlyName
+                Password = _password
             };
         }
     }

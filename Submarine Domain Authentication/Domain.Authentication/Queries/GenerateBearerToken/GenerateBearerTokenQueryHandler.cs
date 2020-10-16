@@ -36,12 +36,12 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
 
             foreach (var role in request.Roles)
             {
-                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Role, role);
+                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Roles, role);
             }
 
             foreach (var product in request.Products)
             {
-                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Product, product);
+                securityTokenDescriptorBuilder.WithClaim(SubmarineRegisteredClaimNames.Products, product);
             }
 
             var securityTokenDescriptor = securityTokenDescriptorBuilder.Build();
