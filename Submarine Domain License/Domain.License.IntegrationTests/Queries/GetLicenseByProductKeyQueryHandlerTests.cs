@@ -39,7 +39,7 @@ namespace Submarine.Domain.License.IntegrationTests.Queries
 
                 var query = new GetLicenseByProductKeyQuery
                 {
-                    ProductKey = "This is the product key being looked for",
+                    ProductKey = "This is the product key being looked for"
                 };
                 
                 var product = new LicenseProductEntity

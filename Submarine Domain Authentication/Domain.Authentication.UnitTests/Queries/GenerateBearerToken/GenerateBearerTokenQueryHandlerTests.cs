@@ -240,7 +240,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
 
                     Assert.That(token, Is.Not.Null);
 
-                    var roleClaims = token.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Role);
+                    var roleClaims = token.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Roles);
                     var standardUserRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.Standard.ToString());
 
                     Assert.That(standardUserRoleClaim, Is.Not.Null);
@@ -267,7 +267,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
 
                     Assert.That(token, Is.Not.Null);
 
-                    var roleClaims = token.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Role);
+                    var roleClaims = token.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Roles);
                     var administratorUserRoleClaim = roleClaims.FirstOrDefault(x => x.Value == UserRole.Administrator.ToString());
 
                     Assert.That(administratorUserRoleClaim, Is.Not.Null);
@@ -294,7 +294,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
 
                     Assert.That(token, Is.Not.Null);
 
-                    var productClaim = token.Claims.FirstOrDefault(x => x.Type == SubmarineRegisteredClaimNames.Product);
+                    var productClaim = token.Claims.FirstOrDefault(x => x.Type == SubmarineRegisteredClaimNames.Products);
 
                     Assert.That(productClaim, Is.Not.Null);
                     Assert.That(productClaim.Value, Is.EqualTo("Test Product"));

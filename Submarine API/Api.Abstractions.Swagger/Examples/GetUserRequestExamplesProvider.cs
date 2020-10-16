@@ -10,7 +10,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.Examples
         {
             return new GetUserRequest
             {
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid()
             };
         }
     }

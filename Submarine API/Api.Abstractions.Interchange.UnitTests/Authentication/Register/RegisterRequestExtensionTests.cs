@@ -16,9 +16,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Authenticat
                 var register = new RegisterRequest
                 {
                     EmailAddress = "This is an email address",
-                    Password = "This is a password",
-                    UserName = "This is a user name",
-                    FriendlyName = "This is a friendly name"
+                    Password = "This is a password"
                 };
                 
                 // Act
@@ -29,8 +27,6 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Authenticat
                 {
                     Assert.That(result.EmailAddress, Is.EqualTo(register.EmailAddress));
                     Assert.That(result.PlainTextPassword, Is.EqualTo(register.Password));
-                    Assert.That(result.UserName, Is.EqualTo(register.UserName));
-                    Assert.That(result.FriendlyName, Is.EqualTo(register.FriendlyName));
                 });
             }
         }

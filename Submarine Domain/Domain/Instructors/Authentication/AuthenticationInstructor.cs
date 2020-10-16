@@ -65,7 +65,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             
             var generateBearerTokenQuery = new GenerateBearerTokenQueryBuilder()
                 .WithSubject(user.Id.ToString())
-                .WithName(user.UserName)
+                .WithName(user.EmailAddress)
                 .WithRoles(user.Roles.AsStrings())
                 .WithProducts(productNames)
                 .WithAudience(license.Key)

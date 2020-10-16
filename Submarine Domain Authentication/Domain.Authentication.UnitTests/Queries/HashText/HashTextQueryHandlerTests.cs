@@ -18,7 +18,7 @@ namespace Domain.Authentication.UnitTests.Queries.HashText
         {
             _submarineAuthenticationSettings = new SubmarineTestAuthenticationSettings
             {
-                SaltingRounds = 10,
+                SaltingRounds = 10
             };
             
             _classUnderTest = new HashTextQueryHandler(_submarineAuthenticationSettings);

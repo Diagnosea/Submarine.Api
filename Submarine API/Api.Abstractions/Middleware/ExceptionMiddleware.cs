@@ -24,7 +24,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
 
             _jsonSerializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                ContractResolver = new CamelCasePropertyNamesContractResolver()    
             };
         }
 

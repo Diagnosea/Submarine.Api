@@ -13,7 +13,7 @@ namespace Diagnosea.IntegrationTestPack.Builders
 
         public TestBearerTokenBuilder WithRole(UserRole role)
         {
-            var claim = new Claim(SubmarineRegisteredClaimNames.Role, role.ToString());
+            var claim = new Claim(SubmarineRegisteredClaimNames.Roles, role.ToString());
             _claims.Add(claim);
 
             return this;

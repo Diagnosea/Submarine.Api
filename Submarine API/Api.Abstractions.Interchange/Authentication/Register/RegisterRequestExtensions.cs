@@ -10,9 +10,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Regist
             return new RegisterDto
             {
                 EmailAddress = register.EmailAddress,
-                PlainTextPassword = register.Password,
-                UserName = register.UserName,
-                FriendlyName = register.FriendlyName
+                PlainTextPassword = register.Password
             };
         }
     }
