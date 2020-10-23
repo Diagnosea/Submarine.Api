@@ -5,6 +5,6 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
 {
     public interface ILicenseInstructor
     {
-        Task CreateAsync(CreateLicenseDto createLicense);
+        Task<CreatedLicenseDto> CreateAsync(CreateLicenseDto createLicense);
     }
 }

@@ -21,10 +21,12 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
             _licenseSettings = licenseSettings;
         }
 
-        public async Task CreateAsync(CreateLicenseDto createLicense)
+        public async Task<CreatedLicenseDto> CreateAsync(CreateLicenseDto createLicense)
         {
+            var licenseId = Guid.NewGuid();
+            
             var insertLicenseCommandBuilder = new InsertLicenseCommandBuilder()
-                .WithId(Guid.NewGuid())
+                .WithId(licenseId)
                 .WithUserId(createLicense.UserId);
 
             if (!createLicense.Products.All(product => _licenseSettings.AvailableProducts.Contains(product.Name)))
@@ -44,6 +46,8 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
             var insertLicenseCommand = insertLicenseCommandBuilder.Build();
 
             await _mediator.Send(insertLicenseCommand);
+
+            return new CreatedLicenseDto {LicenseId = licenseId};
         }
 
         private async Task<InsertLicenseProductCommand> CreateLicenseProductCommandAsync(Guid userId, CreateLicenseProductDto createLicenseProduct)
