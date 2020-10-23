@@ -9,7 +9,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        private static IDictionary<Type, HttpStatusCode> _exceptionMapping = new Dictionary<Type, HttpStatusCode>
+        private static readonly IDictionary<Type, HttpStatusCode> _exceptionMapping = new Dictionary<Type, HttpStatusCode>
         {
             { typeof(SubmarineEntityNotFoundException), HttpStatusCode.NotFound },
             { typeof(SubmarineDataAlreadyExistsException), HttpStatusCode.Conflict },

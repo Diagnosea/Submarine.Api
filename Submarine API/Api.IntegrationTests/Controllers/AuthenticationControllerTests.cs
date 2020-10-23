@@ -909,7 +909,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-                    var productClaims = securityToken.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Products);
+                    var productClaims = securityToken.Claims
+                        .Where(x => x.Type == SubmarineRegisteredClaimNames.Products)
+                        .ToList();
+                    
                     var testProductOneClaim = productClaims.FirstOrDefault(x => x.Value == testProductOneName);
                     var testProductTwoClaim = productClaims.FirstOrDefault(x => x.Value == testProductTwoName);
                     

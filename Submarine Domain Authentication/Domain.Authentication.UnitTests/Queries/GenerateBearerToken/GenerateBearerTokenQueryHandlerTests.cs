@@ -302,7 +302,7 @@ namespace Domain.Authentication.UnitTests.Queries.GenerateBearerToken
             }
         }
         
-        private GenerateBearerTokenQuery CreateGenerateBearerTokenQuery()
+        private static GenerateBearerTokenQuery CreateGenerateBearerTokenQuery()
         {
             return new GenerateBearerTokenQuery
             {

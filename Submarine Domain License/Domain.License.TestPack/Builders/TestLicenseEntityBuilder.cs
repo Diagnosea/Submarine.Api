@@ -9,7 +9,7 @@ namespace Diagnosea.Submarine.Domain.License.TestPack.Builders
         private Guid _id;
         private Guid _userId;
         private string _key;
-        private IList<LicenseProductEntity> _products = new List<LicenseProductEntity>();
+        private readonly IList<LicenseProductEntity> _products = new List<LicenseProductEntity>();
 
         public TestLicenseEntityBuilder WithId(Guid id)
         {

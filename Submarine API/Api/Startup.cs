@@ -26,9 +26,11 @@ namespace Diagnosea.Submarine.Api
         {
             var databaseSettings = _configuration.GetSettings<DatabaseSettings>();
             var authenticationSettings = _configuration.GetSettings<AuthenticationSettings>();
+            var licenseSettings = _configuration.GetSettings<LicenseSettings>();
 
             // Add Settings
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
+            services.AddSingleton(licenseSettings);
 
             // Dependencies
             services.AddSubmarineMediator();
