@@ -27,6 +27,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
             
             var insertLicenseCommandBuilder = new InsertLicenseCommandBuilder()
                 .WithId(licenseId)
+                .WithCreated(DateTime.UtcNow)
                 .WithUserId(createLicense.UserId);
 
             if (!createLicense.Products.All(product => _licenseSettings.AvailableProducts.Contains(product.Name)))
@@ -63,6 +64,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
             return new InsertLicenseProductCommandBuilder()
                 .WithName(createLicenseProduct.Name)
                 .WithKey(hashedLicenseKey)
+                .WithCreated(DateTime.UtcNow)
                 .WithExpiration(createLicenseProduct.Expiration)
                 .Build();
         }

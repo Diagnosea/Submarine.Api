@@ -29,6 +29,28 @@ namespace Submarine.Domain.License.UnitTests.Commands.InsertLicense
             }
         }
 
+        public class WithCreated : InsertLicenseCommandBuilderTests
+        {
+            [Test]
+            public void GivenCreated_BuildWithCreated()
+            {
+                // Arrange
+                var builder = new InsertLicenseCommandBuilder();
+                var created = DateTime.UtcNow;
+                
+                // Act
+                var result = builder.WithCreated(created);
+                var build = builder.Build();
+                
+                // Assert
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.Created, Is.EqualTo(created));
+                });
+            }
+        }
+
         public class WithUserId : InsertLicenseCommandBuilderTests
         {
             [Test]
