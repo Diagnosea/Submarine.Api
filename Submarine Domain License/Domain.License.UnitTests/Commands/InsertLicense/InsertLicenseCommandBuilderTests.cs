@@ -29,6 +29,28 @@ namespace Submarine.Domain.License.UnitTests.Commands.InsertLicense
             }
         }
 
+        public class WithKey : InsertLicenseCommandBuilderTests
+        {
+            [Test]
+            public void GivenKey_BuildsWithKey()
+            {
+                // Arrange
+                var builder = new InsertLicenseCommandBuilder();
+                const string key = "This is a license key";
+                
+                // Act
+                var result = builder.WithKey(key);
+                var build = builder.Build();
+                
+                // Assert
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.Key, Is.EqualTo(key));
+                });
+            }
+        }
+
         public class WithCreated : InsertLicenseCommandBuilderTests
         {
             [Test]
