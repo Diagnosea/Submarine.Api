@@ -8,6 +8,7 @@ using Diagnosea.Submarine.Domain.Instructors.License;
 using Diagnosea.Submarine.Domain.License;
 using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Dtos;
+using Diagnosea.Submarine.Domain.License.TestPack.Builders;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using Diagnosea.Submarine.UnitTestPack.Extensions;
@@ -140,18 +141,14 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 var hashedLicenseKey = Guid.NewGuid().ToBase64String();
                 var hashedSubmarineLicensedProductKey = Guid.NewGuid().ToBase64String();
                 var hashedSubmarinePremiumLicensedProductKey = Guid.NewGuid().ToBase64String();
-                
-                var createSubmarineLicensedProduct = new CreateLicenseProductDto
-                {
-                    Name = submarineProductName,
-                    Expiration = DateTime.UtcNow
-                };
 
-                var createSubmarinePremiumLicensedProduct = new CreateLicenseProductDto
-                {
-                    Name = submarinePremiumProductName,
-                    Expiration = DateTime.UtcNow
-                };
+                var createSubmarineLicensedProduct = new TestCreateLicenseProductDtoBuilder()
+                    .WithName(submarineProductName)
+                    .Build();
+
+                var createSubmarinePremiumLicensedProduct = new TestCreateLicenseProductDtoBuilder()
+                    .WithName(submarinePremiumProductName)
+                    .Build();
 
                 var createLicense = new CreateLicenseDto
                 {
@@ -193,11 +190,14 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 _mediator.VerifyHandler<InsertLicenseCommand>(command => 
                     command.Id != Guid.Empty &&
                     command.UserId == userId &&
+                    command.Key == hashedLicenseKey &&
                     command.Products[0].Name == submarineProductName &&
                     command.Products[0].Key == hashedSubmarineLicensedProductKey &&
+                    command.Products[0].Created != null &&
                     command.Products[0].Expiration == createSubmarineLicensedProduct.Expiration &&
                     command.Products[1].Name == submarinePremiumProductName &&
                     command.Products[1].Key == hashedSubmarinePremiumLicensedProductKey &&
+                    command.Products[1].Created != null &&
                     command.Products[1].Expiration == createSubmarinePremiumLicensedProduct.Expiration,
                     Times.Once());
             }

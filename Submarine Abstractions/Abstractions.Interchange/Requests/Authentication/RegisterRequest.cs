@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Abstractions.Exceptions;
+﻿using Diagnosea.Submarine.Abstractions.Interchange.Attributes;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication
 {
     public class RegisterRequest
     {
-        [Required(ErrorMessage = InterchangeExceptionMessages.Required)]
-        [EmailAddress(ErrorMessage = InterchangeExceptionMessages.InvalidEmailAddress)]
+        [DiagnoseaRequired]
+        [DiagnoseaEmailAddress]
         public string EmailAddress { get; set; }
         
-        [Required(ErrorMessage = InterchangeExceptionMessages.Required)]
+        [DiagnoseaRequired]
         public string Password { get; set; }
     }
 }

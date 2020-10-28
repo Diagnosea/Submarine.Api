@@ -1,38 +1,38 @@
-﻿using Abstractions.Exceptions.Messages;
+﻿using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Interchange.Attributes;
 using NUnit.Framework;
 
 namespace Diagnosea.Submarine.Abstractions.Interchange.UnitTests.Attributes
 {
     [TestFixture]
-    public class SubmarineEmailAddressAttributeTests
+    public class DiagnoseaStringLengthAttributeTests
     {
-        public class FormatErrorMessage : SubmarineEmailAddressAttributeTests
+        public class FormatErrorMessage : DiagnoseaAfterNowAttributeTests
         {
             [Test]
             public void GivenErrorMessageIsAlreadySet_ReturnsAlreadySetErrorMessage()
             {
                 // Arrange
-                var exception = new SubmarineEmailAddressAttribute {ErrorMessage = "This is an error message"};
+                var attribute = new DiagnoseaStringLengthAttribute {ErrorMessage = "This is an error message"};
                 
                 // Act
-                var result = exception.FormatErrorMessage("name");
+                var result = attribute.FormatErrorMessage("name");
                 
                 // Assert
-                Assert.That(result, Is.EqualTo(exception.ErrorMessage));
+                Assert.That(result, Is.EqualTo(attribute.ErrorMessage));
             }
 
             [Test]
             public void GivenErrorMessageIsntAlreadySet_ReturnsInterchangeExceptionMessage()
             {
                 // Arrange
-                var exception = new SubmarineEmailAddressAttribute();
+                var attribute = new DiagnoseaStringLengthAttribute();
                 
                 // Act
-                var result = exception.FormatErrorMessage("name");
+                var result = attribute.FormatErrorMessage("name");
                 
                 // Assert
-                Assert.That(result, Is.EqualTo(InterchangeExceptionMessages.InvalidEmailAddress));
+                Assert.That(result, Is.EqualTo($"{InterchangeExceptionMessages.InvalidStringLength}|0|1"));
             }
         }
     }
