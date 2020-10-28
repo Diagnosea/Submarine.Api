@@ -11,6 +11,7 @@ namespace Diagnosea.Submarine.Domain.License.Extensions
             {
                 Name = command.Name,
                 Key = command.Key,
+                Created = command.Created,
                 Expiration = command.Expiration
             };
         }

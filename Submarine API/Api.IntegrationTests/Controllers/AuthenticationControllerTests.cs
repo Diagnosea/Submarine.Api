@@ -301,7 +301,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.EmailAddress), InterchangeExceptionMessages.Required);
+                    DiagnoseaAssert.Contains(
+                        responseData.Errors, 
+                        nameof(AuthenticateRequest.EmailAddress), 
+                        InterchangeExceptionMessages.Required);
                 });
             }
 

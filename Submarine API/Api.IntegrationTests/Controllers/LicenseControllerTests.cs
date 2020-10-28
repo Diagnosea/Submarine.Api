@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses.License;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.License.Entities;
+using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.TestPack;
 using MongoDB.Driver;
 using NUnit.Framework;
@@ -24,11 +26,13 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
     public class LicenseControllerTests : WebApiIntegrationTests<Startup>
     {
         private IMongoCollection<LicenseEntity> _licenseCollection;
+        private IMongoCollection<UserEntity> _userCollecion;
 
         [OneTimeSetUp]
         public void SetUp()
         {
             _licenseCollection = MongoDatabase.GetEntityCollection<LicenseEntity>();
+            _userCollecion = MongoDatabase.GetEntityCollection<UserEntity>();
         }
 
         [TearDown]
@@ -37,6 +41,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             HttpClient.ClearBearerToken();
 
             _licenseCollection.DeleteMany(FilterDefinition<LicenseEntity>.Empty);
+            _userCollecion.DeleteMany(FilterDefinition<UserEntity>.Empty);
         }
 
         public class CreateLicenseAsync : LicenseControllerTests
@@ -60,10 +65,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             public async Task GivenInvalidRole_RespondsWithForbidden()
             {
                 // Arrange
-                var bearerTokn = new TestBearerTokenBuilder().Build();
+                var bearerToken = new TestBearerTokenBuilder().Build();
                 var request = new CreateLicenseRequest();
 
-                HttpClient.SetBearerToken(bearerTokn);
+                HttpClient.SetBearerToken(bearerToken);
                 
                 // Act
                 var response = await HttpClient.PostAsJsonAsync(_url, request);
@@ -264,49 +269,54 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 });
             }
 
-            // [Test]
-            // public async Task GivenValidRequest_CreatesLicense()
-            // {
-            //     // Arrange
-            //     var bearerToken = new TestBearerTokenBuilder()
-            //         .WithRole(UserRole.Licenser)
-            //         .Build();
-            //     
-            //     var request = new CreateLicenseRequest
-            //     {
-            //         UserId = Guid.NewGuid(),
-            //         Products = new List<CreateLicenseProductRequest>
-            //         {
-            //             new CreateLicenseProductRequest
-            //             {
-            //                 Name = "Submarine",
-            //                 Expiration = DateTime.UtcNow
-            //             }
-            //         }
-            //     };
-            //
-            //     HttpClient.SetBearerToken(bearerToken);
-            //     
-            //     // Act
-            //     var response = await HttpClient.PostAsJsonAsync(_url, request);
-            //     
-            //     // Assert
-            //     var responseData = await response.Content.ReadFromJsonAsync<CreatedLicenseResponse>();
-            //
-            //     var license = await _licenseCollection
-            //         .Find(x => x.Id == responseData.LicenseId)
-            //         .FirstOrDefaultAsync();
-            //     
-            //     Assert.Multiple(() =>
-            //     {
-            //         AssertCreatedLicenseResponse(responseData);
-            //         AssertCreatedLicense(license, request);
-            //
-            //         var product = license.Products.FirstOrDefault(x => x.Name == request.Products[0].Name);
-            //         
-            //         AssertCreatedLicenseProduct(license, product);
-            //     });
-            // }
+            [Test]
+            public async Task GivenValidRequest_CreatesLicense()
+            {
+                // Arrange
+                SetLicenserBearerToken();
+
+                var userId = Guid.NewGuid();
+
+                var request = new CreateLicenseRequest
+                {
+                    UserId = userId,
+                    Products = new List<CreateLicenseProductRequest>
+                    {
+                        new CreateLicenseProductRequest
+                        {
+                            Name = "Submarine",
+                            Expiration = DateTime.UtcNow.AddDays(20)
+                        }
+                    }
+                };
+
+                var user = new UserEntity
+                {
+                    Id = userId
+                };
+
+                await _userCollecion.InsertOneAsync(user);
+
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(_url, request);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<CreatedLicenseResponse>();
+            
+                var license = await _licenseCollection
+                    .Find(x => x.Id == responseData.LicenseId)
+                    .FirstOrDefaultAsync();
+                
+                Assert.Multiple(() =>
+                {
+                    AssertCreatedLicenseResponse(responseData);
+                    AssertCreatedLicense(license, request);
+            
+                    var product = license.Products.FirstOrDefault(x => x.Name == request.Products[0].Name);
+                    
+                    AssertCreatedLicenseProduct(license, product, request);
+                });
+            }
         }
         
         private void SetLicenserBearerToken()
@@ -327,22 +337,20 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
         private static void AssertCreatedLicense(LicenseEntity license, CreateLicenseRequest request)
         {
             DiagnoseaAssert.That(license.Created, Is.EqualTo(DateTime.UtcNow));
-            
-            // TODO: Assert for License Key
-            // Assert.That(license.Key, Is.Not.Null);
-            // Assert.That(BCrypt.Net.BCrypt.Verify($"{request.UserId}-{request.Products[0].Name}", license.Key));
-            
+            Assert.That(BCrypt.Net.BCrypt.Verify(request.UserId.ToString(), license.Key));
             Assert.That(license.UserId, Is.EqualTo(request.UserId));
         }
 
-        private static void AssertCreatedLicenseProduct(LicenseEntity license, LicenseProductEntity product)
+        private static void AssertCreatedLicenseProduct(LicenseEntity license, LicenseProductEntity product, CreateLicenseRequest request)
         {
             Assert.That(product, Is.Not.Null);
             Assert.That(product.Key, Is.Not.Null);
             
             var productKey = $"{license.UserId}-{product.Name}";
-            var verified = BCrypt.Net.BCrypt.Verify(productKey, product.Key);
-            Assert.That(verified);
+            Assert.That(BCrypt.Net.BCrypt.Verify(productKey, product.Key));
+
+            DiagnoseaAssert.That(product.Created, Is.EqualTo(DateTime.UtcNow));
+            DiagnoseaAssert.That(product.Expiration, Is.EqualTo(request.Products[0].Expiration));
         }
     }
 }

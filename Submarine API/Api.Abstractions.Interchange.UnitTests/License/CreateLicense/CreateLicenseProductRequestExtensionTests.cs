@@ -15,11 +15,8 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.License.Cre
             public void GivenNoExpirationValue_ThrowsSubmarineMappingException()
             {
                 // Arrange
-                var request = new CreateLicenseProductRequest
-                {
-                    Name = "This is a name"
-                };
-                
+                var request = new CreateLicenseProductRequest();
+
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
