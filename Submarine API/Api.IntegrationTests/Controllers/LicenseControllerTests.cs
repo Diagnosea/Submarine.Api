@@ -1,0 +1,210 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using Abstractions.Exceptions;
+using Diagnosea.IntegrationTestPack;
+using Diagnosea.IntegrationTestPack.Builders;
+using Diagnosea.IntegrationTestPack.Extensions;
+using Diagnosea.Submarine.Abstraction.Routes;
+using Diagnosea.Submarine.Abstractions.Enums;
+using Diagnosea.Submarine.Abstractions.Interchange.Requests.License;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses;
+using Diagnosea.Submarine.Abstractions.Interchange.Responses.License;
+using Diagnosea.Submarine.Domain.Abstractions.Extensions;
+using Diagnosea.Submarine.Domain.License.Entities;
+using Diagnosea.TestPack;
+using MongoDB.Driver;
+using NUnit.Framework;
+
+namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
+{
+    [TestFixture]
+    public class LicenseControllerTests : WebApiIntegrationTests<Startup>
+    {
+        private IMongoCollection<LicenseEntity> _licenseCollection;
+
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            _licenseCollection = MongoDatabase.GetEntityCollection<LicenseEntity>();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            HttpClient.ClearBearerToken();
+
+            _licenseCollection.DeleteMany(FilterDefinition<LicenseEntity>.Empty);
+        }
+
+        public class CreateLicenseAsync : LicenseControllerTests
+        {
+            private readonly string _url = $"{RouteConstants.Version1}/{RouteConstants.License.Base}";
+
+            [Test]
+            public async Task GivenNoBearerToken_RespondsWithUnauthorized()
+            {
+                // Arrange
+                var request = new CreateLicenseRequest();
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(_url, request);
+                
+                // Assert
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            }
+
+            [Test]
+            public async Task GivenInvalidRole_RespondsWithForbidden()
+            {
+                // Arrange
+                var bearerTokn = new TestBearerTokenBuilder().Build();
+                var request = new CreateLicenseRequest();
+
+                HttpClient.SetBearerToken(bearerTokn);
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(_url, request);
+                
+                // Assert
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+            }
+
+            [Test]
+            public async Task GivenNoUserId_RespondsWithBadRequestAndModelState()
+            {
+                // Arrange
+                var bearerTokn = new TestBearerTokenBuilder()
+                    .WithRole(UserRole.Licenser)
+                    .Build();
+
+                var request = new CreateLicenseRequest();
+
+                HttpClient.SetBearerToken(bearerTokn);
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(_url, request);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(CreateLicenseRequest.UserId), InterchangeExceptionMessages.Required);
+                });
+            }
+
+            [Test]
+            public async Task GivenNoProductName_RespondsWithBadRequestAndModelState()
+            {
+                // Arrange
+                var bearerToken = new TestBearerTokenBuilder()
+                    .WithRole(UserRole.Licenser)
+                    .Build();
+
+                var request = new CreateLicenseRequest
+                {
+                    UserId = Guid.NewGuid(),
+                    Products = new List<CreateLicenseProductRequest>
+                    {
+                        new CreateLicenseProductRequest()
+                    }
+                };
+
+                HttpClient.SetBearerToken(bearerToken);
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(_url, request);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                    DiagnoseaAssert.Contains(
+                        responseData.Errors, 
+                        nameof(CreateLicenseRequest.Products),
+                        0,
+                        nameof(CreateLicenseProductRequest.Name), 
+                        InterchangeExceptionMessages.Required);
+                });
+            }
+
+            [Test]
+            public async Task GivenValidRequest_CreatesLicense()
+            {
+                // Arrange
+                var bearerToken = new TestBearerTokenBuilder()
+                    .WithRole(UserRole.Licenser)
+                    .Build();
+                
+                var request = new CreateLicenseRequest
+                {
+                    UserId = Guid.NewGuid(),
+                    Products = new List<CreateLicenseProductRequest>
+                    {
+                        new CreateLicenseProductRequest
+                        {
+                            Name = "Submarine",
+                            Expiration = DateTime.UtcNow
+                        }
+                    }
+                };
+
+                HttpClient.SetBearerToken(bearerToken);
+                
+                // Act
+                var response = await HttpClient.PostAsJsonAsync(_url, request);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<CreatedLicenseResponse>();
+
+                var license = await _licenseCollection
+                    .Find(x => x.Id == responseData.LicenseId)
+                    .FirstOrDefaultAsync();
+                
+                Assert.Multiple(() =>
+                {
+                    AssertCreatedLicenseResponse(responseData);
+                    AssertCreatedLicense(license, request);
+
+                    var product = license.Products.FirstOrDefault(x => x.Name == request.Products[0].Name);
+                    
+                    AssertCreatedLicenseProduct(license, product);
+                });
+            }
+        }
+
+        private static void AssertCreatedLicenseResponse(CreatedLicenseResponse response)
+        {
+            Assert.That(response.LicenseId, Is.Not.Null);
+            Assert.That(response.LicenseId, Is.Not.EqualTo(Guid.Empty));
+        }
+
+        private static void AssertCreatedLicense(LicenseEntity license, CreateLicenseRequest request)
+        {
+            DiagnoseaAssert.That(license.Created, Is.EqualTo(DateTime.UtcNow));
+            
+            // TODO: Assert for License Key
+            // Assert.That(license.Key, Is.Not.Null);
+            // Assert.That(BCrypt.Net.BCrypt.Verify($"{request.UserId}-{request.Products[0].Name}", license.Key));
+            
+            Assert.That(license.UserId, Is.EqualTo(request.UserId));
+        }
+
+        private static void AssertCreatedLicenseProduct(LicenseEntity license, LicenseProductEntity product)
+        {
+            Assert.That(product, Is.Not.Null);
+            Assert.That(product.Key, Is.Not.Null);
+            
+            var productKey = $"{license.UserId}-{product.Name}";
+            var verified = BCrypt.Net.BCrypt.Verify(productKey, product.Key);
+            Assert.That(verified);
+        }
+    }
+}

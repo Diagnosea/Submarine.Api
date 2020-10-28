@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.License;
@@ -17,7 +18,7 @@ using Swashbuckle.AspNetCore.Filters;
 namespace Diagnosea.Submarine.Api.Controllers
 {
     [ApiController]
-    [SubmarineAuthorize(UserRole.Administrator)]
+    [SubmarineAuthorize(UserRole.Licenser)]
     [Route("v{version:apiVersion}/" + RouteConstants.License.Base)]
     public class LicenseController : ControllerBase
     {
@@ -32,7 +33,9 @@ namespace Diagnosea.Submarine.Api.Controllers
         [ActionName(nameof(GetLicenseAsync))]
         public IActionResult GetLicenseAsync([FromRoute] Guid licenseId)
         {
-            return Ok($"You gave {licenseId}");
+            throw new SubmarineException(
+                SubmarineExceptionCode.Unknown, 
+                $"This endpoint is not usable. You gave License ID: '{licenseId}'");
         }
         
         [HttpPost]
@@ -42,7 +45,7 @@ namespace Diagnosea.Submarine.Api.Controllers
         [SwaggerRequestExample(typeof(CreateLicenseRequest), typeof(CreateLicenseRequestExamplesProvider))]
         public async Task<IActionResult> CreateLicenseAsync([FromBody] CreateLicenseRequest createLicense, ApiVersion version)
         {
-            var createdLicense= await _licenseInstructor.CreateAsync(createLicense.ToDto());
+            var createdLicense = await _licenseInstructor.CreateAsync(createLicense.ToDto());
 
             var routeValues = new
             {

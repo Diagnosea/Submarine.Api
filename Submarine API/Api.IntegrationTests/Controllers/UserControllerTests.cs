@@ -43,7 +43,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             private string GetUrl(Guid id) => $"{_url}/{id}";
             
             [Test]
-            public async Task GivenBearerToken_RespondsWithUnauthorized()
+            public async Task GivenNoBearerToken_RespondsWithUnauthorized()
             {
                 // Arrange
                 var userId = Guid.NewGuid();
