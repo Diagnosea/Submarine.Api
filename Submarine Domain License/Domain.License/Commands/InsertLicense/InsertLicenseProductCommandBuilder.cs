@@ -6,6 +6,7 @@ namespace Diagnosea.Submarine.Domain.License.Commands.InsertLicense
     {
         private string _title;
         private string _key;
+        private DateTime _created;
         private DateTime? _expiration;
 
         public InsertLicenseProductCommandBuilder WithName(string name)
@@ -17,6 +18,12 @@ namespace Diagnosea.Submarine.Domain.License.Commands.InsertLicense
         public InsertLicenseProductCommandBuilder WithKey(string key)
         {
             _key = key;
+            return this;
+        }
+
+        public InsertLicenseProductCommandBuilder WithCreated(DateTime created)
+        {
+            _created = created;
             return this;
         }
 
@@ -32,6 +39,7 @@ namespace Diagnosea.Submarine.Domain.License.Commands.InsertLicense
             {
                 Name = _title,
                 Key = _key,
+                Created = _created,
                 Expiration = _expiration
             };
         }

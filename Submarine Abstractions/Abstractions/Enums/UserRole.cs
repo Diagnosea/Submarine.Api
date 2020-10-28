@@ -3,6 +3,7 @@
     public enum UserRole
     {
         Standard,
+        Licenser,
         Administrator
     }
 }

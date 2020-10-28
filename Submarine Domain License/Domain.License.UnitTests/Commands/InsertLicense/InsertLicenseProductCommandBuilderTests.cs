@@ -50,6 +50,28 @@ namespace Submarine.Domain.License.UnitTests.Commands.InsertLicense
                 });
             }
         }
+        
+        public class WithCreated : InsertLicenseProductCommandBuilderTests
+        {
+            [Test]
+            public void GivenKey_BuildsWitKey()
+            {
+                // Arrange
+                var builder = new InsertLicenseProductCommandBuilder();
+                var created = DateTime.UtcNow;
+                
+                // Act
+                var result = builder.WithCreated(created);
+                var build = builder.Build();
+                
+                // Assert
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result, Is.EqualTo(builder));
+                    Assert.That(build.Created, Is.EqualTo(created));
+                });
+            }
+        }
 
         public class WithExpiration : InsertLicenseProductCommandBuilderTests
         {

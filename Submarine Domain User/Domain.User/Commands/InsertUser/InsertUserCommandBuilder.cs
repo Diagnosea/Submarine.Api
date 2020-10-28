@@ -11,7 +11,7 @@ namespace Diagnosea.Submarine.Domain.User.Commands.InsertUser
         private string _password;
         private string _userName;
         private string _friendlyName;
-        private IList<UserRole> _roles = new List<UserRole>();
+        private readonly IList<UserRole> _roles = new List<UserRole>();
 
         public InsertUserCommandBuilder WithId(Guid id)
         {

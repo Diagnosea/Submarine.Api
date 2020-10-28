@@ -5,8 +5,8 @@ namespace Diagnosea.Submarine.Domain.Abstractions.Extensions
 {
     public static class MongoDatabaseExtensions
     {
-        private static string EntitySuffix = "Entity";
-        
+        private const string EntitySuffix = "Entity";
+
         public static IMongoCollection<TEntity> GetEntityCollection<TEntity>(this IMongoDatabase mongoDatabase) where TEntity : class
         {
             var entityName = typeof(TEntity).Name;

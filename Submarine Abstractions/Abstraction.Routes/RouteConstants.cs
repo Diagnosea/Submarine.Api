@@ -15,5 +15,10 @@
         {
             public const string Base = "user";
         }
+
+        public static class License
+        {
+            public const string Base = "license";
+        }
     }
 }

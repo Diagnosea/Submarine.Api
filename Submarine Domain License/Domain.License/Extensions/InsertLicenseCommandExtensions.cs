@@ -11,6 +11,8 @@ namespace Diagnosea.Submarine.Domain.License.Extensions
             return new LicenseEntity
             {
                 Id = command.Id,
+                Key = command.Key,
+                Created = command.Created,
                 UserId = command.UserId,
                 Products = command.Products.Select(x => x.ToEntity()).ToList()
             };

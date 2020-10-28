@@ -6,6 +6,7 @@ namespace Diagnosea.Submarine.Domain.License.Commands.InsertLicense
     {
         public string Name { get; set; }
         public string Key { get; set; }
+        public DateTime Created { get; set; }
         public DateTime? Expiration { get; set; }
     }
 }

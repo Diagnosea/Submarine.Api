@@ -300,8 +300,11 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 
                 Assert.Multiple(() =>
                 {
-                    Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.EmailAddress), InterchangeExceptionMessages.Required);
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+                    DiagnoseaAssert.Contains(
+                        responseData.Errors, 
+                        nameof(AuthenticateRequest.EmailAddress), 
+                        InterchangeExceptionMessages.Required);
                 });
             }
 
@@ -909,7 +912,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-                    var productClaims = securityToken.Claims.Where(x => x.Type == SubmarineRegisteredClaimNames.Products);
+                    var productClaims = securityToken.Claims
+                        .Where(x => x.Type == SubmarineRegisteredClaimNames.Products)
+                        .ToList();
+                    
                     var testProductOneClaim = productClaims.FirstOrDefault(x => x.Value == testProductOneName);
                     var testProductTwoClaim = productClaims.FirstOrDefault(x => x.Value == testProductTwoName);
                     

@@ -5,6 +5,7 @@ using Diagnosea.Submarine.Api.Settings;
 using Diagnosea.Submarine.Domain.Abstractions.Extensions;
 using Diagnosea.Submarine.Domain.Authentication.Extensions;
 using Diagnosea.Submarine.Domain.Extensions;
+using Diagnosea.Submarine.Domain.License;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,9 +27,11 @@ namespace Diagnosea.Submarine.Api
         {
             var databaseSettings = _configuration.GetSettings<DatabaseSettings>();
             var authenticationSettings = _configuration.GetSettings<AuthenticationSettings>();
+            var licenseSettings = _configuration.GetSettings<LicenseSettings>();
 
             // Add Settings
             services.AddSubmarineAuthenticationSettings(authenticationSettings);
+            services.AddSingleton<ILicenseSettings>(licenseSettings);
 
             // Dependencies
             services.AddSubmarineMediator();

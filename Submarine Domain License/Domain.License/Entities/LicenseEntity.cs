@@ -7,7 +7,8 @@ namespace Diagnosea.Submarine.Domain.License.Entities
     {
         public Guid Id { get; set; }
         public string Key { get; set; }
-        public IList<LicenseProductEntity> Products { get; set; } = new List<LicenseProductEntity>();
+        public DateTime Created { get; set; }
         public Guid UserId { get; set; }
+        public IList<LicenseProductEntity> Products { get; set; } = new List<LicenseProductEntity>();
     }
 }

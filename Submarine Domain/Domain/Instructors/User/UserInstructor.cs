@@ -11,7 +11,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.User
 {
     public class UserInstructor : IUserInstructor
     {
-        private IMediator _mediator;
+        private readonly IMediator _mediator;
 
         public UserInstructor(IMediator mediator)
         {
