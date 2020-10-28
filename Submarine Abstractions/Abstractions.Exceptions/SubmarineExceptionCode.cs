@@ -20,6 +20,11 @@
         /// <summary>
         /// Typically used when comparing hashes.
         /// </summary>
-        DataMismatchException
+        DataMismatchException,
+        
+        /// <summary>
+        /// Trouble mapping two objects.
+        /// </summary>
+        MappingException
     }
 }

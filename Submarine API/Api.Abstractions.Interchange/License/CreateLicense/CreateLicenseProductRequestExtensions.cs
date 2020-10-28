@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.License;
 using Diagnosea.Submarine.Domain.License.Dtos;
 
@@ -10,8 +10,9 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.License.CreateLicense
         {
             if (!createLicenseProduct.Expiration.HasValue)
             {
-                // TODO HOW HAS IT GOT HERE? IS THERE SOMETHING BETTER I CAN DO HERE.
-                throw new Exception("Oh no");
+                throw new SubmarineMappingException(
+                    $"No Expiration Value for Licensed Product '{createLicenseProduct.Name}'",
+                    MappingExceptionMessages.Failed);
             }
             
             return new CreateLicenseProductDto
