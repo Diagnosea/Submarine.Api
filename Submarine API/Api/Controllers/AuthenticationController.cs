@@ -8,6 +8,7 @@ using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authentica
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Register;
 using Diagnosea.Submarine.Api.Abstractions.Swagger.Examples;
 using Diagnosea.Submarine.Domain.Instructors.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -16,6 +17,7 @@ using Swashbuckle.AspNetCore.Filters;
 namespace Diagnosea.Submarine.Api.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("v{version:apiVersion}/" + RouteConstants.Authentication.Base)]
     public class AuthenticationController : ControllerBase
     {

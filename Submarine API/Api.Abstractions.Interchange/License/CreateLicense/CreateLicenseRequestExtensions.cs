@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.License;
 using Diagnosea.Submarine.Domain.License.Dtos;
 
@@ -11,8 +11,9 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.License.CreateLicense
         {
             if (!createLicense.UserId.HasValue)
             {
-                // TODO HOW HAS IT GOT HERE? IS THERE SOMETHING BETTER I CAN DO HERE.
-                throw new Exception("Oh no");
+                throw new SubmarineMappingException(
+                    $"No UserId Value for License",
+                    MappingExceptionMessages.Failed);
             }
 
             return new CreateLicenseDto
