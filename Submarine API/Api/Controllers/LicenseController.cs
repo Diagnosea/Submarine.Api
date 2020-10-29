@@ -46,7 +46,7 @@ namespace Diagnosea.Submarine.Api.Controllers
         [SwaggerResponse(StatusCodes.Status409Conflict, Type = typeof(ExceptionResponse))]
         [SwaggerRequestExample(typeof(CreateLicenseRequest), typeof(CreateLicenseRequestExamplesProvider))]
         public async Task<IActionResult> CreateLicenseAsync(
-            [FromBody] CreateLicenseRequest createLicense, ApiVersion version, CancellationToken token)
+            [FromBody] CreateLicenseRequest createLicense, [FromRoute] ApiVersion version, CancellationToken token)
         {
             var createdLicense = await _licenseInstructor.CreateAsync(createLicense.ToDto(), token);
 

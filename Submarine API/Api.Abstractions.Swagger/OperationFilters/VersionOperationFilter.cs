@@ -8,11 +8,39 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.OperationFilters
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            var parameter = operation.Parameters.FirstOrDefault(x => x.Name == "version");
+            var versionParameter = operation.Parameters.FirstOrDefault(x => x.Name == "version");
 
-            if (parameter != null)
+            if (versionParameter != null)
             {
-                operation.Parameters.Remove(parameter);
+                operation.Parameters.Remove(versionParameter);
+            }
+
+            var groupVersionParameter = operation.Parameters.FirstOrDefault(x => x.Name == "GroupVersion");
+
+            if (groupVersionParameter != null)
+            {
+                operation.Parameters.Remove(groupVersionParameter);
+            }
+            
+            var majorVersionParameter = operation.Parameters.FirstOrDefault(x => x.Name == "MajorVersion");
+
+            if (majorVersionParameter != null)
+            {
+                operation.Parameters.Remove(majorVersionParameter);
+            }
+            
+            var minorVersionParameter = operation.Parameters.FirstOrDefault(x => x.Name == "MinorVersion");
+
+            if (minorVersionParameter != null)
+            {
+                operation.Parameters.Remove(minorVersionParameter);
+            }
+            
+            var statusParameter = operation.Parameters.FirstOrDefault(x => x.Name == "Status");
+
+            if (statusParameter != null)
+            {
+                operation.Parameters.Remove(statusParameter);
             }
         }
     }
