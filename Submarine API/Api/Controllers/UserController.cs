@@ -5,6 +5,7 @@ using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.User;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses.User;
+using Diagnosea.Submarine.Api.Abstractions.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.User;
 using Diagnosea.Submarine.Domain.Instructors.User;
@@ -16,7 +17,7 @@ namespace Diagnosea.Submarine.Api.Controllers
 {
     [ApiController]
     [SubmarineAuthorize]
-    [Route("v{version:apiVersion}/" + RouteConstants.User.Base)]
+    [DiagnoseaRoute(RouteConstants.User.Base)]
     public class UserController : ControllerBase
     {
         private readonly IUserInstructor _userInstructor;
