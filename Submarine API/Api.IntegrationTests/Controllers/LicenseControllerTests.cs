@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -131,15 +130,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
 
                 var request = new CreateLicenseRequest
                 {
-                    UserId = userId,
-                    Products = new List<CreateLicenseProductRequest>
-                    {
-                        new CreateLicenseProductRequest
-                        {
-                            Name = "Submarine",
-                            Expiration = DateTime.UtcNow.AddDays(20)
-                        }
-                    }
+                    UserId = userId
                 };
 
                 var user = new UserEntity
@@ -187,18 +178,6 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             DiagnoseaAssert.That(license.Created, Is.EqualTo(DateTime.UtcNow));
             Assert.That(BCrypt.Net.BCrypt.Verify(request.UserId.ToString(), license.Key));
             Assert.That(license.UserId, Is.EqualTo(request.UserId));
-        }
-
-        private static void AssertCreatedLicenseProduct(LicenseEntity license, LicenseProductEntity product, CreateLicenseRequest request)
-        {
-            Assert.That(product, Is.Not.Null);
-            Assert.That(product.Key, Is.Not.Null);
-            
-            var productKey = $"{license.UserId}-{product.Name}";
-            Assert.That(BCrypt.Net.BCrypt.Verify(productKey, product.Key));
-
-            DiagnoseaAssert.That(product.Created, Is.EqualTo(DateTime.UtcNow));
-            DiagnoseaAssert.That(product.Expiration, Is.EqualTo(request.Products[0].Expiration));
         }
     }
 }

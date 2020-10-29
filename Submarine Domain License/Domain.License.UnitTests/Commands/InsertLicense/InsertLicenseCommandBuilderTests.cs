@@ -94,27 +94,5 @@ namespace Submarine.Domain.License.UnitTests.Commands.InsertLicense
                 });
             }
         }
-
-        public class WithProduct : InsertLicenseCommandBuilderTests
-        {
-            [Test]
-            public void GivenInsertLicenseProductCommand_BuildsWithInsertLicenseProductCommand()
-            {
-                // Arrange
-                var builder = new InsertLicenseCommandBuilder();
-                var insertLicenseProductCommand = new InsertLicenseProductCommand();
-                
-                // Act
-                var result = builder.WithProduct(insertLicenseProductCommand);
-                var build = builder.Build();
-                
-                // Assert
-                Assert.Multiple(() =>
-                {
-                    Assert.That(result, Is.EqualTo(builder));
-                    CollectionAssert.Contains(build.Products, insertLicenseProductCommand);
-                });
-            }
-        }
     }
 }
