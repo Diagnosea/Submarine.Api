@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -123,153 +122,6 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             }
 
             [Test]
-            public async Task GivenNoProductName_RespondsWithBadRequestAndModelState()
-            {
-                // Arrange
-                SetLicenserBearerToken();
-
-                var request = new CreateLicenseRequest
-                {
-                    UserId = Guid.NewGuid(),
-                    Products = new List<CreateLicenseProductRequest>
-                    {
-                        new CreateLicenseProductRequest
-                        {
-                            Expiration = DateTime.UtcNow.AddSeconds(20)
-                        }
-                    }
-                };
-
-                // Act
-                var response = await HttpClient.PostAsJsonAsync(_url, request);
-                
-                // Assert
-                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
-                
-                Assert.Multiple(() =>
-                {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(
-                        responseData.Errors, 
-                        nameof(CreateLicenseRequest.Products),
-                        0,
-                        nameof(CreateLicenseProductRequest.Name), 
-                        InterchangeExceptionMessages.Required);
-                });
-            }
-
-            [Test]
-            public async Task GivenEmptyProductName_RespondsWithBadRequestAndModelState()
-            {
-                // Arrange
-                SetLicenserBearerToken();
-
-                var request = new CreateLicenseRequest
-                {
-                    UserId = Guid.NewGuid(),
-                    Products = new List<CreateLicenseProductRequest>
-                    {
-                        new CreateLicenseProductRequest
-                        {
-                            Name = string.Empty,
-                            Expiration = DateTime.UtcNow.AddSeconds(20)
-                        }
-                    }
-                };
-
-                // Act
-                var response = await HttpClient.PostAsJsonAsync(_url, request);
-                
-                // Assert
-                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
-                
-                Assert.Multiple(() =>
-                {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(
-                        responseData.Errors, 
-                        nameof(CreateLicenseRequest.Products),
-                        0,
-                        nameof(CreateLicenseProductRequest.Name), 
-                        InterchangeExceptionMessages.Required);
-                });
-            }
-
-            [Test]
-            public async Task GivenProductNameOverCharacterLimit_RespondsWithBadRequestAndModelState()
-            {
-                // Arrange
-                SetLicenserBearerToken();
-
-                var request = new CreateLicenseRequest
-                {
-                    UserId = Guid.NewGuid(),
-                    Products = new List<CreateLicenseProductRequest>
-                    {
-                        new CreateLicenseProductRequest
-                        {
-                            Name = new string('A', 51),
-                            Expiration = DateTime.UtcNow.AddSeconds(20)
-                        }
-                    }
-                };
-
-                // Act
-                var response = await HttpClient.PostAsJsonAsync(_url, request);
-                
-                // Assert
-                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
-                
-                Assert.Multiple(() =>
-                {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(
-                        responseData.Errors, 
-                        nameof(CreateLicenseRequest.Products),
-                        0,
-                        nameof(CreateLicenseProductRequest.Name), 
-                        $"{InterchangeExceptionMessages.InvalidStringLength}|0|50");
-                });
-            }
-
-            [Test]
-            public async Task GivenProductExpirationBeforeNow_RespondsWithBadRequestAndModelState()
-            {
-                // Arrange
-                SetLicenserBearerToken();
-
-                var request = new CreateLicenseRequest
-                {
-                    UserId = Guid.NewGuid(),
-                    Products = new List<CreateLicenseProductRequest>
-                    {
-                        new CreateLicenseProductRequest
-                        {
-                            Name = "Name",
-                            Expiration = DateTime.UtcNow.AddSeconds(-20)
-                        }
-                    }
-                };
-                
-                // Act
-                var response = await HttpClient.PostAsJsonAsync(_url, request);
-                
-                // Assert
-                var responseData = await response.Content.ReadFromJsonAsync<ValidationResponse>();
-                
-                Assert.Multiple(() =>
-                {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(
-                        responseData.Errors, 
-                        nameof(CreateLicenseRequest.Products),
-                        0,
-                        nameof(CreateLicenseProductRequest.Expiration), 
-                        InterchangeExceptionMessages.InvalidDateAfterNow);
-                });
-            }
-
-            [Test]
             public async Task GivenValidRequest_CreatesLicense()
             {
                 // Arrange
@@ -311,10 +163,6 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 {
                     AssertCreatedLicenseResponse(responseData);
                     AssertCreatedLicense(license, request);
-            
-                    var product = license.Products.FirstOrDefault(x => x.Name == request.Products[0].Name);
-                    
-                    AssertCreatedLicenseProduct(license, product, request);
                 });
             }
         }
