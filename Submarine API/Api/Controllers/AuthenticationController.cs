@@ -4,6 +4,7 @@ using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.Authentication;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses.Authentication;
+using Diagnosea.Submarine.Api.Abstractions.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Authenticate;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.Authentication.Register;
 using Diagnosea.Submarine.Api.Abstractions.Swagger.Examples;
@@ -18,7 +19,7 @@ namespace Diagnosea.Submarine.Api.Controllers
 {
     [ApiController]
     [AllowAnonymous]
-    [Route("v{version:apiVersion}/" + RouteConstants.Authentication.Base)]
+    [DiagnoseaRoute(RouteConstants.Authentication.Base)]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationInstructor _authenticationInstructor;
