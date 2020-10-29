@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Abstractions.Exceptions;
+﻿using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.License;
 using Diagnosea.Submarine.Domain.License.Dtos;
 
@@ -18,10 +17,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.License.CreateLicense
 
             return new CreateLicenseDto
             {
-                UserId = createLicense.UserId.Value,
-                Products = createLicense.Products
-                    .Select(x => x.ToDto())
-                    .ToList()
+                UserId = createLicense.UserId.Value
             };
         }
     }

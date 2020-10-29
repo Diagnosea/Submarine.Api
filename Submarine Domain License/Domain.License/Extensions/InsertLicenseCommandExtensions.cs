@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
+﻿using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Entities;
 
 namespace Diagnosea.Submarine.Domain.License.Extensions
@@ -13,8 +12,7 @@ namespace Diagnosea.Submarine.Domain.License.Extensions
                 Id = command.Id,
                 Key = command.Key,
                 Created = command.Created,
-                UserId = command.UserId,
-                Products = command.Products.Select(x => x.ToEntity()).ToList()
+                UserId = command.UserId
             };
         }
     }

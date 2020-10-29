@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Extensions;
-using Diagnosea.TestPack;
 using NUnit.Framework;
 
 namespace Submarine.Domain.License.UnitTests.Extensions
@@ -20,8 +17,7 @@ namespace Submarine.Domain.License.UnitTests.Extensions
                 var command = new InsertLicenseCommand
                 {
                     Id = Guid.NewGuid(),
-                    UserId = Guid.NewGuid(),
-                    Products = new List<InsertLicenseProductCommand>()
+                    UserId = Guid.NewGuid()
                 };
                 
                 // Act
@@ -43,16 +39,7 @@ namespace Submarine.Domain.License.UnitTests.Extensions
                 var command = new InsertLicenseCommand
                 {
                     Id = Guid.NewGuid(),
-                    UserId = Guid.NewGuid(),
-                    Products = new List<InsertLicenseProductCommand>
-                    {
-                        new InsertLicenseProductCommand
-                        {
-                            Name = "This is a product",
-                            Key = "This is a product key",
-                            Expiration = DateTime.UtcNow.AddDays(1)
-                        }
-                    }
+                    UserId = Guid.NewGuid()
                 };
                 
                 // Act
@@ -63,13 +50,6 @@ namespace Submarine.Domain.License.UnitTests.Extensions
                 {
                     Assert.That(result.Id, Is.EqualTo(command.Id));
                     Assert.That(result.UserId, Is.EqualTo(command.UserId));
-
-                    var product = command.Products.FirstOrDefault();
-                    var stub = result.Products.FirstOrDefault();
-
-                    Assert.That(stub.Name, Is.EqualTo(product.Name));
-                    Assert.That(stub.Key, Is.EqualTo(product.Key));
-                    DiagnoseaAssert.That(stub.Expiration, Is.EqualTo(product.Expiration));
                 });
             }
         }
