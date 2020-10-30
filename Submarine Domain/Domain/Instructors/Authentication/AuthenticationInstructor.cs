@@ -61,7 +61,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             
             var license = await GetLicenseByUserIdAsync(user.Id, token);
 
-            var productNames = license.Products.Select(product => product.Name);
+            var productNames = license.Products
+                .Where(x => x.Expiration > DateTime.UtcNow)
+                .Select(product => product.Name);
             
             var generateBearerTokenQuery = new GenerateBearerTokenQueryBuilder()
                 .WithSubject(user.Id.ToString())

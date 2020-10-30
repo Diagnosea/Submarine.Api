@@ -66,8 +66,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
                     Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserExistsWithEmail));
                 });
-                
-                
+
                 _mediator.VerifyHandler<GetUserByEmailQuery, UserEntity>(query => query.EmailAddress == register.EmailAddress, Times.Once());
             }
             
@@ -223,8 +222,20 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
 
                 const bool isPasswordValid = true;
 
+                var unexpiredProduct = new TestLicenseProductEntityBuilder()
+                    .WithName("Unexpired Product Name")
+                    .WithExpiration(DateTime.UtcNow.AddDays(1))
+                    .Build();
+
+                var expiredProduct = new TestLicenseProductEntityBuilder()
+                    .WithName("Expired Product Name")
+                    .WithExpiration(DateTime.UtcNow.AddDays(-2))
+                    .Build();
+
                 var license = new TestLicenseEntityBuilder()
                     .WithKey(licenseKey)
+                    .WithProduct(unexpiredProduct)
+                    .WithProduct(expiredProduct)
                     .Build();
 
                 const string bearerToken = "This is a bearer token";
@@ -250,6 +261,8 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 return query.Subject == user.Id.ToString() &&
                        query.Name == user.EmailAddress &&
                        query.Audience == audience &&
+                       query.Products.Contains("Unexpired Product Name") &&
+                       !query.Products.Contains("Expired Product Name") && 
                        query.Roles.Contains(UserRole.Standard.ToString());
             }
         }
