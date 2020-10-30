@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.IntegrationTestPack;
 using Diagnosea.Submarine.Domain.License.Entities;
 using Diagnosea.Submarine.Domain.License.Queries.GetLicenseById;
+using Diagnosea.TestPack;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -66,7 +68,20 @@ namespace Submarine.Domain.License.IntegrationTests.Queries.GetLicenseById
 
                 var license = new LicenseEntity
                 {
-                    Id = licenseId
+                    Id = licenseId,
+                    Key = "This is a key",
+                    Created = DateTime.UtcNow,
+                    UserId = Guid.NewGuid(),
+                    Products = new List<LicenseProductEntity>
+                    {
+                        new LicenseProductEntity
+                        {
+                            Name = "Product Name",
+                            Key = "This is a key",
+                            Created = DateTime.UtcNow,
+                            Expiration = DateTime.UtcNow.AddDays(1)
+                        }
+                    }
                 };
 
                 await _licenseCollection.InsertOneAsync(license, null, CancellationToken.None);
@@ -78,8 +93,14 @@ namespace Submarine.Domain.License.IntegrationTests.Queries.GetLicenseById
                 Assert.Multiple(() =>
                 {
                     Assert.That(result.Id, Is.EqualTo(licenseId));
+                    Assert.That(result.Key, Is.Not.EqualTo(license.Key));
+                    DiagnoseaAssert.That(result.Created, Is.Not.EqualTo(license.Created));
                     Assert.That(result.UserId, Is.Not.Null);
-                    CollectionAssert.IsEmpty(result.Products);
+                    CollectionAssert.IsNotEmpty(result.Products);
+                    Assert.That(result.Products[0].Name, Is.EqualTo(license.Products[0].Name));
+                    Assert.That(result.Products[0].Key, Is.Not.EqualTo(license.Products[0].Key));
+                    DiagnoseaAssert.That(result.Products[0].Created, Is.Not.EqualTo(license.Products[0].Created));
+                    DiagnoseaAssert.That(result.Products[0].Expiration, Is.EqualTo(license.Products[0].Expiration));
                 });
             }
         }

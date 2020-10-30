@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -42,6 +43,117 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             _userCollecion.DeleteMany(FilterDefinition<UserEntity>.Empty);
         }
 
+        public class GetLicenseByIdAsync : LicenseControllerTests
+        {
+            private readonly string _url = $"{RouteConstants.Version1}/{RouteConstants.License.Base}";
+            
+            private string GetUrl(Guid id) => $"{_url}/{id}";
+
+            [Test]
+            public async Task GivenNoBearerToken_RespondsWithUnauthorized()
+            {
+                // Arrange
+                var licenseId = Guid.NewGuid();
+                var url = GetUrl(licenseId);
+                
+                // Act
+                var response = await HttpClient.GetAsync(url);
+                
+                // Assert
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            }
+
+            [Test]
+            public async Task GivenInvalidRole_RespondsWithForbidden()
+            {
+                // Arrange
+                var licenseId = Guid.NewGuid();
+                var url = GetUrl(licenseId);
+                var bearerToken = new TestBearerTokenBuilder()
+                    .Build();
+                
+                HttpClient.SetBearerToken(bearerToken);
+                
+                // Act
+                var response = await HttpClient.GetAsync(url);
+                
+                // Assert
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+            }
+
+            [Test]
+            public async Task GivenLicenseDoesNotExist_RespondsWithNotFound()
+            {
+                // Arrange
+                var licenseId = Guid.NewGuid();
+                var url = GetUrl(licenseId);
+                var bearerToken = new TestBearerTokenBuilder()
+                    .WithRole(UserRole.Standard)
+                    .Build();
+                
+                HttpClient.SetBearerToken(bearerToken);
+                
+                // Act
+                var response = await HttpClient.GetAsync(url);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<ExceptionResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(responseData.TechnicalMessage, Is.Not.Null);
+                    Assert.That(responseData.UserMessage, Is.EqualTo(LicenseExceptionMessages.NoLicenseWithId));
+                });
+            }
+
+            [Test]
+            public async Task GivenLicenseExists_RespondsWithLicense()
+            {
+                // Arrange
+                var licenseId = Guid.NewGuid();
+                var url = GetUrl(licenseId);
+                var bearerToken = new TestBearerTokenBuilder()
+                    .WithRole(UserRole.Standard)
+                    .Build();
+
+                var license = new LicenseEntity
+                {
+                    Id = licenseId,
+                    Key = "This is a key",
+                    Created = DateTime.UtcNow,
+                    Products = new List<LicenseProductEntity>
+                    {
+                        new LicenseProductEntity
+                        {
+                            Name = "Product Name",
+                            Key = "This is a key",
+                            Created = DateTime.UtcNow,
+                            Expiration = DateTime.UtcNow
+                        }
+                    }
+                };
+
+                await _licenseCollection.InsertOneAsync(license);
+                
+                HttpClient.SetBearerToken(bearerToken);
+
+                // Act
+                var response = await HttpClient.GetAsync(url);
+                
+                // Assert
+                var responseData = await response.Content.ReadFromJsonAsync<LicenseResponse>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(responseData.Id, Is.EqualTo(licenseId));
+                    Assert.That(responseData.Products[0].Name, Is.EqualTo(license.Products[0].Name));
+                    DiagnoseaAssert.That(responseData.Products[0].Expiration, Is.EqualTo(license.Products[0].Expiration));
+                });
+            }
+        }
+
         public class CreateLicenseAsync : LicenseControllerTests
         {
             private readonly string _url = $"{RouteConstants.Version1}/{RouteConstants.License.Base}";
@@ -79,7 +191,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             public async Task GivenNoUserId_RespondsWithBadRequestAndModelState()
             {
                 // Arrange
-                SetLicenserBearerToken();
+                SetStandardBearerToken();
 
                 var request = new CreateLicenseRequest();
 
@@ -100,7 +212,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             public async Task GivenEmptyUserId_RespondsWithBadRequestAndModelState()
             {
                 // Arrange
-                SetLicenserBearerToken();
+                SetStandardBearerToken();
 
                 var request = new CreateLicenseRequest
                 {
@@ -124,7 +236,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             public async Task GivenValidRequest_CreatesLicense()
             {
                 // Arrange
-                SetLicenserBearerToken();
+                SetStandardBearerToken();
 
                 var userId = Guid.NewGuid();
 
@@ -158,10 +270,10 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
             }
         }
         
-        private void SetLicenserBearerToken()
+        private void SetStandardBearerToken()
         {
             var bearerToken = new TestBearerTokenBuilder()
-                .WithRole(UserRole.Licenser)
+                .WithRole(UserRole.Standard)
                 .Build();
                 
             HttpClient.SetBearerToken(bearerToken);
