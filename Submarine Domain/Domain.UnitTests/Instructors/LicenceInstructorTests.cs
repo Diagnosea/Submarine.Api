@@ -5,6 +5,8 @@ using Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Instructors.License;
 using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Dtos;
+using Diagnosea.Submarine.Domain.License.Entities;
+using Diagnosea.Submarine.Domain.License.Queries.GetLicenseById;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using Diagnosea.Submarine.UnitTestPack.Extensions;
@@ -25,6 +27,52 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
         {
             _mediator = new Mock<IMediator>();
             _classUnderTest = new LicenseInstructor(_mediator.Object);
+        }
+
+        public class GetByIdAsync : LicenceInstructorTests
+        {
+            [Test]
+            public void GivenInvalidLicenseId_ThrowsEntityNotFoundException()
+            {
+                // Arrange
+                var licenseId = Guid.NewGuid();
+
+                _mediator
+                    .SetupHandler<GetLicenseByIdQuery, LicenseEntity>();
+
+                // Act & Assert
+                Assert.Multiple(() =>
+                {
+                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(
+                        () => _classUnderTest.GetByIdAsync(licenseId, CancellationToken.None));
+                    
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.TechnicalMessage, Is.Not.Null);
+                    Assert.That(exception.UserMessage, Is.EqualTo(LicenseExceptionMessages.NoLicenseWithId));
+                });
+            }
+
+            [Test]
+            public async Task GivenValidLicense_ReturnsLicense()
+            {
+                // Arrange
+                var licenseId = Guid.NewGuid();
+
+                var license = new LicenseEntity
+                {
+                    Id = licenseId
+                };
+
+                _mediator
+                    .SetupHandler<GetLicenseByIdQuery, LicenseEntity>()
+                    .ReturnsAsync(license);
+
+                // Act
+                var result = await _classUnderTest.GetByIdAsync(licenseId, CancellationToken.None);
+
+                // Assert
+                Assert.That(result.Id, Is.EqualTo(license.Id));
+            }
         }
 
         public class CreateAsync : LicenceInstructorTests
