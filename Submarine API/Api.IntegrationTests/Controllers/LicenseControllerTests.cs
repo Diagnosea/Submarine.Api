@@ -121,11 +121,15 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var license = new LicenseEntity
                 {
                     Id = licenseId,
+                    Key = "This is a key",
+                    Created = DateTime.UtcNow,
                     Products = new List<LicenseProductEntity>
                     {
                         new LicenseProductEntity
                         {
                             Name = "Product Name",
+                            Key = "This is a key",
+                            Created = DateTime.UtcNow,
                             Expiration = DateTime.UtcNow
                         }
                     }
@@ -134,8 +138,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 await _licenseCollection.InsertOneAsync(license);
                 
                 HttpClient.SetBearerToken(bearerToken);
-                
-                
+
                 // Act
                 var response = await HttpClient.GetAsync(url);
                 
