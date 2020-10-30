@@ -8,6 +8,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
     public interface ILicenseInstructor
     {
         Task<LicenseDto> GetByIdAsync(Guid id, CancellationToken token);
+        Task<LicenseDto> GetByUserIdAsync(Guid userId, CancellationToken token);
         Task<CreatedLicenseDto> CreateAsync(CreateLicenseDto createLicense, CancellationToken token);
     }
 }
