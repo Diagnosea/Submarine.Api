@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Diagnosea.Submarine.Domain.License.Dtos
+namespace Diagnosea.Submarine.Abstractions.Interchange.Responses.License
 {
-    public class LicenseProductDto
+    public class LicenseProductResponse
     {
         public string Name { get; set; }
         public DateTime Expiration { get; set; }

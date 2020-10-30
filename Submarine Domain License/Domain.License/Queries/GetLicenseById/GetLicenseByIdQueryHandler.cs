@@ -20,10 +20,11 @@ namespace Diagnosea.Submarine.Domain.License.Queries.GetLicenseById
         {
             var filter = new FilterDefinitionBuilder<LicenseEntity>()
                 .Eq(x => x.Id, request.LicenseId);
-            
+
             var projection = new ProjectionDefinitionBuilder<LicenseEntity>()
                 .Include(x => x.Id)
-                .Include(x => x.UserId);
+                .Include(x => x.UserId)
+                .Include(x => x.Products);
             
             return await _licenseCollection
                 .Find(filter)

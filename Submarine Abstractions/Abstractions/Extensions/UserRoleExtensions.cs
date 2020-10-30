@@ -6,7 +6,7 @@ namespace Diagnosea.Submarine.Abstractions.Extensions
 {
     public static class UserRoleExtensions
     {
-        public static IEnumerable<string> AsStrings(this IEnumerable<UserRole> roles) 
+        public static IList<string> AsStrings(this IEnumerable<UserRole> roles) 
             => roles.Select(x => x.ToString()).ToList();
     }
 }

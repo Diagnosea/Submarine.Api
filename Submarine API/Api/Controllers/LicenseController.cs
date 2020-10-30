@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Abstractions.Exceptions;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Interchange.Requests.License;
@@ -9,6 +8,7 @@ using Diagnosea.Submarine.Abstractions.Interchange.Responses;
 using Diagnosea.Submarine.Abstractions.Interchange.Responses.License;
 using Diagnosea.Submarine.Api.Abstractions.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
+using Diagnosea.Submarine.Api.Abstractions.Interchange.License;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.License.CreateLicense;
 using Diagnosea.Submarine.Api.Abstractions.Swagger.Examples;
 using Diagnosea.Submarine.Domain.Instructors.License;
@@ -20,7 +20,7 @@ using Swashbuckle.AspNetCore.Filters;
 namespace Diagnosea.Submarine.Api.Controllers
 {
     [ApiController]
-    [SubmarineAuthorize(UserRole.Licenser)]
+    [SubmarineAuthorize(UserRole.Standard)]
     [DiagnoseaRoute(RouteConstants.License.Base)]
     public class LicenseController : ControllerBase
     {
@@ -31,13 +31,14 @@ namespace Diagnosea.Submarine.Api.Controllers
             _licenseInstructor = licenseInstructor;
         }
 
-        [HttpGet]
-        [ActionName(nameof(GetLicenseAsync))]
-        public IActionResult GetLicenseAsync([FromRoute] Guid licenseId)
+        [HttpGet("{licenseId:guid}")]
+        [ActionName(nameof(GetLicenseIdAsync))]
+        [SwaggerResponse(StatusCodes.Status201Created, Type = typeof(CreatedLicenseResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
+        public async Task<IActionResult> GetLicenseIdAsync([FromRoute] Guid licenseId, CancellationToken token)
         {
-            throw new SubmarineException(
-                SubmarineExceptionCode.Unknown, 
-                $"This endpoint is not usable. You gave License ID: '{licenseId}'");
+            var license = await _licenseInstructor.GetByIdAsync(licenseId, token);
+            return Ok(license.ToResponse());
         }
         
         [HttpPost]
@@ -56,7 +57,7 @@ namespace Diagnosea.Submarine.Api.Controllers
                 licenseId = createdLicense.LicenseId
             };
 
-            return CreatedAtAction(nameof(GetLicenseAsync), routeValues, createdLicense);
+            return CreatedAtAction(nameof(GetLicenseIdAsync), routeValues, createdLicense);
         }
     }
 }

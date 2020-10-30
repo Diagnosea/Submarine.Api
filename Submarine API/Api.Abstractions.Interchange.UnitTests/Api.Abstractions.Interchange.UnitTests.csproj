@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Test Packs\TestPack\TestPack.csproj" />
       <ProjectReference Include="..\Api.Abstractions.Interchange\Api.Abstractions.Interchange.csproj" />
     </ItemGroup>
 
