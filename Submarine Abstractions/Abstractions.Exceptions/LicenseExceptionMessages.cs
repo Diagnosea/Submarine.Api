@@ -4,6 +4,6 @@
     {
         private const string Prefix = "License";
         
-        public static readonly string InvalidProductName = $"{Prefix}{ExceptionMessages.Separator}InvalidProductName";
+        public static readonly string NoLicenseWithId = $"{Prefix}{ExceptionMessages.Separator}{nameof(NoLicenseWithId)}";
     }
 }

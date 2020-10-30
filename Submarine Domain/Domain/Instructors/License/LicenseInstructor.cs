@@ -5,6 +5,8 @@ using Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Authentication.Queries.HashText;
 using Diagnosea.Submarine.Domain.License.Commands.InsertLicense;
 using Diagnosea.Submarine.Domain.License.Dtos;
+using Diagnosea.Submarine.Domain.License.Extensions;
+using Diagnosea.Submarine.Domain.License.Queries.GetLicenseById;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MediatR;
 
@@ -17,6 +19,24 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
         public LicenseInstructor(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        public async Task<LicenseDto> GetByIdAsync(Guid id, CancellationToken token)
+        {
+            var getLicenseById = new GetLicenseByIdQueryBuilder()
+                .WithLicenseId(id)
+                .Build();
+
+            var license = await _mediator.Send(getLicenseById, token);
+
+            if (license == null)
+            {
+                throw new SubmarineEntityNotFoundException(
+                    $"No License With ID: '{id}' Found",
+                    LicenseExceptionMessages.NoLicenseWithId);
+            }
+
+            return license.ToDto();
         }
 
         public async Task<CreatedLicenseDto> CreateAsync(CreateLicenseDto createLicense, CancellationToken token)
