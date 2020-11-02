@@ -1,7 +1,7 @@
 ﻿namespace Diagnosea.Submarine.Abstractions.Enums
 {
-    public enum Metric
+    public enum Ailment
     {
-        PartsPerMillion
+        Finrot
     }
 }

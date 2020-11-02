@@ -1,8 +1,9 @@
 ﻿namespace Diagnosea.Submarine.Abstractions.Enums.Livestock
 {
-    public enum LivestockBreedRequirementType
+    public enum LivestockBreedConditionType
     {
-        Composite,
+        Compositional,
+        Bacterial,
         Nutritional
     }
 }
