@@ -5,4 +5,8 @@
         <RootNamespace>Diagnosea.Submarine.Domain.Livestock</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Submarine Abstractions\Abstractions\Abstractions.csproj" />
+    </ItemGroup>
+
 </Project>
