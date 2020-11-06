@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Diagnosea.Submarine.Domain.Supply.Entities
+namespace Diagnosea.Submarine.Domain.Supply.Entities.SupplyStore
 {
     public class SupplyStoreEntity
     {

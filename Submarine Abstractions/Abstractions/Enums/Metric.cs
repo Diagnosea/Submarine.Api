@@ -2,6 +2,7 @@
 {
     public enum Metric
     {
+        Unit,
         PartsPerMillion
     }
 }
