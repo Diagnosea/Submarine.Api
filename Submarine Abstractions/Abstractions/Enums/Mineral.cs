@@ -1,6 +1,6 @@
 ﻿namespace Diagnosea.Submarine.Abstractions.Enums
 {
-    public enum Composite
+    public enum Mineral
     {
         Saline,
         Alkaline

@@ -1,4 +1,5 @@
 ﻿using Diagnosea.Submarine.Abstractions.Enums;
+using Diagnosea.Submarine.Abstractions.Enums.Livestock;
 
 namespace Diagnosea.Submarine.Domain.Livestock.Entities.LivestockBreed.LivestockBreedCondition
 {

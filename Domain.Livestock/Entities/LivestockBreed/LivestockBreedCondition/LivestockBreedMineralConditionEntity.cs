@@ -1,12 +1,13 @@
 ﻿using Diagnosea.Submarine.Abstractions.Enums;
+using Diagnosea.Submarine.Abstractions.Enums.Livestock;
 
 namespace Diagnosea.Submarine.Domain.Livestock.Entities.LivestockBreed.LivestockBreedCondition
 {
-    public class LivestockBreedCompositionalConditionEntity : LivestockBreedConditionEntity
+    public class LivestockBreedMineralConditionEntity : LivestockBreedConditionEntity
     {
-        public Composite Composite { get; set; }
+        public Mineral Mineral { get; set; }
 
-        public LivestockBreedCompositionalConditionEntity()
+        public LivestockBreedMineralConditionEntity()
         {
             Type = LivestockBreedConditionType.Compositional;
         }
