@@ -1,6 +1,6 @@
 ﻿using Diagnosea.Submarine.Abstractions.Enums;
 
-namespace Diagnosea.Submarine.Domain.Supply.Entities.Supply.FeedingSupply
+namespace Diagnosea.Submarine.Domain.Supply.Entities.FeedingSupply
 {
     public class FeedingSupplyNutritionEntity
     {
