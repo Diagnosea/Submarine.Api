@@ -1,8 +1,7 @@
 ﻿namespace Diagnosea.Submarine.Abstractions.Enums
 {
-    public enum Metric
+    public enum Occurence
     {
-        Units,
-        PartsPerMillion
+        Hourly = 0
     }
 }
