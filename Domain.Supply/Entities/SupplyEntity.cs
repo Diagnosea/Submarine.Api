@@ -11,6 +11,7 @@ namespace Diagnosea.Submarine.Domain.Supply.Entities
     public class SupplyEntity
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public SupplyCategory Category { get; set; }
         public string Name { get; set; }
         public Metric MeasuredIn { get; set; }

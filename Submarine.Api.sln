@@ -119,6 +119,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain Water", "Domain Wate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Water", "Domain.Water\Domain.Water.csproj", "{7815D5FE-FB1A-4472-8A31-669B5ECE8553}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain Tank", "Domain Tank", "{190F9014-D202-4B82-9A59-C98EB0A9DAF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tank", "Domain.Tank\Domain.Tank.csproj", "{3E7931F7-D542-4A9E-B420-142E10E343BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -297,6 +301,10 @@ Global
 		{7815D5FE-FB1A-4472-8A31-669B5ECE8553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7815D5FE-FB1A-4472-8A31-669B5ECE8553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7815D5FE-FB1A-4472-8A31-669B5ECE8553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E7931F7-D542-4A9E-B420-142E10E343BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E7931F7-D542-4A9E-B420-142E10E343BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E7931F7-D542-4A9E-B420-142E10E343BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E7931F7-D542-4A9E-B420-142E10E343BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -344,6 +352,7 @@ Global
 		{2601F989-B593-41EA-9963-404C4C400978} = {7FD95344-E2AA-451D-AE40-CBD022C8AFA9}
 		{74238871-2CF9-4A38-8413-55C7DF9DDCC8} = {94A9C489-23EA-4A25-9548-C2C6B7A7D8CA}
 		{7815D5FE-FB1A-4472-8A31-669B5ECE8553} = {163F3A1F-DEDE-404D-87FE-B276EED478AF}
+		{3E7931F7-D542-4A9E-B420-142E10E343BE} = {190F9014-D202-4B82-9A59-C98EB0A9DAF8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC71E9EF-3B1F-4E70-9CE9-1BE964B459DB}

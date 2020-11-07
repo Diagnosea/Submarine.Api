@@ -7,6 +7,7 @@
         Supplemental,
         Medical,
         Testing,
+        Decoration,
         Configuration
     }
 }
