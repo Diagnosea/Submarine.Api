@@ -20,5 +20,11 @@
         {
             public const string Base = "license";
         }
+
+        public static class Tank
+        {
+            public const string Base = "tank";
+            public const string Me = "me";
+        }
     }
 }

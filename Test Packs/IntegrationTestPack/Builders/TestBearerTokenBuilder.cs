@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Diagnosea.Submarine.Abstractions.Enums;
@@ -10,6 +11,14 @@ namespace Diagnosea.IntegrationTestPack.Builders
     public class TestBearerTokenBuilder
     {
         private readonly IList<Claim> _claims = new List<Claim>();
+
+        public TestBearerTokenBuilder WithUserId(Guid Id)
+        {
+            var claim = new Claim(JwtRegisteredClaimNames.Sub, Id.ToString());
+            _claims.Add(claim);
+
+            return this;
+        }
 
         public TestBearerTokenBuilder WithRole(UserRole role)
         {

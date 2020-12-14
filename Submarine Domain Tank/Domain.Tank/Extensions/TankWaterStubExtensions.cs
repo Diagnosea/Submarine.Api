@@ -11,7 +11,7 @@ namespace Diagnosea.Submarine.Domain.Tank.Extensions
             return new TankWaterDto
             {
                 WaterId = tankWater.WaterId,
-                Levels = tankWater.Levels 
+                Levels = tankWater.Levels? 
                     .Select(tankWaterLevel => tankWaterLevel.ToDto())
                     .ToList(),
                 Stage = tankWater.Stage
