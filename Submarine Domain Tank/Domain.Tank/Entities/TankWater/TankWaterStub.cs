@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Diagnosea.Submarine.Abstractions.Enums.Water;
 
-namespace Domain.Tank.Entities.TankWater
+namespace Diagnosea.Submarine.Domain.Tank.Entities.TankWater
 {
     public class TankWaterStub
     {

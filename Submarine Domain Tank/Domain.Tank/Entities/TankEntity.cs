@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Tank.Entities.TankSupply;
-using Domain.Tank.Entities.TankWater;
+using Diagnosea.Submarine.Domain.Tank.Entities.TankSupply;
+using Diagnosea.Submarine.Domain.Tank.Entities.TankWater;
 
-namespace Domain.Tank.Entities
+namespace Diagnosea.Submarine.Domain.Tank.Entities
 {
     public class TankEntity
     {
