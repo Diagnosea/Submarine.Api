@@ -12,11 +12,11 @@ namespace Diagnosea.Submarine.Domain.Tank.Extensions
             {
                 Id = tank.Id,
                 Name = tank.Name,
-                Water = tank.Water.ToDto(),
-                Livestock = tank.Livestock
+                Water = tank.Water?.ToDto(),
+                Livestock = tank.Livestock?
                     .Select(tankLivestock => tankLivestock.ToDto())
                     .ToList(),
-                Supplies = tank.Supplies
+                Supplies = tank.Supplies?
                     .Select(tankSupply => tankSupply.ToDto())
                     .ToList()
             };
