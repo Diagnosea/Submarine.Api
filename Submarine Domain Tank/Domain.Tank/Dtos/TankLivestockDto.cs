@@ -2,9 +2,9 @@
 using Diagnosea.Submarine.Abstractions.Enums.Livestock;
 using Diagnosea.Submarine.Abstractions.Enums.Tank;
 
-namespace Diagnosea.Submarine.Domain.Tank.Entities
+namespace Diagnosea.Submarine.Domain.Tank.Dtos
 {
-    public class TankLivestockStub
+    public class TankLivestockDto
     {
         public Guid LivestockId { get; set; }
         public string Name { get; set; }

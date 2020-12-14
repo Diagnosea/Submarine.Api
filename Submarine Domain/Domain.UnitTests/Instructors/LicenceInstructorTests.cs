@@ -101,6 +101,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
             [Test]
             public void GivenNoLicenseWithUserId_ThrowsEntityNotFoundException()
             {
+                // Arrange
                 var userId = Guid.NewGuid();
 
                 var user = new UserEntity
@@ -130,6 +131,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
             [Test]
             public async Task GivenLicenseWithUserId_ReturnsLicense()
             {
+                // Arrange
                 var licenseId = Guid.NewGuid();
                 var userId = Guid.NewGuid();
 
