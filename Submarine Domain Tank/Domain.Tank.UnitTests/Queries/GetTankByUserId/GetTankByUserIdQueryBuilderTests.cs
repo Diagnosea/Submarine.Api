@@ -1,6 +1,6 @@
 ﻿using System;
 using Abstractions.Exceptions;
-using Diagnosea.Submarine.Domain.Tank.Queries.GetTankByUserId;
+using Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId;
 using NUnit.Framework;
 
 namespace Domain.Tank.UnitTests.Queries.GetTankByUserId
@@ -14,7 +14,7 @@ namespace Domain.Tank.UnitTests.Queries.GetTankByUserId
             public void GivenWithoutUserId_ThrowsMappingException()
             {
                 // Arrange
-                var builder = new GetTankByUserIdQueryBuilder();
+                var builder = new GetTanksByUserIdQueryBuilder();
 
                 // Act & Assert
                 Assert.Multiple(() =>
@@ -31,7 +31,7 @@ namespace Domain.Tank.UnitTests.Queries.GetTankByUserId
             public void GivenUserId_BuildsWithUserId()
             {
                 // Arrange
-                var builder = new GetTankByUserIdQueryBuilder();
+                var builder = new GetTanksByUserIdQueryBuilder();
                 var userId = Guid.NewGuid();
                 
                 // Act

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.IntegrationTestPack;
 using Diagnosea.Submarine.Domain.Abstractions;
 using Diagnosea.Submarine.Domain.Tank.Entities;
-using Diagnosea.Submarine.Domain.Tank.Queries.GetTankByUserId;
+using Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -32,27 +33,33 @@ namespace Diagnosea.Submarine.Domain.Tank.IntegrationTests.Queries.GetTankByUser
         public class Handle : GetTankByUserIdQueryHandlerTests
         {
             [Test]
-            public async Task GivenTankWithoutUserId_ReturnsNull()
+            public async Task GivenTankWithoutUserId_ReturnsEmptyCollection()
             {
                 // Arrange
-                var query = new GetTankByUserIdQuery
+                var query = new GetTanksByUserIdQuery
                 {
                     UserId = Guid.NewGuid()
                 };
 
-                var tank = new TankEntity
+                var tankOne = new TankEntity
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = Guid.NewGuid()
+                };
+                
+                var tankTwo = new TankEntity
                 {
                     Id = Guid.NewGuid(),
                     UserId = Guid.NewGuid()
                 };
 
-                await _tankCollection.InsertOneAsync(tank);
+                await _tankCollection.InsertManyAsync(new []{tankOne, tankTwo});
                 
                 // Act
                 var result = await _classUnderTest.Handle(query, CancellationToken.None);
                 
                 // Assert
-                Assert.That(result, Is.Null);
+                CollectionAssert.IsEmpty(result);
             }
 
             [Test]
@@ -61,18 +68,24 @@ namespace Diagnosea.Submarine.Domain.Tank.IntegrationTests.Queries.GetTankByUser
                 // Arrange
                 var userId = Guid.NewGuid();
 
-                var query = new GetTankByUserIdQuery
+                var query = new GetTanksByUserIdQuery
                 {
                     UserId = userId
                 };
 
-                var tank = new TankEntity
+                var tankOne = new TankEntity
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId
+                };
+                
+                var tankTwo = new TankEntity
                 {
                     Id = Guid.NewGuid(),
                     UserId = userId
                 };
 
-                await _tankCollection.InsertOneAsync(tank);
+                await _tankCollection.InsertManyAsync(new []{tankOne, tankTwo});
                 
                 // Act
                 var result = await _classUnderTest.Handle(query, CancellationToken.None);
@@ -80,8 +93,15 @@ namespace Diagnosea.Submarine.Domain.Tank.IntegrationTests.Queries.GetTankByUser
                 // Assert
                 Assert.Multiple(() =>
                 {
-                    Assert.That(result.Id, Is.Not.Null);
-                    Assert.That(result.UserId, Is.EqualTo(userId));
+                    Assert.That(result.Count, Is.EqualTo(2));
+
+                    var resultingTankOne = result.FirstOrDefault();
+                    Assert.That(resultingTankOne, Is.Not.Null);
+                    Assert.That(resultingTankOne.Id, Is.EqualTo(tankOne.Id));
+
+                    var resultingTankTwo = result.LastOrDefault();
+                    Assert.That(resultingTankTwo, Is.Not.Null);
+                    Assert.That(resultingTankTwo.Id, Is.EqualTo(tankTwo.Id));
                 });
             }
         }

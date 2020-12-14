@@ -13,7 +13,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
             public void GivenTankWaterLevelDto_ReturnsTankWaterLevelResponse()
             {
                 // Arrange
-                var tankWaterLevel = new TankWaterLevelDto
+                var tankWaterLevel = new TankWaterLevelListDto
                 {
                     Metric = Metric.Units,
                     Quantity = 23

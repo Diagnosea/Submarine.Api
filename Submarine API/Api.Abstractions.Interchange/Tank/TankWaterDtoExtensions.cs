@@ -6,13 +6,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Tank
 {
     public static class TankWaterDtoExtension
     {
-        public static TankWaterResponse ToResponse(this TankWaterDto tankWater)
+        public static TankWaterResponse ToResponse(this TankWaterListDto tankWaterList)
         {
             return new TankWaterResponse
             {
-                WaterId = tankWater.WaterId,
-                Stage = tankWater.Stage,
-                Levels = tankWater.Levels?
+                WaterId = tankWaterList.WaterId,
+                Stage = tankWaterList.Stage,
+                Levels = tankWaterList.Levels?
                     .Select(tankWaterLevel => tankWaterLevel.ToResponse())
                     .ToList()
             };

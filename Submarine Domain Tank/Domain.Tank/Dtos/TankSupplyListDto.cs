@@ -4,7 +4,7 @@ using Diagnosea.Submarine.Abstractions.Enums.Tank;
 
 namespace Diagnosea.Submarine.Domain.Tank.Dtos
 {
-    public class TankSupplyDto
+    public class TankSupplyListDto
     {
         public Guid SupplyId { get; set; }
         public string Name { get; set; }

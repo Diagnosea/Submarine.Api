@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Diagnosea.Submarine.Abstraction.Routes;
 using Diagnosea.Submarine.Abstractions.Enums;
@@ -26,8 +27,8 @@ namespace Diagnosea.Submarine.Api.Controllers
         [HttpGet(RouteConstants.Tank.Me)]
         public async Task<IActionResult> GetTankByUserId(CancellationToken token)
         {
-            var tank = await _tankInstructor.GetByUserIdAsync(User.GetId(), token);
-            return Ok(tank.ToResponse());
+            var tanks = await _tankInstructor.GetByUserIdAsync(User.GetId(), token);
+            return Ok(tanks.Select(tank => tank.ToResponse()));
         }
     }
 }

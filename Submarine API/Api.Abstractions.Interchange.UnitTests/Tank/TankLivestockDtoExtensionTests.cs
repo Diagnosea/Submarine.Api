@@ -16,7 +16,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
             public void GivenTankLivestockDto_ReturnsTankLivestockResponse()
             {
                 // Arrange
-                var tankLivestock = new TankLivestockDto
+                var tankLivestock = new TankLivestockListDto
                 {
                     LivestockId = Guid.NewGuid(),
                     Name = "This is livestock",

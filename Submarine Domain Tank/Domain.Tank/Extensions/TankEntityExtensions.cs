@@ -6,13 +6,13 @@ namespace Diagnosea.Submarine.Domain.Tank.Extensions
 {
     public static class TankEntityExtensions
     {
-        public static TankDto ToDto(this TankEntity tank)
+        public static TankListDto ToDto(this TankEntity tank)
         {
-            return new TankDto
+            return new TankListDto
             {
                 Id = tank.Id,
                 Name = tank.Name,
-                Water = tank.Water?.ToDto(),
+                WaterList = tank.Water?.ToDto(),
                 Livestock = tank.Livestock?
                     .Select(tankLivestock => tankLivestock.ToDto())
                     .ToList(),

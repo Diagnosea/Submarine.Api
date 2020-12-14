@@ -5,9 +5,9 @@ namespace Diagnosea.Submarine.Domain.Tank.Extensions
 {
     public static class TankWaterLevelStubExtensions
     {
-        public static TankWaterLevelDto ToDto(this TankWaterLevelStub tankWaterLevel)
+        public static TankWaterLevelListDto ToDto(this TankWaterLevelStub tankWaterLevel)
         {
-            return new TankWaterLevelDto
+            return new TankWaterLevelListDto
             {
                 Metric = tankWaterLevel.Metric,
                 Quantity = tankWaterLevel.Quantity

@@ -5,12 +5,12 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Tank
 {
     public static class TankWaterLevelDtoExtensionTests
     {
-        public static TankWaterLevelResponse ToResponse(this TankWaterLevelDto tankWaterLevel)
+        public static TankWaterLevelResponse ToResponse(this TankWaterLevelListDto tankWaterLevelList)
         {
             return new TankWaterLevelResponse
             {
-                Metric = tankWaterLevel.Metric,
-                Quantity = tankWaterLevel.Quantity
+                Metric = tankWaterLevelList.Metric,
+                Quantity = tankWaterLevelList.Quantity
             };
         }
     }

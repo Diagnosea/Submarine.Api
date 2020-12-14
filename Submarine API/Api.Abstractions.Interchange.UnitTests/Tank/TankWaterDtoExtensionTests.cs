@@ -18,13 +18,13 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
             public void GivenTankWaterDto_ReturnsTankWaterResponse()
             {
                 // Arrange
-                var tankWater = new TankWaterDto
+                var tankWater = new TankWaterListDto
                 {
                     WaterId = Guid.NewGuid(),
                     Stage = WaterCycleStage.BuildingAnaerobic,
-                    Levels = new List<TankWaterLevelDto>
+                    Levels = new List<TankWaterLevelListDto>
                     {
-                        new TankWaterLevelDto
+                        new TankWaterLevelListDto
                         {
                             Metric = Metric.Units,
                             Quantity = 23

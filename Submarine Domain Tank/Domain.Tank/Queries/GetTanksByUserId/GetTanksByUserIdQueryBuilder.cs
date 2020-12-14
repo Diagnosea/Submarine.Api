@@ -1,28 +1,28 @@
 ﻿using System;
 using Abstractions.Exceptions;
 
-namespace Diagnosea.Submarine.Domain.Tank.Queries.GetTankByUserId
+namespace Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId
 {
-    public class GetTankByUserIdQueryBuilder
+    public class GetTanksByUserIdQueryBuilder
     {
         private Guid? _userId { get; set; }
 
-        public GetTankByUserIdQueryBuilder WithUserId(Guid userId)
+        public GetTanksByUserIdQueryBuilder WithUserId(Guid userId)
         {
             _userId = userId;
             return this;
         }
 
-        public GetTankByUserIdQuery Build()
+        public GetTanksByUserIdQuery Build()
         {
             if (!_userId.HasValue)
             {
                 throw new SubmarineMappingException(
-                    $"Failed to Map UserId to {nameof(GetTankByUserIdQuery)}",
+                    $"Failed to Map UserId to {nameof(GetTanksByUserIdQuery)}",
                     MappingExceptionMessages.Failed);
             }
             
-            return new GetTankByUserIdQuery
+            return new GetTanksByUserIdQuery
             {
                 UserId = _userId.Value
             };

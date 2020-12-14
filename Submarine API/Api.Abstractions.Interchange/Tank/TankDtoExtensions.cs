@@ -6,17 +6,17 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Tank
 {
     public static class TankDtoExtensions
     {
-        public static TankResponse ToResponse(this TankDto tank)
+        public static TankResponse ToResponse(this TankListDto tankList)
         {
             return new TankResponse
             {
-                Id = tank.Id,
-                Name = tank.Name,
-                Water = tank.Water?.ToResponse(),
-                Livestock = tank.Livestock?
+                Id = tankList.Id,
+                Name = tankList.Name,
+                Water = tankList.WaterList?.ToResponse(),
+                Livestock = tankList.Livestock?
                     .Select(tankLivestock => tankLivestock.ToResponse())
                     .ToList(),
-                Supplies = tank.Supplies?
+                Supplies = tankList.Supplies?
                     .Select(tankSupply => tankSupply.ToResponse())
                     .ToList()
             };
