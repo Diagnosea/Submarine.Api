@@ -2,7 +2,7 @@
 using Diagnosea.Submarine.Abstractions.Enums.Livestock;
 using Diagnosea.Submarine.Abstractions.Enums.Tank;
 
-namespace Domain.Tank.Entities
+namespace Diagnosea.Submarine.Domain.Tank.Entities
 {
     public class TankLivestockStub
     {

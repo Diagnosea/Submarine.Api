@@ -4,6 +4,7 @@ using Diagnosea.Submarine.Domain.Instructors.Authentication;
 using Diagnosea.Submarine.Domain.Instructors.License;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Diagnosea.Submarine.Domain.License.Entities;
+using Diagnosea.Submarine.Domain.Tank.Entities;
 using Diagnosea.Submarine.Domain.User.Dtos;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,8 +25,9 @@ namespace Diagnosea.Submarine.Domain.Extensions
             var user = Assembly.GetAssembly(typeof(UserDto));
             var authentication = Assembly.GetAssembly(typeof(AuthenticateDto));
             var licensing = Assembly.GetAssembly(typeof(LicenseEntity));
+            var tank = Assembly.GetAssembly(typeof(TankEntity));
             
-            serviceCollection.AddMediatR(user, authentication, licensing);
+            serviceCollection.AddMediatR(user, authentication, licensing, tank);
         }
     }
 }

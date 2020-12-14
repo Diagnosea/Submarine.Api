@@ -42,7 +42,7 @@ namespace Diagnosea.Migrator
             var user = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                EmailAddress = "joshua.crowe@outlook.com",
+                EmailAddress = "joshuacrowe@outlook.com",
                 Password = hashedPassword,
                 FriendlyName = "Joshua Crowe",
                 UserName = "InsertBeforeFlight",

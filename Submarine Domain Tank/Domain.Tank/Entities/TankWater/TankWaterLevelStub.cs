@@ -1,6 +1,6 @@
 ﻿using Diagnosea.Submarine.Abstractions.Enums;
 
-namespace Domain.Tank.Entities.TankWater
+namespace Diagnosea.Submarine.Domain.Tank.Entities.TankWater
 {
     public class TankWaterLevelStub
     {

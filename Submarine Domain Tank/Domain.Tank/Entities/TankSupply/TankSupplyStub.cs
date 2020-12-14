@@ -2,7 +2,7 @@
 using Diagnosea.Submarine.Abstractions.Enums;
 using Diagnosea.Submarine.Abstractions.Enums.Tank;
 
-namespace Domain.Tank.Entities.TankSupply
+namespace Diagnosea.Submarine.Domain.Tank.Entities.TankSupply
 {
     public class TankSupplyStub
     {

@@ -15,6 +15,8 @@
       <ProjectReference Include="..\..\Submarine Abstractions\Abstractions.Exceptions\Abstractions.Exceptions.csproj" />
       <ProjectReference Include="..\..\Submarine Domain Authentication\Domain.Authentication\Domain.Authentication.csproj" />
       <ProjectReference Include="..\..\Submarine Domain License\Domain.License\Domain.License.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain Tank\Domain.Tank.csproj" />
+      <ProjectReference Include="..\..\Submarine Domain Tank\Domain.Tank\Domain.Tank.csproj" />
       <ProjectReference Include="..\..\Submarine Domain User\Domain.User\Domain.User.csproj" />
     </ItemGroup>
 
