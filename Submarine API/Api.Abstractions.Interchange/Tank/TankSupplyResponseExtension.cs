@@ -5,15 +5,15 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Tank
 {
     public static class TankSupplyResponseExtension
     {
-        public static TankSupplyResponse ToResponse(this TankSupplyDto tankSupply)
+        public static TankSupplyResponse ToResponse(this TankSupplyListDto tankSupplyList)
         {
             return new TankSupplyResponse
             {
-                SupplyId = tankSupply.SupplyId,
-                Name = tankSupply.Name,
-                Component = tankSupply.Component,
-                Metric = tankSupply.Metric,
-                Quantity = tankSupply.Quantity
+                SupplyId = tankSupplyList.SupplyId,
+                Name = tankSupplyList.Name,
+                Component = tankSupplyList.Component,
+                Metric = tankSupplyList.Metric,
+                Quantity = tankSupplyList.Quantity
             };
         }
     }

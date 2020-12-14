@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
 using Diagnosea.Submarine.Domain.Tank.Dtos;
 using Diagnosea.Submarine.Domain.Tank.Extensions;
-using Diagnosea.Submarine.Domain.Tank.Queries.GetTankByUserId;
+using Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MediatR;
 
@@ -19,24 +21,26 @@ namespace Diagnosea.Submarine.Domain.Instructors.Tank
             _mediator = mediator;
         }
 
-        public async Task<TankDto> GetByUserIdAsync(Guid userId, CancellationToken token)
+        public async Task<IList<TankListDto>> GetByUserIdAsync(Guid userId, CancellationToken token)
         {
             await ValidateUserExistsAsync(userId, token);
             
-            var getTankByUserId = new GetTankByUserIdQueryBuilder()
+            var getTankByUserId = new GetTanksByUserIdQueryBuilder()
                 .WithUserId(userId)
                 .Build();
 
-            var tank = await _mediator.Send(getTankByUserId, token);
+            var tanks = await _mediator.Send(getTankByUserId, token);
 
-            if (tank == null)
+            if (tanks == null || !tanks.Any())
             {
                 throw new SubmarineEntityNotFoundException(
-                    $"No Tank With UserId: '{userId}' Found",
-                    TankExceptionMessages.NoTankWithUserId);
+                    $"No Tanks With UserId: '{userId}' Found",
+                    TankExceptionMessages.NoTanksWithUserId);
             }
 
-            return tank.ToDto();
+            return tanks
+                .Select(tank => tank.ToDto())
+                .ToList();
         } 
         
         private async Task ValidateUserExistsAsync(Guid userId, CancellationToken token)

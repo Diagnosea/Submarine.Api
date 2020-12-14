@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Exceptions;
@@ -11,7 +12,7 @@ using Diagnosea.Submarine.Domain.Instructors.Tank;
 using Diagnosea.Submarine.Domain.Tank.Entities;
 using Diagnosea.Submarine.Domain.Tank.Entities.TankSupply;
 using Diagnosea.Submarine.Domain.Tank.Entities.TankWater;
-using Diagnosea.Submarine.Domain.Tank.Queries.GetTankByUserId;
+using Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId;
 using Diagnosea.Submarine.Domain.User.Entities;
 using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using Diagnosea.Submarine.UnitTestPack.Extensions;
@@ -72,7 +73,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                     .ReturnsAsync(user);
 
                 _mediator
-                    .SetupHandler<GetTankByUserIdQuery, TankEntity>();
+                    .SetupHandler<GetTanksByUserIdQuery, IList<TankEntity>>();
 
                 // Act & Assert
                 Assert.Multiple(() =>
@@ -82,7 +83,7 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                     
                     Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(TankExceptionMessages.NoTankWithUserId));
+                    Assert.That(exception.UserMessage, Is.EqualTo(TankExceptionMessages.NoTanksWithUserId));
                 });
             }
             
@@ -147,14 +148,16 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                     .ReturnsAsync(user);
 
                 _mediator
-                    .SetupHandler<GetTankByUserIdQuery, TankEntity>()
-                    .ReturnsAsync(tank);
+                    .SetupHandler<GetTanksByUserIdQuery, IList<TankEntity>>()
+                    .ReturnsAsync(new List<TankEntity> {tank});
                 
                 // Act
                 var result = await _classUnderTest.GetByUserIdAsync(userId, CancellationToken.None);
                 
                 // Assert
-                Assert.That(result.Id, Is.EqualTo(tankId));
+                var resultingTank = result.FirstOrDefault();
+                
+                Assert.That(resultingTank.Id, Is.EqualTo(tankId));
             }
         }
     }

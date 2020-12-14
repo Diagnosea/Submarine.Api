@@ -16,7 +16,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
             public void GivenTankSupplyDto_ReturnsTankSupplyResponse()
             {
                 // Arrange
-                var tankSupply = new TankSupplyDto
+                var tankSupply = new TankSupplyListDto
                 {
                     SupplyId = Guid.NewGuid(),
                     Name = "This is a supply",

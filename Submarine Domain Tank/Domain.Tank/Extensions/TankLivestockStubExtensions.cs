@@ -5,9 +5,9 @@ namespace Diagnosea.Submarine.Domain.Tank.Extensions
 {
     public static class TankLivestockStubExtensions
     {
-        public static TankLivestockDto ToDto(this TankLivestockStub tankLivestock)
+        public static TankLivestockListDto ToDto(this TankLivestockStub tankLivestock)
         {
-            return new TankLivestockDto
+            return new TankLivestockListDto
             {
                 LivestockId = tankLivestock.LivestockId,
                 Name = tankLivestock.Name,

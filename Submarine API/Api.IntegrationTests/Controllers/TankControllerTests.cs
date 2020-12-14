@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -129,7 +131,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
                     Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
-                    Assert.That(responseData.UserMessage, Is.EqualTo(TankExceptionMessages.NoTankWithUserId));
+                    Assert.That(responseData.UserMessage, Is.EqualTo(TankExceptionMessages.NoTanksWithUserId));
                 });
             }
 
@@ -165,9 +167,15 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.GetAsync(_url);
                 
                 // Assert
-                var responseData = await response.Content.ReadFromJsonAsync<TankResponse>();
+                var responseData = await response.Content.ReadFromJsonAsync<IEnumerable<TankResponse>>();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(responseData.Count(), Is.EqualTo(1));
 
-                Assert.That(responseData.Id, Is.EqualTo(tankId));
+                    var resultingTankResponse = responseData.FirstOrDefault();
+                    Assert.That(resultingTankResponse.Id, Is.EqualTo(tankId));
+                });
             }
         }
     }

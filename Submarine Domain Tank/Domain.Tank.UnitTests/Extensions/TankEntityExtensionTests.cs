@@ -75,11 +75,11 @@ namespace Domain.Tank.UnitTests.Extensions
                     Assert.That(result.Id, Is.EqualTo(tank.Id));
                     Assert.That(result.Name, Is.EqualTo(tank.Name));
                     
-                    Assert.That(result.Water.WaterId, Is.EqualTo(tank.Water.WaterId));
-                    Assert.That(result.Water.Stage, Is.EqualTo(tank.Water.Stage));
+                    Assert.That(result.WaterList.WaterId, Is.EqualTo(tank.Water.WaterId));
+                    Assert.That(result.WaterList.Stage, Is.EqualTo(tank.Water.Stage));
 
                     var tankWaterLevel = tank.Water.Levels.FirstOrDefault();
-                    var resultingTankWaterLevel = result.Water.Levels.FirstOrDefault();
+                    var resultingTankWaterLevel = result.WaterList.Levels.FirstOrDefault();
                     Assert.That(resultingTankWaterLevel, Is.Not.Null);
                     Assert.That(resultingTankWaterLevel.Metric, Is.EqualTo(tankWaterLevel.Metric));
                     Assert.That(resultingTankWaterLevel.Quantity, Is.EqualTo(tankWaterLevel.Quantity));

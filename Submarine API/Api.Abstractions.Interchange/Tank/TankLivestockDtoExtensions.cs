@@ -5,17 +5,17 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.Tank
 {
     public static class TankLivestockDtoExtensions
     {
-        public static TankLivestockResponse ToResponse(this TankLivestockDto tankLivestock)
+        public static TankLivestockResponse ToResponse(this TankLivestockListDto tankLivestockList)
         {
             return new TankLivestockResponse
             {
-                LivestockId = tankLivestock.LivestockId,
-                Name = tankLivestock.Name,
-                Sex = tankLivestock.Sex,
-                Happiness = tankLivestock.Happiness,
-                Healthy = tankLivestock.Healthy,
-                LastFed = tankLivestock.LastFed,
-                UntilNextFeed = tankLivestock.UntilNextFeed
+                LivestockId = tankLivestockList.LivestockId,
+                Name = tankLivestockList.Name,
+                Sex = tankLivestockList.Sex,
+                Happiness = tankLivestockList.Happiness,
+                Healthy = tankLivestockList.Healthy,
+                LastFed = tankLivestockList.LastFed,
+                UntilNextFeed = tankLivestockList.UntilNextFeed
             };
         }
     }

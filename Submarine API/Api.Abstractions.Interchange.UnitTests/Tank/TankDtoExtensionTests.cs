@@ -20,26 +20,26 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
             public void GivenTankDto_ReturnsTankResponse()
             {
                 // Arrange
-                var tank = new TankDto
+                var tank = new TankListDto
                 {
                     Id = Guid.NewGuid(),
                     Name = "This is a tank",
-                    Water = new TankWaterDto
+                    WaterList = new TankWaterListDto
                     {
                         WaterId = Guid.NewGuid(),
                         Stage = WaterCycleStage.BuildingAnaerobic,
-                        Levels = new List<TankWaterLevelDto>
+                        Levels = new List<TankWaterLevelListDto>
                         {
-                            new TankWaterLevelDto
+                            new TankWaterLevelListDto
                             {
                                 Metric = Metric.Units,
                                 Quantity = 23
                             }
                         }
                     },
-                    Livestock = new List<TankLivestockDto>
+                    Livestock = new List<TankLivestockListDto>
                     {
-                        new TankLivestockDto
+                        new TankLivestockListDto
                         {
                             LivestockId = Guid.NewGuid(),
                             Name = "This is livestock",
@@ -50,9 +50,9 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
                             UntilNextFeed = new TimeSpan(1, 1, 1, 1, 1)
                         }
                     },
-                    Supplies = new List<TankSupplyDto>
+                    Supplies = new List<TankSupplyListDto>
                     {
-                        new TankSupplyDto
+                        new TankSupplyListDto
                         {
                             SupplyId = Guid.NewGuid(),
                             Name = "This is a supply",
@@ -72,10 +72,10 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.Tank
                     Assert.That(result.Id, Is.EqualTo(tank.Id));
                     Assert.That(result.Name, Is.EqualTo(tank.Name));
                     
-                    Assert.That(result.Water.WaterId, Is.EqualTo(tank.Water.WaterId));
-                    Assert.That(result.Water.Stage, Is.EqualTo(tank.Water.Stage));
+                    Assert.That(result.Water.WaterId, Is.EqualTo(tank.WaterList.WaterId));
+                    Assert.That(result.Water.Stage, Is.EqualTo(tank.WaterList.Stage));
 
-                    var tankWaterLevel = tank.Water.Levels.FirstOrDefault();
+                    var tankWaterLevel = tank.WaterList.Levels.FirstOrDefault();
                     var resultingTankWaterLevel = result.Water.Levels.FirstOrDefault();
                     Assert.That(resultingTankWaterLevel, Is.Not.Null);
                     Assert.That(resultingTankWaterLevel.Metric, Is.EqualTo(tankWaterLevel.Metric));

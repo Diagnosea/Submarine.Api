@@ -5,9 +5,9 @@ namespace Diagnosea.Submarine.Domain.Tank.Extensions
 {
     public static class TankSupplyStubExtensions
     {
-        public static TankSupplyDto ToDto(this TankSupplyStub tankSupply)
+        public static TankSupplyListDto ToDto(this TankSupplyStub tankSupply)
         {
-            return new TankSupplyDto
+            return new TankSupplyListDto
             {
                 SupplyId = tankSupply.SupplyId,
                 Name = tankSupply.Name,
