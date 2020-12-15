@@ -14,11 +14,11 @@ namespace Diagnosea.Submarine.Domain.Tank.IntegrationTests.Queries.GetTankByUser
     [TestFixture]
     public class GetTankByUserIdQueryHandlerTests : MongoIntegrationTests
     {
-        private IMongoCollection<TankEntity> _tankCollection { get; set; }
-        private GetTankByUserIdQueryHandler _classUnderTest { get; set; }
-
-        [OneTimeSetUp]
-        public new void OneTimeSetUp()
+        private IMongoCollection<TankEntity> _tankCollection;
+        private GetTankByUserIdQueryHandler _classUnderTest;
+        
+        [SetUp]
+        public void SetUp()
         {
             _tankCollection = MongoDatabase.GetCollection<TankEntity>(CollectionConstants.TankCollectionName);
             _classUnderTest = new GetTankByUserIdQueryHandler(MongoDatabase);

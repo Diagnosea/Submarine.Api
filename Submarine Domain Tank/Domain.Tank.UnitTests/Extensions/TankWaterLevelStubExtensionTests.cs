@@ -14,8 +14,9 @@ namespace Domain.Tank.UnitTests.Extensions
             public void GivenTankWaterLevelStub_ReturnsTankWaterLevelDto()
             {
                 // Arrange
-                var tankWaterLevel = new TankWaterLevelStub
+                var tankWaterLevel = new TankWaterBacterialLevelStub
                 {
+                    Bacteria = Bacteria.Ammonia,
                     Metric = Metric.Units,
                     Quantity = 23
                 };

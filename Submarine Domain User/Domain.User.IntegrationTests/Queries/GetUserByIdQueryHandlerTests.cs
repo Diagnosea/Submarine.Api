@@ -8,7 +8,7 @@ using Diagnosea.Submarine.Domain.User.Queries.GetUserById;
 using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
+namespace Diagnosea.Submarine.Domain.User.IntegrationTests.Queries
 {
     [TestFixture]
     public class GetUserByIdQueryHandlerTests : UserIntegrationTests
@@ -41,7 +41,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                     Id = Guid.NewGuid(),
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
-                    UserName = "Johnoo2398",
+                    UserName = "John2398",
                     FriendlyName = "John Smith",
                     Roles = new List<UserRole> {UserRole.Standard}
                 };
@@ -71,7 +71,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
                     Id = getUserByIdQuery.Id,
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
-                    UserName = "Johnoo2398",
+                    UserName = "John2398",
                     FriendlyName = "John Smith",
                     Roles = new List<UserRole> {UserRole.Standard}
                 };

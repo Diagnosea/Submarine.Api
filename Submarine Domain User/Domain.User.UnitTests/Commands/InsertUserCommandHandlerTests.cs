@@ -15,18 +15,18 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
     public class InsertUserCommandHandlerTests
     {
         private Mock<IMongoDatabase> _mongoDatabase;
-        private Mock<IMongoCollection<UserEntity>> _usercollection;
+        private Mock<IMongoCollection<UserEntity>> _userCollection;
         private InsertUserCommandHandler _classUnderTest;
 
         [SetUp]
         public void SetUp()
         {
             _mongoDatabase = new Mock<IMongoDatabase>();
-            _usercollection = new Mock<IMongoCollection<UserEntity>>();
+            _userCollection = new Mock<IMongoCollection<UserEntity>>();
 
             _mongoDatabase
                 .Setup(x => x.GetCollection<UserEntity>("User", null))
-                .Returns(_usercollection.Object);
+                .Returns(_userCollection.Object);
             
             _classUnderTest = new InsertUserCommandHandler(_mongoDatabase.Object);
         }
@@ -44,7 +44,7 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                     Id = Guid.NewGuid(),
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
-                    UserName = "Johnoo2398",
+                    UserName = "John2398",
                     Roles = new List<UserRole> {UserRole.Standard}
                 };
 
@@ -54,7 +54,7 @@ namespace Diagnosea.Submarine.Domain.User.UnitTests.Commands
                 // Assert
                 Assert.That(result, Is.Not.Null);
                 
-                _usercollection.Verify(x => 
+                _userCollection.Verify(x => 
                     x.InsertOneAsync(It.Is<UserEntity>(user => VerifyUserEntity(user, insertUserCommand)), null, cancellationToken),
                     Times.Once);
             }

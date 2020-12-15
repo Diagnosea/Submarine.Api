@@ -16,7 +16,7 @@ namespace Domain.Tank.UnitTests.Extensions
             public void GivenTankSupplyStub_ReturnsTankSupplyDto()
             {
                 // Arrange
-                var tankSupply = new TankSupplyStub
+                var tankSupply = new FilterTankSupplyStub
                 {
                     SupplyId = Guid.NewGuid(),
                     Name = "This is a tank supply.",

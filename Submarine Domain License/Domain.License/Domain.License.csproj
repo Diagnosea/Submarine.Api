@@ -16,4 +16,8 @@
       <ProjectReference Include="..\..\Submarine Domain Abstractions\Domain.Abstractions\Domain.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands" />
+    </ItemGroup>
+
 </Project>

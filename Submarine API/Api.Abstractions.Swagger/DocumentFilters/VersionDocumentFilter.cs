@@ -38,13 +38,14 @@ namespace Diagnosea.Submarine.Api.Abstractions.Swagger.DocumentFilters
             }
 
             // If there are any versions implemented by this action.
-            if (apiVersionModel != null && apiVersionModel.ImplementedApiVersions.Any())
+            if (apiVersionModel == null || !apiVersionModel.ImplementedApiVersions.Any())
             {
-                var implementedVersion = apiVersionModel.ImplementedApiVersions.First();
-                return implementedVersion.ToString();
+                throw new ArgumentException($"No Version Found for {actionDescriptor.DisplayName}");
             }
 
-            throw new ArgumentException($"No Version Found for {actionDescriptor.DisplayName}");
+            var implementedVersion = apiVersionModel.ImplementedApiVersions.First();
+            return implementedVersion.ToString();
+
         }
     }
 }

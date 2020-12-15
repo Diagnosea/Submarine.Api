@@ -18,11 +18,10 @@ namespace Diagnosea.IntegrationTestPack
                 _mongoDbRunner = MongoDbRunner.Start();
             }
 
-            if (MongoDatabase == null)
-            {
-                var client = new MongoClient(_mongoDbRunner.ConnectionString);
-                MongoDatabase = client.GetDatabase(Assembly.GetExecutingAssembly().GetName().Name);
-            }
+            if (MongoDatabase != null) return;
+            
+            var client = new MongoClient(_mongoDbRunner.ConnectionString);
+            MongoDatabase = client.GetDatabase(Assembly.GetExecutingAssembly().GetName().Name);
         }
 
         [OneTimeTearDown]
@@ -31,7 +30,7 @@ namespace Diagnosea.IntegrationTestPack
             if (!_mongoDbRunner.Disposed)
             {
                 _mongoDbRunner.Dispose();
-            };
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        private static readonly IDictionary<Type, HttpStatusCode> _exceptionMapping = new Dictionary<Type, HttpStatusCode>
+        private static readonly IDictionary<Type, HttpStatusCode> ExceptionMapping = new Dictionary<Type, HttpStatusCode>
         {
             { typeof(SubmarineEntityNotFoundException), HttpStatusCode.NotFound },
             { typeof(SubmarineDataAlreadyExistsException), HttpStatusCode.Conflict },
@@ -18,7 +18,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
 
         public static void AddSubmarineExceptionMiddleware(this IApplicationBuilder app)
         {
-            app.UseMiddleware<ExceptionMiddleware>(_exceptionMapping);
+            app.UseMiddleware<ExceptionMiddleware>(ExceptionMapping);
         }
     }
 }

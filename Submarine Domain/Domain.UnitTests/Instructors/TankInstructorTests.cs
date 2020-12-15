@@ -156,7 +156,8 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 
                 // Assert
                 var resultingTank = result.FirstOrDefault();
-                
+
+                Assert.That(resultingTank, Is.Not.Null);
                 Assert.That(resultingTank.Id, Is.EqualTo(tankId));
             }
         }

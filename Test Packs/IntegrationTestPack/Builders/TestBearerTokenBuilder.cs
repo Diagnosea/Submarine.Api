@@ -12,9 +12,9 @@ namespace Diagnosea.IntegrationTestPack.Builders
     {
         private readonly IList<Claim> _claims = new List<Claim>();
 
-        public TestBearerTokenBuilder WithUserId(Guid Id)
+        public TestBearerTokenBuilder WithUserId(Guid id)
         {
-            var claim = new Claim(JwtRegisteredClaimNames.Sub, Id.ToString());
+            var claim = new Claim(JwtRegisteredClaimNames.Sub, id.ToString());
             _claims.Add(claim);
 
             return this;

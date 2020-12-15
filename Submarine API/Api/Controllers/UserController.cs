@@ -8,10 +8,12 @@ using Diagnosea.Submarine.Abstractions.Interchange.Responses.User;
 using Diagnosea.Submarine.Api.Abstractions.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Authentication.Attributes;
 using Diagnosea.Submarine.Api.Abstractions.Interchange.User;
+using Diagnosea.Submarine.Api.Abstractions.Swagger.Examples;
 using Diagnosea.Submarine.Domain.Instructors.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Diagnosea.Submarine.Api.Controllers
 {
@@ -38,6 +40,7 @@ namespace Diagnosea.Submarine.Api.Controllers
         [SwaggerResponse(StatusCodes.Status401Unauthorized)]
         [SwaggerResponse(StatusCodes.Status403Forbidden)]
         [SwaggerResponse(StatusCodes.Status404NotFound, Type = typeof(ExceptionResponse))]
+        [SwaggerRequestExample(typeof(GetUserRequest), typeof(GetUserRequestExamplesProvider))]
         public async Task<IActionResult> GetUserAsync([FromRoute] GetUserRequest request, CancellationToken token)
         {
             var user = await _userInstructor.GetAsync(request.UserId, token);

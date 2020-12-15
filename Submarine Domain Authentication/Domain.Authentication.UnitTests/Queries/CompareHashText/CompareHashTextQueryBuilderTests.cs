@@ -34,7 +34,7 @@ namespace Domain.Authentication.UnitTests.Queries.CompareHashText
             public void GivenText_BuildsWithText()
             {
                 // Arrange
-                var builder = new CompareHashTextQueryBuilder();;
+                var builder = new CompareHashTextQueryBuilder();
                 const string text = "This is the text";
                 
                 // Act

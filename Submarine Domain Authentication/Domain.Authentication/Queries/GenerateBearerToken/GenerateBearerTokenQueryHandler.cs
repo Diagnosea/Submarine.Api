@@ -45,10 +45,10 @@ namespace Diagnosea.Submarine.Domain.Authentication.Queries.GenerateBearerToken
             }
 
             var securityTokenDescriptor = securityTokenDescriptorBuilder.Build();
-            var jwetSecurityTokenHander = new JwtSecurityTokenHandler();
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
-            var securityToken = jwetSecurityTokenHander.CreateToken(securityTokenDescriptor);
-            var serializedToken = jwetSecurityTokenHander.WriteToken(securityToken);
+            var securityToken = jwtSecurityTokenHandler.CreateToken(securityTokenDescriptor);
+            var serializedToken = jwtSecurityTokenHandler.WriteToken(securityToken);
 
             return Task.FromResult(serializedToken);
         }

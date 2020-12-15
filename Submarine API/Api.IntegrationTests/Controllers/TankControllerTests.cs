@@ -167,13 +167,14 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.GetAsync(_url);
                 
                 // Assert
-                var responseData = await response.Content.ReadFromJsonAsync<IEnumerable<TankResponse>>();
-                
+                var responseData = await response.Content.ReadFromJsonAsync<IList<TankResponse>>();
+
                 Assert.Multiple(() =>
                 {
                     Assert.That(responseData.Count(), Is.EqualTo(1));
 
                     var resultingTankResponse = responseData.FirstOrDefault();
+                    Assert.That(resultingTankResponse, Is.Not.Null);
                     Assert.That(resultingTankResponse.Id, Is.EqualTo(tankId));
                 });
             }

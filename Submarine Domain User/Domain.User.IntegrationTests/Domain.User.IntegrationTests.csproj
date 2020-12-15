@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <RootNamespace>Diagnosae.Submarine.Domain.User.IntegrationTests</RootNamespace>
+        <RootNamespace>Diagnosea.Submarine.Domain.User.IntegrationTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

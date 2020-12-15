@@ -8,7 +8,7 @@ using Diagnosea.Submarine.Domain.User.Entities;
 using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Commands
+namespace Diagnosea.Submarine.Domain.User.IntegrationTests.Commands
 {
     [TestFixture]
     public class InsertUserCommandHandlerTests : UserIntegrationTests
@@ -37,7 +37,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Commands
                     Id = Guid.NewGuid(),
                     EmailAddress = "john.smith@gmail.com",
                     Password = "30=5902i0jfe-q0dj-0",
-                    UserName = "Johnoo2398",
+                    UserName = "John2398",
                     Roles = new List<UserRole> {UserRole.Standard}
                 };
                 

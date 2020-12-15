@@ -10,8 +10,6 @@ namespace Diagnosea.Submarine.Domain.User.TestPack.Builders
         private Guid? _id;
         private string _emailAddress;
         private string _password;
-        private string _userName;
-        private string _friendlyName;
         private readonly IList<UserRole> _roles = new List<UserRole>();
 
         public TestUserEntityBuilder WithId(Guid id)
@@ -32,18 +30,6 @@ namespace Diagnosea.Submarine.Domain.User.TestPack.Builders
             return this;
         }
 
-        public TestUserEntityBuilder WithUserName(string userName)
-        {
-            _userName = userName;
-            return this;
-        }
-
-        public TestUserEntityBuilder WithFriendlyName(string friendlyName)
-        {
-            _friendlyName = friendlyName;
-            return this;
-        }
-
         public TestUserEntityBuilder WithRole(UserRole role)
         {
             _roles.Add(role);
@@ -57,8 +43,6 @@ namespace Diagnosea.Submarine.Domain.User.TestPack.Builders
                 Id = _id ?? Guid.NewGuid(),
                 EmailAddress = _emailAddress ?? "This is an email address",
                 Password = _password ?? "This is a password",
-                UserName = _userName ?? "This is a user name",
-                FriendlyName = _friendlyName ?? "This is a friendly name",
                 Roles = _roles
             };
         }

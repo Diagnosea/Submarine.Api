@@ -20,22 +20,6 @@ namespace Diagnosea.TestPack
             ContainsKeyedValue(dictionary, correctedKey, value);
         }
 
-        /// <summary>
-        /// Test an error exists under a nested array field within model state. E.g. object[1].field
-        /// </summary>
-        public static void Contains(
-            IDictionary<string, string[]> dictionary, 
-            string keyNestingObjectName, 
-            int keyNestingIndex, 
-            string keyNestingFieldName, 
-            string value)
-        {
-            var correctedKeyNestingFieldName = CorrectKeyFieldName(keyNestingObjectName);
-            var correctedKey = $"{correctedKeyNestingFieldName}[{keyNestingIndex}].{keyNestingFieldName}";
-
-            ContainsKeyedValue(dictionary, correctedKey, value);
-        }
-
         private static string CorrectKeyFieldName(string keyNestingFieldName)
             => char.ToLowerInvariant(keyNestingFieldName[0]) + keyNestingFieldName.Substring(1);
 

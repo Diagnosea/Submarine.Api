@@ -4,9 +4,9 @@
     {
         private string _emailAddress;
 
-        public GetUserByEmailQueryBuilder WithEmailAddress(string emailAdddress)
+        public GetUserByEmailQueryBuilder WithEmailAddress(string emailAddress)
         {
-            _emailAddress = emailAdddress;
+            _emailAddress = emailAddress;
             return this;
         }
         

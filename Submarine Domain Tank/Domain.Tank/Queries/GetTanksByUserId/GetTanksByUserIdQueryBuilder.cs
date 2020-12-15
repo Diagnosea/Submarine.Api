@@ -5,17 +5,17 @@ namespace Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId
 {
     public class GetTanksByUserIdQueryBuilder
     {
-        private Guid? _userId { get; set; }
+        private Guid? UserId { get; set; }
 
         public GetTanksByUserIdQueryBuilder WithUserId(Guid userId)
         {
-            _userId = userId;
+            UserId = userId;
             return this;
         }
 
         public GetTanksByUserIdQuery Build()
         {
-            if (!_userId.HasValue)
+            if (!UserId.HasValue)
             {
                 throw new SubmarineMappingException(
                     $"Failed to Map UserId to {nameof(GetTanksByUserIdQuery)}",
@@ -24,7 +24,7 @@ namespace Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId
             
             return new GetTanksByUserIdQuery
             {
-                UserId = _userId.Value
+                UserId = UserId.Value
             };
         }
     }

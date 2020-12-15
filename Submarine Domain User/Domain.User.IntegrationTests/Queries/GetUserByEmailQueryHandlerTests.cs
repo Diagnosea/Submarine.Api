@@ -8,7 +8,7 @@ using Diagnosea.Submarine.Domain.User.Queries.GetUserByEmail;
 using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace Diagnosae.Submarine.Domain.User.IntegrationTests.Queries
+namespace Diagnosea.Submarine.Domain.User.IntegrationTests.Queries
 {
     [TestFixture]
     public class GetUserByEmailQueryHandlerTests : UserIntegrationTests

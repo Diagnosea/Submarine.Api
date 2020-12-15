@@ -16,11 +16,6 @@
             public const string Base = "user";
         }
 
-        public static class License
-        {
-            public const string Base = "license";
-        }
-
         public static class Tank
         {
             public const string Base = "tank";

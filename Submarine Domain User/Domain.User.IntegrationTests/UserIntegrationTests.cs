@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace Diagnosae.Submarine.Domain.User.IntegrationTests
+namespace Diagnosea.Submarine.Domain.User.IntegrationTests
 {
     public class UserIntegrationTests
     {
@@ -17,11 +17,10 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests
                 _mongoDbRunner = MongoDbRunner.Start();
             }
 
-            if (Database == null)
-            {
-                var client = new MongoClient(_mongoDbRunner.ConnectionString);
-                Database = client.GetDatabase(nameof(UserIntegrationTests));
-            }
+            if (Database != null) return;
+            
+            var client = new MongoClient(_mongoDbRunner.ConnectionString);
+            Database = client.GetDatabase(nameof(UserIntegrationTests));
         }
 
         [OneTimeTearDown]
@@ -30,7 +29,7 @@ namespace Diagnosae.Submarine.Domain.User.IntegrationTests
             if (!_mongoDbRunner.Disposed)
             {
                 _mongoDbRunner.Dispose();
-            };
+            }
         }
     }
 }
