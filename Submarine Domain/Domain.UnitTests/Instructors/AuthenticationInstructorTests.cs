@@ -60,11 +60,11 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineDataAlreadyExistsException>(() => _classUnderTest.RegisterAsync(register, CancellationToken.None));
+                    var exception = Assert.ThrowsAsync<DataAlreadyExistsException>(() => _classUnderTest.RegisterAsync(register, CancellationToken.None));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataAlreadyExists));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.DataAlreadyExists));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserExistsWithEmail));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.User.UserExistsWithEmail));
                 });
 
                 _mediator.VerifyHandler<GetUserByEmailQuery, UserEntity>(query => query.EmailAddress == register.EmailAddress, Times.Once());
@@ -120,10 +120,10 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(() => _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(() => _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
                     
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.User.UserNotFound));
                 });
                 
                 _mediator.Verify(x =>
@@ -151,12 +151,12 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineDataMismatchException>(() => 
+                    var exception = Assert.ThrowsAsync<DataMismatchException>(() => 
                         _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataMismatchException));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.DataMismatchException));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.PasswordIsIncorrect));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.Authentication.PasswordIsIncorrect));
                 });
                 
                 _mediator.VerifyHandler<GetUserByEmailQuery, UserEntity>(query => query.EmailAddress == emailAddress, Times.Once());
@@ -188,12 +188,12 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(() =>
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(() =>
                         _classUnderTest.AuthenticateAsync(authentication, CancellationToken.None));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.NoLicensesUnderUserWithId));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.License.NoLicenseWithUserId));
                 });
 
                 _mediator.VerifyHandler<GetUserByEmailQuery, UserEntity>(query => query.EmailAddress == emailAddress, Times.Once());

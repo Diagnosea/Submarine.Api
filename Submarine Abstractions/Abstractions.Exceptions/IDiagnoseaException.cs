@@ -1,6 +1,6 @@
 ﻿namespace Abstractions.Exceptions
 {
-    public interface ISubmarineException
+    public interface IDiagnoseaException
     {
         int ExceptionCode { get; }
         string TechnicalMessage { get; }

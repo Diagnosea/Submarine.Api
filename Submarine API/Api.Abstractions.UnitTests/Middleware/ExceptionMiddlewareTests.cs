@@ -24,7 +24,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
             _exceptionMapping = new Dictionary<Type, HttpStatusCode>
             {
                 {typeof(Exception), HttpStatusCode.BadRequest},
-                {typeof(SubmarineTestException), HttpStatusCode.Conflict}
+                {typeof(DiagnoseaTestException), HttpStatusCode.Conflict}
             };
 
             _jsonSerializerOptions = new JsonSerializerOptions
@@ -52,7 +52,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(message.ExceptionCode, Is.EqualTo((int)SubmarineExceptionCode.Unknown));
+                    Assert.That(message.ExceptionCode, Is.EqualTo((int)ExceptionCode.Unknown));
                     Assert.That(message.TechnicalMessage, Is.EqualTo(exception.Message));
                 });
             }
@@ -61,7 +61,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
             public async Task GivenRequestThrowsCustomException_SetsErrorResponse()
             {
                 // Arrange
-                var exception = new SubmarineTestException(SubmarineExceptionCode.EntityNotFound, "TM", "UM");
+                var exception = new DiagnoseaTestException(ExceptionCode.EntityNotFound, "TM", "UM");
                 Task CurrentRequest(HttpContext c) => throw exception;
                 var classUnderTest = new ExceptionMiddleware(CurrentRequest, _exceptionMapping);
                 var context = GetDefaultHttpContext();
@@ -74,7 +74,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
 
                 Assert.Multiple(() =>
                 {
-                    var statusCode = _exceptionMapping[typeof(SubmarineTestException)];
+                    var statusCode = _exceptionMapping[typeof(DiagnoseaTestException)];
                     Assert.That(context.Response.StatusCode, Is.EqualTo((int)statusCode));
                     
                     Assert.That(message.ExceptionCode, Is.EqualTo(exception.ExceptionCode));
@@ -87,7 +87,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
             public async Task GivenRequestThrowsCustomExceptionWithoutUSerMessage_SetsErrorResponse()
             {
                 // Arrange
-                var exception = new SubmarineTestException(SubmarineExceptionCode.EntityNotFound, "TM");
+                var exception = new DiagnoseaTestException(ExceptionCode.EntityNotFound, "TM");
                 Task CurrentRequest(HttpContext c) => throw exception;
                 var classUnderTest = new ExceptionMiddleware(CurrentRequest, _exceptionMapping);
                 var context = GetDefaultHttpContext();
@@ -100,7 +100,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
                 
                 Assert.Multiple(() =>
                 {
-                    var statusCode = _exceptionMapping[typeof(SubmarineTestException)];
+                    var statusCode = _exceptionMapping[typeof(DiagnoseaTestException)];
                     Assert.That(context.Response.StatusCode, Is.EqualTo((int)statusCode));
                     
                     Assert.That(message.ExceptionCode, Is.EqualTo(exception.ExceptionCode));
@@ -123,14 +123,14 @@ namespace Diagnosea.Submarine.Api.Abstractions.UnitTests.Middleware
             return context;
         }
 
-        private class SubmarineTestException : SubmarineException, ISubmarineException
+        private class DiagnoseaTestException : DiagnoseaException, IDiagnoseaException
         {
-            public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage) 
+            public DiagnoseaTestException(ExceptionCode exceptionCode, string technicalMessage) 
                 : base(exceptionCode, technicalMessage)
             {
             }
 
-            public SubmarineTestException(SubmarineExceptionCode exceptionCode, string technicalMessage, string userMessage) 
+            public DiagnoseaTestException(ExceptionCode exceptionCode, string technicalMessage, string userMessage) 
                 : base(exceptionCode, technicalMessage, userMessage)
             {
             }

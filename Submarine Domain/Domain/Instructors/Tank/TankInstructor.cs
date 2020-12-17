@@ -33,9 +33,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Tank
 
             if (tanks == null || !tanks.Any())
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No Tanks With UserId: '{userId}' Found",
-                    TankExceptionMessages.NoTanksWithUserId);
+                    ExceptionMessages.Tank.NoTanksWithUserId);
             }
 
             return tanks
@@ -53,9 +53,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Tank
 
             if (user == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No User With ID: '{userId}' Found",
-                    UserExceptionMessages.UserNotFound);
+                    ExceptionMessages.User.UserNotFound);
             }
         }
     }

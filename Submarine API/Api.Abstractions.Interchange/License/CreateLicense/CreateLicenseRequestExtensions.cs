@@ -10,9 +10,9 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.License.CreateLicense
         {
             if (!createLicense.UserId.HasValue)
             {
-                throw new SubmarineMappingException(
+                throw new MappingException(
                     $"No UserId Value for License",
-                    MappingExceptionMessages.Failed);
+                    ExceptionMessages.Mapping.Failed);
             }
 
             return new CreateLicenseDto

@@ -20,11 +20,11 @@ namespace Diagnosea.Submarine.Api.Abstractions.Interchange.UnitTests.License.Cre
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.Throws<SubmarineMappingException>(() => request.ToDto());
+                    var exception = Assert.Throws<MappingException>(() => request.ToDto());
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.MappingException));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.MappingException));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(MappingExceptionMessages.Failed));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.Mapping.Failed));
                 });
             }
 

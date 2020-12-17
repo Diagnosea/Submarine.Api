@@ -95,7 +95,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.EmailAddress), InterchangeExceptionMessages.Required);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.EmailAddress), ExceptionMessages.Interchange.Required);
                 });
             }
 
@@ -121,7 +121,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.EmailAddress), InterchangeExceptionMessages.InvalidEmailAddress);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.EmailAddress), ExceptionMessages.Interchange.InvalidEmailAddress);
                 });
             }
 
@@ -147,7 +147,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.Password), InterchangeExceptionMessages.Required);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(RegisterRequest.Password), ExceptionMessages.Interchange.Required);
                 });
             }
 
@@ -180,9 +180,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
-                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int)SubmarineExceptionCode.DataAlreadyExists));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int)ExceptionCode.DataAlreadyExists));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
-                    Assert.That(responseData.UserMessage, Is.EqualTo(UserExceptionMessages.UserExistsWithEmail));
+                    Assert.That(responseData.UserMessage, Is.EqualTo(ExceptionMessages.User.UserExistsWithEmail));
                 });
             }
             
@@ -284,7 +284,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                     DiagnoseaAssert.Contains(
                         responseData.Errors, 
                         nameof(AuthenticateRequest.EmailAddress), 
-                        InterchangeExceptionMessages.Required);
+                        ExceptionMessages.Interchange.Required);
                 });
             }
 
@@ -310,7 +310,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.EmailAddress), InterchangeExceptionMessages.InvalidEmailAddress);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.EmailAddress), ExceptionMessages.Interchange.InvalidEmailAddress);
                 });
             }
 
@@ -334,7 +334,7 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.Password), InterchangeExceptionMessages.Required);
+                    DiagnoseaAssert.Contains(responseData.Errors, nameof(AuthenticateRequest.Password), ExceptionMessages.Interchange.Required);
                 });
             }
             
@@ -361,9 +361,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
-                    Assert.That(responseData.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                    Assert.That(responseData.UserMessage, Is.EqualTo(ExceptionMessages.User.UserNotFound));
                 });
             }
 
@@ -395,9 +395,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
-                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.DataMismatchException));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) ExceptionCode.DataMismatchException));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
-                    Assert.That(responseData.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.PasswordIsIncorrect));
+                    Assert.That(responseData.UserMessage, Is.EqualTo(ExceptionMessages.Authentication.PasswordIsIncorrect));
                 });
             }
 
@@ -433,9 +433,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
-                    Assert.That(responseData.UserMessage, Is.EqualTo(AuthenticationExceptionMessages.NoLicensesUnderUserWithId));
+                    Assert.That(responseData.UserMessage, Is.EqualTo(ExceptionMessages.License.NoLicenseWithUserId));
                 });
             }
 

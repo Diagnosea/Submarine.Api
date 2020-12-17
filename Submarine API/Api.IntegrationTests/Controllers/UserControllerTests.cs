@@ -96,9 +96,9 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 Assert.Multiple(() =>
                 {
                     Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
-                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int)SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(responseData.ExceptionCode, Is.EqualTo((int)ExceptionCode.EntityNotFound));
                     Assert.That(responseData.TechnicalMessage, Is.Not.Null);
-                    Assert.That(responseData.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                    Assert.That(responseData.UserMessage, Is.EqualTo(ExceptionMessages.User.UserNotFound));
                 });
             }
 

@@ -37,11 +37,11 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(() => _classUnderTest.GetAsync(userId, cancellationToken));
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(() => _classUnderTest.GetAsync(userId, cancellationToken));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.User.UserNotFound));
                 });
             }
             

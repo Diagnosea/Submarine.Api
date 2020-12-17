@@ -10,6 +10,6 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.Attributes
         }
 
         public override string FormatErrorMessage(string name)
-            => ErrorMessage ?? $"{InterchangeExceptionMessages.InvalidStringLength}|{MinimumLength}|{MaximumLength}";
+            => ErrorMessage ?? $"{ExceptionMessages.Interchange.InvalidStringLength}|{MinimumLength}|{MaximumLength}";
     }
 }

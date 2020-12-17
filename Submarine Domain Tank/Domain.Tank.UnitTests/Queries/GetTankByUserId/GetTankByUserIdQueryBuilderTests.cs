@@ -19,10 +19,10 @@ namespace Domain.Tank.UnitTests.Queries.GetTankByUserId
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.Throws<SubmarineMappingException>(() => builder.Build());
+                    var exception = Assert.Throws<MappingException>(() => builder.Build());
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.MappingException));
-                    Assert.That(exception.UserMessage, Is.EqualTo(MappingExceptionMessages.Failed));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.MappingException));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.Mapping.Failed));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
                 });
             }

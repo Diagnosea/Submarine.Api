@@ -17,9 +17,9 @@ namespace Diagnosea.Submarine.Domain.Tank.Queries.GetTanksByUserId
         {
             if (!_userId.HasValue)
             {
-                throw new SubmarineMappingException(
+                throw new MappingException(
                     $"Failed to Map UserId to {nameof(GetTanksByUserIdQuery)}",
-                    MappingExceptionMessages.Failed);
+                    ExceptionMessages.Mapping.Failed);
             }
             
             return new GetTanksByUserIdQuery

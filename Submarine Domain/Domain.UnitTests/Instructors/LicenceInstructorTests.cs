@@ -44,12 +44,12 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(
                         () => _classUnderTest.GetByIdAsync(licenseId, CancellationToken.None));
                     
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(LicenseExceptionMessages.NoLicenseWithId));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.License.NoLicenseWithId));
                 });
             }
 
@@ -89,12 +89,12 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(
                         () => _classUnderTest.GetByUserIdAsync(userId, CancellationToken.None));
                     
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.User.UserNotFound));
                 });
             }
 
@@ -119,12 +119,12 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(
                         () => _classUnderTest.GetByUserIdAsync(userId, CancellationToken.None));
                     
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(LicenseExceptionMessages.NoLicenseWithUserId));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.License.NoLicenseWithUserId));
                 });
             }
 
@@ -176,12 +176,12 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 // Act & Assert
                 Assert.Multiple(() =>
                 {
-                    var exception = Assert.ThrowsAsync<SubmarineEntityNotFoundException>(
+                    var exception = Assert.ThrowsAsync<EntityNotFoundException>(
                         () => _classUnderTest.CreateAsync(createLicense, CancellationToken.None));
 
-                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) SubmarineExceptionCode.EntityNotFound));
+                    Assert.That(exception.ExceptionCode, Is.EqualTo((int) ExceptionCode.EntityNotFound));
                     Assert.That(exception.TechnicalMessage, Is.Not.Null);
-                    Assert.That(exception.UserMessage, Is.EqualTo(UserExceptionMessages.UserNotFound));
+                    Assert.That(exception.UserMessage, Is.EqualTo(ExceptionMessages.User.UserNotFound));
                 });
             }
 

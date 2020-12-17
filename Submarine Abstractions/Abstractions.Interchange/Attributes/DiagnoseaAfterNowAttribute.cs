@@ -17,6 +17,6 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.Attributes
         }
 
         public override string FormatErrorMessage(string name)
-            => ErrorMessage ?? InterchangeExceptionMessages.InvalidDateAfterNow;
+            => ErrorMessage ?? ExceptionMessages.Interchange.InvalidDateAfterNow;
     }
 }

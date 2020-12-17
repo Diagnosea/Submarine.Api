@@ -86,9 +86,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
 
             if (user != null)
             {
-                throw new SubmarineDataAlreadyExistsException(
+                throw new DataAlreadyExistsException(
                     $"User Already Exists For Email: '{user.EmailAddress}'",
-                    UserExceptionMessages.UserExistsWithEmail);
+                    ExceptionMessages.User.UserExistsWithEmail);
             }
         }
         
@@ -102,9 +102,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
 
             if (user == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No User Found With Email: '{emailAddress}'",
-                    UserExceptionMessages.UserNotFound);
+                    ExceptionMessages.User.UserNotFound);
             }
 
             return user;
@@ -120,9 +120,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             var isValidPassword = await _mediator.Send(compareHashTextQuery, token);
             if (!isValidPassword)
             {
-                throw new SubmarineDataMismatchException(
+                throw new DataMismatchException(
                     "Invalid Password Provided",
-                    AuthenticationExceptionMessages.PasswordIsIncorrect);
+                    ExceptionMessages.Authentication.PasswordIsIncorrect);
             }
         }
 
@@ -135,9 +135,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
             var license = await _mediator.Send(getLicenseByUserId, token);
             if (license == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No Licenses Found Under User '{userId}'",
-                    AuthenticationExceptionMessages.NoLicensesUnderUserWithId);
+                    ExceptionMessages.License.NoLicenseWithUserId);
             }
 
             return license;

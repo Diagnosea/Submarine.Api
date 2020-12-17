@@ -28,9 +28,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.User
 
             if (user == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No User With ID: '{userId}' Found",
-                    UserExceptionMessages.UserNotFound);
+                    ExceptionMessages.User.UserNotFound);
             }
 
             return user.ToDto();

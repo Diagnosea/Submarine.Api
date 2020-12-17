@@ -48,7 +48,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
             context.Response.ContentType = MediaTypeNames.Application.Json;
             context.Response.StatusCode = (int) statusCode;
 
-            if (exception is ISubmarineException submarineException)
+            if (exception is IDiagnoseaException submarineException)
             {
                 var response = new ExceptionResponse
                 {
@@ -63,7 +63,7 @@ namespace Diagnosea.Submarine.Api.Abstractions.Middleware
             
             var fallbackResponse = new ExceptionResponse
             {
-                ExceptionCode = (int) SubmarineExceptionCode.Unknown,
+                ExceptionCode = (int) ExceptionCode.Unknown,
                 TechnicalMessage = exception.Message
             };
 

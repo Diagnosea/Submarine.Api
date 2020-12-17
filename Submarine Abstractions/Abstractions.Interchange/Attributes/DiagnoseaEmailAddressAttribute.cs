@@ -9,6 +9,6 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.Attributes
          => new EmailAddressAttribute().IsValid(value);
 
         public override string FormatErrorMessage(string name)
-            => ErrorMessage ?? InterchangeExceptionMessages.InvalidEmailAddress;
+            => ErrorMessage ?? ExceptionMessages.Interchange.InvalidEmailAddress;
     }
 }

@@ -11,9 +11,9 @@ namespace Diagnosea.Submarine.Api.Abstractions.Extensions
     {
         private static readonly IDictionary<Type, HttpStatusCode> _exceptionMapping = new Dictionary<Type, HttpStatusCode>
         {
-            { typeof(SubmarineEntityNotFoundException), HttpStatusCode.NotFound },
-            { typeof(SubmarineDataAlreadyExistsException), HttpStatusCode.Conflict },
-            { typeof(SubmarineDataMismatchException), HttpStatusCode.Conflict }
+            { typeof(EntityNotFoundException), HttpStatusCode.NotFound },
+            { typeof(DataAlreadyExistsException), HttpStatusCode.Conflict },
+            { typeof(DataMismatchException), HttpStatusCode.Conflict }
         };
 
         public static void AddSubmarineExceptionMiddleware(this IApplicationBuilder app)

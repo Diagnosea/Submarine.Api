@@ -32,7 +32,7 @@ namespace Diagnosea.Submarine.Abstractions.Interchange.UnitTests.Attributes
                 var result = attribute.FormatErrorMessage("name");
                 
                 // Assert
-                Assert.That(result, Is.EqualTo(InterchangeExceptionMessages.InvalidEmailAddress));
+                Assert.That(result, Is.EqualTo(ExceptionMessages.Interchange.InvalidEmailAddress));
             }
         }
     }

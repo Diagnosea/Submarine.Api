@@ -1,6 +1,6 @@
 ﻿namespace Abstractions.Exceptions
 {
-    public enum SubmarineExceptionCode
+    public enum ExceptionCode
     {
         /// <summary>
         /// A specific code could not be resolved for this exception.

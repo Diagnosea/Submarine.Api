@@ -32,9 +32,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
 
             if (license == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No License With ID: '{id}' Found",
-                    LicenseExceptionMessages.NoLicenseWithId);
+                    ExceptionMessages.License.NoLicenseWithId);
             }
 
             return license.ToDto();
@@ -52,9 +52,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
 
             if (license == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No License With UserId: '{userId}' Found",
-                    LicenseExceptionMessages.NoLicenseWithUserId);
+                    ExceptionMessages.License.NoLicenseWithUserId);
             }
 
             return license.ToDto();
@@ -90,9 +90,9 @@ namespace Diagnosea.Submarine.Domain.Instructors.License
 
             if (user == null)
             {
-                throw new SubmarineEntityNotFoundException(
+                throw new EntityNotFoundException(
                     $"No User With ID: '{userId}' Found",
-                    UserExceptionMessages.UserNotFound);
+                    ExceptionMessages.User.UserNotFound);
             }
         }
 
