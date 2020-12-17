@@ -88,16 +88,16 @@ namespace Diagnosea.Domain.Instructors.UnitTests.Instructors
                 _mediator.SetupHandler<HashTextQuery, string>().ReturnsAsync(hashedPassword);
 
                 // Act
-                var result = await _classUnderTest.RegisterAsync(register, cancellationToken);
+                await _classUnderTest.RegisterAsync(register, cancellationToken);
                 
                 // Assert
                 _mediator.VerifyHandler<HashTextQuery, string>(query => query.Text == register.PlainTextPassword, Times.Once());
-                _mediator.VerifyHandler<InsertUserCommand>(command => VerifyInsertUserCommand(command, register, result), Times.Once());
+                _mediator.VerifyHandler<InsertUserCommand>(command => VerifyInsertUserCommand(command, register), Times.Once());
             }
 
-            private static bool VerifyInsertUserCommand(InsertUserCommand command, RegisterDto register, RegisteredDto registered)
+            private static bool VerifyInsertUserCommand(InsertUserCommand command, RegisterDto register)
             {
-                return command.Id == registered.UserId &&
+                return command.Id != null &&
                        command.EmailAddress == register.EmailAddress &&
                        command.Password != null && // Handled by BCrypt in the integration test.
                        command.UserName == register.UserName &&
