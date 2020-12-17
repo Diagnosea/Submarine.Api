@@ -77,7 +77,6 @@ namespace Submarine.Domain.License.IntegrationTests.Queries.GetLicenseById
                         new LicenseProductEntity
                         {
                             Name = "Product Name",
-                            Key = "This is a key",
                             Created = DateTime.UtcNow,
                             Expiration = DateTime.UtcNow.AddDays(1)
                         }
@@ -98,7 +97,6 @@ namespace Submarine.Domain.License.IntegrationTests.Queries.GetLicenseById
                     Assert.That(result.UserId, Is.Not.Null);
                     CollectionAssert.IsNotEmpty(result.Products);
                     Assert.That(result.Products[0].Name, Is.EqualTo(license.Products[0].Name));
-                    Assert.That(result.Products[0].Key, Is.Not.EqualTo(license.Products[0].Key));
                     DiagnoseaAssert.That(result.Products[0].Created, Is.Not.EqualTo(license.Products[0].Created));
                     DiagnoseaAssert.That(result.Products[0].Expiration, Is.EqualTo(license.Products[0].Expiration));
                 });

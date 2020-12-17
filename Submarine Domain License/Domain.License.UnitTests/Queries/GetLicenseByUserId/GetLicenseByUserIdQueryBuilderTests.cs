@@ -1,14 +1,13 @@
 ﻿using System;
 using Diagnosea.Submarine.Domain.License.Queries.GetLicenseByUserId;
 using NUnit.Framework;
-using Submarine.Domain.License.UnitTests.Queries.GetLicenseByProductKey;
 
 namespace Submarine.Domain.License.UnitTests.Queries.GetLicenseByUserId
 {
     [TestFixture]
     public class GetLicenseByUserIdQueryBuilderTests
     {
-        public class WithUserId : GetLicenseByProductKeyQueryBuilderTests
+        public class WithUserId : GetLicenseByUserIdQueryBuilderTests
         {
             [Test]
             public void GivenUserId_BuildsWithUserId()
