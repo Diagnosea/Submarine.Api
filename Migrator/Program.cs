@@ -51,14 +51,9 @@ namespace Diagnosea.Migrator
 
             await userCollection.InsertOneAsync(user);
 
-            var productKeyBytes = Encoding.UTF8.GetBytes("productKey");
-            var productKey = Convert.ToBase64String(productKeyBytes);
-            var hashedProductKey = BCrypt.Net.BCrypt.HashPassword(productKey);
-
             var product = new LicenseProductEntity
             {
                 Name = "Submarine",
-                Key = hashedProductKey,
                 Expiration = DateTime.UtcNow.AddYears(1)
             };
 

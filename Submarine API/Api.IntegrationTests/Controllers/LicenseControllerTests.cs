@@ -128,7 +128,6 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                         new LicenseProductEntity
                         {
                             Name = "Product Name",
-                            Key = "This is a key",
                             Created = DateTime.UtcNow,
                             Expiration = DateTime.UtcNow
                         }
