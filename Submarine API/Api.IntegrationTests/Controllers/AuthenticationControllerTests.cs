@@ -203,25 +203,14 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, register);
                 
                 // Assert
-                var responseLocationHeaderValue = response.Headers.Location.ToString();
-                
-                var responseData = await response.Content.ReadFromJsonAsync<RegisteredResponse>();
-
                 var user = await _userCollection
-                    .Find(x => x.Id == responseData.UserId)
+                    .Find(FilterDefinition<UserEntity>.Empty)
                     .FirstOrDefaultAsync();
 
-                var userUrl = GetUserUrl(user.Id);
-                
                 Assert.Multiple(() =>
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-                    Assert.That(responseLocationHeaderValue.Contains(userUrl));
-                    
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
                     Assert.That(user.EmailAddress, Is.EqualTo(emailAddress));
-                    Assert.That(user.UserName, Is.Null);
-                    Assert.That(user.FriendlyName, Is.Null);
-
                     var isPasswordValue = BCrypt.Net.BCrypt.Verify(password, user.Password);
                     Assert.That(isPasswordValue);
                 });
@@ -244,23 +233,14 @@ namespace Diagnosea.Submarine.Api.IntegrationTests.Controllers
                 var response = await HttpClient.PostAsJsonAsync(url, register);
                 
                 // Assert
-                var responseLocationHeaderValue = response.Headers.Location.ToString();
-                
-                var responseData = await response.Content.ReadFromJsonAsync<RegisteredResponse>();
-
                 var user = await _userCollection
-                    .Find(x => x.Id == responseData.UserId)
+                    .Find(FilterDefinition<UserEntity>.Empty)
                     .FirstOrDefaultAsync();
 
-                var userUrl = GetUserUrl(user.Id);
-                
                 Assert.Multiple(() =>
                 {
-                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-                    Assert.That(responseLocationHeaderValue.Contains(userUrl));
-                    
+                    Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
                     Assert.That(user.EmailAddress, Is.EqualTo(emailAddress));
-
                     var isPasswordValue = BCrypt.Net.BCrypt.Verify(password, user.Password);
                     Assert.That(isPasswordValue);
                 });

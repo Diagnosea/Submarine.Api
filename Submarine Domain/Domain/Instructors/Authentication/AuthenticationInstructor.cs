@@ -24,7 +24,7 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
 
         public AuthenticationInstructor(IMediator mediator) => _mediator = mediator;
 
-        public async Task<RegisteredDto> RegisterAsync(RegisterDto register, CancellationToken token)
+        public async Task RegisterAsync(RegisterDto register, CancellationToken token)
         {
             await ValidateUserDoesNotExist(register.EmailAddress, token);
             
@@ -46,11 +46,6 @@ namespace Diagnosea.Submarine.Domain.Instructors.Authentication
                 .Build();
             
             await _mediator.Send(insertUserCommand, token);
-
-            return new RegisteredDto
-            {
-                UserId = insertUserCommand.Id
-            };
         }
         
         public async Task<AuthenticatedDto> AuthenticateAsync(AuthenticateDto authenticate, CancellationToken token)

@@ -40,15 +40,8 @@ namespace Diagnosea.Submarine.Api.Controllers
         [SwaggerRequestExample(typeof(RegisterRequest), typeof(RegisterRequestExamplesProvider))]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, ApiVersion version, CancellationToken token)
         {
-            var registered = await _authenticationInstructor.RegisterAsync(request.ToDto(), token);
-            
-            var routeValues = new
-            {
-                version = version.ToString(),
-                userId = registered.UserId.ToString()
-            };
-            
-            return CreatedAtAction("GetUserAsync", "User", routeValues, registered);
+            await _authenticationInstructor.RegisterAsync(request.ToDto(), token);
+            return NoContent();
         }
         
         
